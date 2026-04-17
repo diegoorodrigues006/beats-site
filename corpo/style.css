@@ -1,0 +1,39 @@
+/*margens pag */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif; /*escolher fonte depois*/
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    border-bottom: 2px solid #f51f1f;
+}
+
+.perfil {
+    display: flex;
+    align-items: center;
+    gap: 15px; /*espaçamento entre imagem e nome */
+}
+.foto-circulo {
+        width: 80px;
+        height: 80px;
+        border: 2px solid #f51f1f; /*borda vermelha */
+        border-radius: 50%; /*torna a imagem circular */    
+        object-fit: cover; /*garante que a imagem preencha o círculo sem distorção */
+}
+
+#redes-sociais {
+    background-color: #f51f1f; /*cor de fundo vermelha */
+    color: white; /*cor do texto branca */
+    border: none; /*remove borda padrão */
+    padding: 10px 20px; /*espaçamento interno */
+    cursor: pointer; /*muda o cursor para indicar que é clicável */
+    font-size: 16px; /*tamanho da fonte */
+    border-radius: 5px; /*borda arredondada */
+
+}
