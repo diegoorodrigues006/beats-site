@@ -2,79 +2,15 @@
    TOPO (HEADER)
    ============================================================ */
 /*margens pag */
+/* Reset global de margens e paddings */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif; /*escolher fonte depois*/
 }
-
+/* Estilo do cabeçalho principal */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 40px 8%;
-    /* Gradiente do fundo: do cinza para o preto */
-    background: linear-gradient(180deg, #444342 0%, #1a1a1a 100%);
-    color: white;
-}
-
-/* Foto com borda branca fina */
-.foto-circulo {
-    width: 150px; /* Aumentamos o tamanho como na foto */
-    height: 150px;
-    border: 4px solid white;
-    border-radius: 50%;
-    overflow: hidden; 
-}
-
-/* Info do Produtor */
-.info-produtor {
-    margin-left: 20px;
-}
-
-.nome-verificado {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-/*Ícone de verificado (pode ser um SVG ou uma fonte de ícones) */
-.verificado {
-    color: #f1c40f; /* Cor dourada do ícone */
-}
-
-/* Estilo do nome de usuário (ex: @prod.kaiky) */
-.usuario {
-    color: #aaa; /* Cinza para o @ */
-    display: block;
-    margin-bottom: 10px;
-}
-
-.bio {
-    font-size: 14px;
-    max-width: 400px;
-    line-height: 1.5;
-}
-
-/* Stats (Números na direita) */
-.stats {
-    display: flex;
-    gap: 30px;
-    text-align: center;
-}
-
-.stat-item strong {
-    display: block;
-    font-size: 24px;
-}
-
-.stat-item span {
-    font-size: 12px;
-    color: #aaa;
-
-
-}header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -84,59 +20,66 @@ header {
     color: white;
 }
 
-/* Foto com borda branca fina */
+/* Estilo da foto circular do perfil */
 .foto-circulo {
     width: 150px; /* Aumentamos o tamanho como na foto */
     height: 150px;
     border: 2px solid white;
     border-radius: 50%;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
-/* Info do Produtor */
+/* Estilo das informações do produtor */
 .info-produtor {
     margin-left: 20px;
 }
 
+/* Estilo do nome e ícone verificado */
 .nome-verificado {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
+/* Estilo do ícone verificado */
 .verificado {
     color: #2799f7; /* Cor dourada do ícone */
 }
 
+/* Estilo do nome de usuário */
 .usuario {
     color: #aaa; /* Cinza para o @ */
     display: block;
     margin-bottom: 10px;
 }
-
+/*Detalhes bio */
+/* Estilo da bio */
 .bio {
     font-size: 14px;
     max-width: 400px;
     line-height: 1.5;
 }
 
-/* Stats (Números na direita) */
+/* Estilo das estatísticas */
 .stats {
     display: flex;
     gap: 50px;
     text-align: center;
 }
 
+/* Estilo do número nas estatísticas */
 .stat-item strong {
     display: block;
     font-size: 24px;
 }
 
+/* Estilo do texto nas estatísticas */
 .stat-item span {
     font-size: 12px;
     color: #aaa;
 }
 
+/* Estilo do botão de redes sociais (não usado?) */
 #redes-sociais {
     background-color: #000000; /*cor de fundo vermelha */
     color: white; /*cor do texto branca */
@@ -148,10 +91,12 @@ header {
 
 }
 /* Estilo dos círculos das redes sociais no topo */
+/* Estilo do container de ícones de redes sociais */
 .redes .media-icons {
     display: flex;
 }
 
+/* Estilo dos links dos ícones de redes sociais */
 .redes .media-icons a {
     height: 40px;
     width: 40px;
@@ -166,11 +111,15 @@ header {
 }
 
 /* Cores específicas de cada rede social */
+/* Cor de fundo do Facebook */
 .redes .media-icons a:nth-child(1) { background: #777777; } /* Facebook */
+/* Cor de fundo do Instagram */
 .redes .media-icons a:nth-child(2) { background: #777777; } /* Instagram */
+/* Cor de fundo do YouTube */
 .redes .media-icons a:nth-child(3) { background: #777777; } /* Youtube */
 
 /* Efeito de passar o mouse (Hover) */
+/* Efeito hover nos ícones de redes sociais */
 .redes .media-icons a:hover {
     background: #a5a5a5; /* Fica preto ou branco, como preferir */
     transform: scale(1.1); /* Dá um leve aumento ao passar o mouse */
@@ -180,20 +129,21 @@ header {
 
     /*-- ============================================================
    RODAPÉ (FOOTER)
-   ============================================================ */ 
+   ============================================================ */
+/* Reset global para o footer */
    * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-
+/* Estilo do corpo da página */
 body {
   min-height: 100vh;
   width: 100%;
   background: #EEECEB;
 }
-
+/* Estilo do rodapé */
 footer {
   position: fixed;
   background: #000000;
@@ -201,7 +151,7 @@ footer {
   bottom: 0;
   left: 0;
 }
-
+/* Linha separadora no rodapé */
 footer::before {
   content: '';
   position: absolute;
@@ -211,29 +161,29 @@ footer::before {
   width: 100%;
   background: #AFAFB6;
 }
-
+/* Container de conteúdo do rodapé */
 footer .content {
   max-width: 1250px;
   margin: auto;
   padding: 30px 40px 40px 40px;
 }
-
+/* Seção superior do rodapé */
 footer .content .top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 50px;
 }
-
+/* Detalhes do logo no rodapé */
 .content .top .logo-details {
   color: #fff;
   font-size: 30px;
 }
-
+/* Ícones de mídia no topo do rodapé */
 .content .top .media-icons {
   display: flex;
 }
-
+/* Links dos ícones de mídia */
 .content .top .media-icons a {
   height: 40px;
   width: 40px;
@@ -246,62 +196,62 @@ footer .content .top {
   text-decoration: none;
   transition: all 0.4s ease;
 }
-
+/* Cor de fundo do primeiro ícone (Facebook) */
 .top .media-icons a:nth-child(1) {
   background: #4267B2;
 }
-
+/* Efeito hover do primeiro ícone */
 .top .media-icons a:nth-child(1):hover {
   color: #4267B2;
   background: #fff;
 }
-
+/* Cor de fundo do segundo ícone (Twitter) */
 .top .media-icons a:nth-child(2) {
   background: #1DA1F2;
 }
-
+/* Efeito hover do segundo ícone */
 .top .media-icons a:nth-child(2):hover {
   color: #1DA1F2;
   background: #fff;
 }
-
+/* Cor de fundo do terceiro ícone (Instagram) */
 .top .media-icons a:nth-child(3) {
   background: #E1306C;
 }
-
+/* Efeito hover do terceiro ícone */
 .top .media-icons a:nth-child(3):hover {
   color: #E1306C;
   background: #fff;
 }
-
+/* Cor de fundo do quarto ícone (LinkedIn) */
 .top .media-icons a:nth-child(4) {
   background: #0077B5;
 }
-
+/* Efeito hover do quarto ícone */
 .top .media-icons a:nth-child(4):hover {
   color: #0077B5;
   background: #fff;
 }
-
+/* Cor de fundo do quinto ícone (YouTube) */
 .top .media-icons a:nth-child(5) {
   background: #FF0000;
 }
-
+/* Efeito hover do quinto ícone */
 .top .media-icons a:nth-child(5):hover {
   color: #FF0000;
   background: #fff;
 }
-
+/* Container das caixas de links */
 footer .content .link-boxes {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
-
+/* Estilo das caixas de links */
 footer .content .link-boxes .box {
   width: calc(100% / 5 - 10px);
 }
-
+/* Estilo do nome dos links */
 .content .link-boxes .box .link_name {
   color: #fff;
   font-size: 18px;
@@ -309,7 +259,7 @@ footer .content .link-boxes .box {
   margin-bottom: 10px;
   position: relative;
 }
-
+/* Linha decorativa sob o nome dos links */
 .link-boxes .box .link_name::before {
   content: '';
   position: absolute;
@@ -319,12 +269,12 @@ footer .content .link-boxes .box {
   width: 35px;
   background: #fff;
 }
-
+/* Estilo dos itens de lista */
 .content .link-boxes .box li {
   margin: 6px 0;
   list-style: none;
 }
-
+/* Estilo dos links nos itens de lista */
 .content .link-boxes .box li a {
   color: #fff;
   font-size: 14px;
@@ -333,16 +283,16 @@ footer .content .link-boxes .box {
   opacity: 0.8;
   transition: all 0.4s ease
 }
-
+/* Efeito hover nos links */
 .content .link-boxes .box li a:hover {
   opacity: 1;
   text-decoration: underline;
 }
-
+/* Estilo da caixa de input */
 .content .link-boxes .input-box {
   margin-right: 55px;
 }
-
+/* Estilo do input */
 .link-boxes .input-box input {
   height: 40px;
   width: calc(100% + 55px);
@@ -355,12 +305,12 @@ footer .content .link-boxes .box {
   color: #fff;
   margin-top: 5px;
 }
-
+/* Estilo do placeholder do input */
 .link-boxes .input-box input::placeholder {
   color: #AFAFB6;
   font-size: 16px;
 }
-
+/* Estilo do botão de input */
 .link-boxes .input-box input[type="button"] {
   background: #fff;
   color: #000000;
@@ -372,16 +322,16 @@ footer .content .link-boxes .box {
   cursor: pointer;
   transition: all 0.4s ease;
 }
-
+/* Efeito hover no botão */
 .input-box input[type="button"]:hover {
   opacity: 1;
 }
-
+/* Estilo da seção inferior do rodapé */
 footer .bottom-details {
   width: 100%;
   background: #8b8989;
 }
-
+/* Estilo do texto inferior */
 footer .bottom-details .bottom_text {
   max-width: 1250px;
   margin: auto;
@@ -389,7 +339,7 @@ footer .bottom-details .bottom_text {
   display: flex;
   justify-content: space-between;
 }
-
+/* Estilo dos spans e links no texto inferior */
 .bottom-details .bottom_text span,
 .bottom-details .bottom_text a {
   font-size: 14px;
@@ -398,36 +348,43 @@ footer .bottom-details .bottom_text {
   opacity: 0.8;
   text-decoration: none;
 }
-
+/* Efeito hover nos links */
 .bottom-details .bottom_text a:hover {
   opacity: 1;
   text-decoration: underline;
 }
-
+/* Margem direita nos links */
 .bottom-details .bottom_text a {
   margin-right: 10px;
 }
 
+/* Media query para telas menores que 900px */
 @media (max-width: 900px) {
+  /* Ajuste das caixas de links para telas menores */
   footer .content .link-boxes {
     flex-wrap: wrap;
   }
 
+  /* Ajuste da caixa de input */
   footer .content .link-boxes .input-box {
     width: 40%;
     margin-top: 10px;
   }
 }
 
+/* Media query para telas menores que 700px */
 @media (max-width: 700px) {
+  /* Ajuste da posição do rodapé */
   footer {
     position: relative;
   }
 
+  /* Ajuste do tamanho do logo */
   .content .top .logo-details {
     font-size: 26px;
   }
 
+  /* Ajuste dos ícones de mídia */
   .content .top .media-icons a {
     height: 35px;
     width: 35px;
@@ -435,37 +392,46 @@ footer .bottom-details .bottom_text {
     line-height: 35px;
   }
 
+  /* Ajuste das caixas de links */
   footer .content .link-boxes .box {
     width: calc(100% / 3 - 10px);
   }
 
+  /* Ajuste da caixa de input */
   footer .content .link-boxes .input-box {
     width: 60%;
   }
 
+  /* Ajuste do tamanho do texto inferior */
   .bottom-details .bottom_text span,
   .bottom-details .bottom_text a {
     font-size: 12px;
   }
 }
 
+/* Media query para telas menores que 520px */
 @media (max-width: 520px) {
+  /* Ajuste da linha separadora */
   footer::before {
     top: 145px;
   }
 
+  /* Ajuste da seção superior para coluna */
   footer .content .top {
     flex-direction: column;
   }
 
+  /* Margem superior dos ícones */
   .content .top .media-icons {
     margin-top: 16px;
   }
 
+  /* Ajuste das caixas de links */
   footer .content .link-boxes .box {
     width: calc(100% / 2 - 10px);
   }
 
+  /* Ajuste da caixa de input */
   footer .content .link-boxes .input-box {
     width: 100%;
   }
