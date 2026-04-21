@@ -15,16 +15,16 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 40px 8%;
-    /* Gradiente do fundo: do cinza para o preto */
-    background: linear-gradient(180deg, #7a6046 0%, #3b2e2e 100%);
+    background-color: #0a0a0a;
     color: white;
+    border-bottom: 2px solid #ccff00;
 }
 
 /* Estilo da foto circular do perfil */
 .foto-circulo {
     width: 150px; /* Aumentamos o tamanho como na foto */
     height: 150px;
-    border: 2px solid white;
+    border: 2px solid #ccff00;
     border-radius: 50%;
     overflow: hidden;
 }
@@ -32,6 +32,13 @@ header {
 /* Estilo das informações do produtor */
 .info-produtor {
     margin-left: 20px;
+}
+
+.info-produtor h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    text-transform: uppercase;
 }
 
 /* Estilo do nome e ícone verificado */
@@ -43,14 +50,15 @@ header {
 
 /* Estilo do ícone verificado */
 .verificado {
-    color: #2799f7; /* Cor dourada do ícone */
+    color: #ccff00; /* Cor neon */
 }
 
 /* Estilo do nome de usuário */
 .usuario {
-    color: #aaa; /* Cinza para o @ */
+    color: #ccff00; /* Verde neon para o @ */
     display: block;
     margin-bottom: 10px;
+    font-weight: 600;
 }
 /*Detalhes bio */
 /* Estilo da bio */
@@ -71,6 +79,8 @@ header {
 .stat-item strong {
     display: block;
     font-size: 24px;
+    color: #ccff00;
+    font-weight: 900;
 }
 
 /* Estilo do texto nas estatísticas */
@@ -104,335 +114,458 @@ header {
     border-radius: 50%;
     text-align: center;
     line-height: 40px; /* Alinha o ícone verticalmente */
-    color: #000000;
+    color: #ffffff;
     font-size: 17px;
     text-decoration: none;
     transition: all 0.4s ease;
+    border: 2px solid #ccff00;
 }
 
 /* Cores específicas de cada rede social */
 /* Cor de fundo do Facebook */
-.redes .media-icons a:nth-child(1) { background: #777777; } /* Facebook */
+.redes .media-icons a:nth-child(1) { background: transparent; } /* Facebook */
 /* Cor de fundo do Instagram */
-.redes .media-icons a:nth-child(2) { background: #777777; } /* Instagram */
+.redes .media-icons a:nth-child(2) { background: transparent; } /* Instagram */
 /* Cor de fundo do YouTube */
-.redes .media-icons a:nth-child(3) { background: #777777; } /* Youtube */
+.redes .media-icons a:nth-child(3) { background: transparent; } /* Youtube */
 
 /* Efeito de passar o mouse (Hover) */
 /* Efeito hover nos ícones de redes sociais */
 .redes .media-icons a:hover {
-    background: #a5a5a5; /* Fica preto ou branco, como preferir */
-    transform: scale(1.1); /* Dá um leve aumento ao passar o mouse */
+    background: #ccff00;
+    color: #000000;
+    box-shadow: 0 0 20px rgba(204, 255, 0, 0.8);
+    transform: scale(1.2);
+}
+
+/* ============================================================
+   MENU DE NAVEGAÇÃO
+   ============================================================ */
+.navbar {
+    background-color: #1a1a1a;
+    border-bottom: 3px solid #ccff00;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 60px;
+    padding: 20px 0;
+}
+
+.nav-link {
+    color: #888888;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: 0.3s ease;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 5px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #ccff00;
+    border-bottom-color: #ccff00;
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        gap: 30px;
+        padding: 15px 0;
+    }
+    
+    .nav-link {
+        font-size: 0.8rem;
+    }
 }
 
 
 
     /*-- ============================================================
+   SEÇÕES PLAYLISTS E BEATS
+   ============================================================ */
+.playlists-section,
+.beats-section {
+    background-color: #0a0a0a;
+    padding: 60px 20px;
+    color: #ffffff;
+}
+
+.playlists-section {
+    border-bottom: 1px solid #222;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto 40px;
+}
+
+.section-header h2 {
+    font-size: 2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    color: #ffffff;
+}
+
+.nav-arrows {
+    display: flex;
+    gap: 15px;
+}
+
+.arrow-btn {
+    background-color: transparent;
+    border: 2px solid #ccff00;
+    color: #ccff00;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow-btn:hover {
+    background-color: #ccff00;
+    color: #000;
+    box-shadow: 0 0 20px rgba(204, 255, 0, 0.8);
+}
+
+/* PLAYLISTS CONTAINER */
+.playlists-container {
+    display: flex;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    scroll-behavior: smooth;
+}
+
+.playlists-container::-webkit-scrollbar {
+    height: 4px;
+}
+
+.playlists-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.playlists-container::-webkit-scrollbar-thumb {
+    background: #ccff00;
+    border-radius: 4px;
+}
+
+.playlist-card {
+    flex-shrink: 0;
+    width: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.playlist-image {
+    width: 100%;
+    height: 180px;
+    display: flex;
+    align-items: flex-end;
+    padding: 15px;
+}
+
+.playlist-info {
+    background-color: #1a1a1a;
+    padding: 15px;
+    border: 1px solid #333;
+}
+
+.playlist-info h3 {
+    font-size: 1rem;
+    font-weight: 900;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #ffffff;
+}
+
+.playlist-info p {
+    font-size: 0.85rem;
+    color: #888888;
+}
+
+.playlist-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(204, 255, 0, 0.3);
+    border: 1px solid #ccff00;
+}
+
+.playlist-card:hover .playlist-info h3 {
+    color: #ccff00;
+}
+
+/* BEATS CONTAINER */
+.beats-container {
+    display: flex;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    scroll-behavior: smooth;
+}
+
+.beats-container::-webkit-scrollbar {
+    height: 4px;
+}
+
+.beats-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.beats-container::-webkit-scrollbar-thumb {
+    background: #ccff00;
+    border-radius: 4px;
+}
+
+.beat-card {
+    flex-shrink: 0;
+    width: 180px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.beat-image {
+    width: 100%;
+    height: 220px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 15px;
+}
+
+.beat-artist {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 10, 0.95) 50%);
+    padding: 30px 15px 15px;
+    text-align: left;
+}
+
+.artist-badge {
+    display: inline-block;
+    background-color: transparent;
+    border: 1px solid #ccff00;
+    color: #ccff00;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.beat-artist p {
+    font-size: 0.9rem;
+    color: #888888;
+    margin: 5px 0;
+}
+
+.beat-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(204, 255, 0, 0.3);
+}
+
+.beat-card:hover .artist-badge {
+    background-color: #ccff00;
+    color: #000;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+    .section-header {
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+    }
+
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .playlists-container {
+        gap: 20px;
+    }
+
+    .playlist-card {
+        width: 160px;
+    }
+
+    .playlist-image {
+        height: 140px;
+    }
+
+    .beats-container {
+        gap: 15px;
+    }
+
+    .beat-card {
+        width: 150px;
+    }
+
+    .beat-image {
+        height: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    .playlists-section,
+    .beats-section {
+        padding: 40px 15px;
+    }
+
+    .section-header h2 {
+        font-size: 1.2rem;
+    }
+
+    .playlist-card {
+        width: 140px;
+    }
+
+    .beat-card {
+        width: 130px;
+    }
+
+    .arrow-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+}
+
+    /*-- ============================================================
    RODAPÉ (FOOTER)
    ============================================================ */
-/* Reset global para o footer */
-   * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-/* Estilo do corpo da página */
-body {
-  min-height: 100vh;
-  width: 100%;
-  background: #EEECEB;
-}
-/* Estilo do rodapé */
-footer {
-  position: fixed;
-  background: #000000;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-}
-/* Linha separadora no rodapé */
-footer::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 100px;
-  height: 1px;
-  width: 100%;
-  background: #AFAFB6;
-}
-/* Container de conteúdo do rodapé */
-footer .content {
-  max-width: 1250px;
-  margin: auto;
-  padding: 30px 40px 40px 40px;
-}
-/* Seção superior do rodapé */
-footer .content .top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 50px;
-}
-/* Detalhes do logo no rodapé */
-.content .top .logo-details {
-  color: #fff;
-  font-size: 30px;
-}
-/* Ícones de mídia no topo do rodapé */
-.content .top .media-icons {
-  display: flex;
-}
-/* Links dos ícones de mídia */
-.content .top .media-icons a {
-  height: 40px;
-  width: 40px;
-  margin: 0 8px;
-  border-radius: 50%;
-  text-align: center;
-  line-height: 40px;
-  color: #fff;
-  font-size: 17px;
-  text-decoration: none;
-  transition: all 0.4s ease;
-}
-/* Cor de fundo do primeiro ícone (Facebook) */
-.top .media-icons a:nth-child(1) {
-  background: #4267B2;
-}
-/* Efeito hover do primeiro ícone */
-.top .media-icons a:nth-child(1):hover {
-  color: #4267B2;
-  background: #fff;
-}
-/* Cor de fundo do segundo ícone (Twitter) */
-.top .media-icons a:nth-child(2) {
-  background: #1DA1F2;
-}
-/* Efeito hover do segundo ícone */
-.top .media-icons a:nth-child(2):hover {
-  color: #1DA1F2;
-  background: #fff;
-}
-/* Cor de fundo do terceiro ícone (Instagram) */
-.top .media-icons a:nth-child(3) {
-  background: #E1306C;
-}
-/* Efeito hover do terceiro ícone */
-.top .media-icons a:nth-child(3):hover {
-  color: #E1306C;
-  background: #fff;
-}
-/* Cor de fundo do quarto ícone (LinkedIn) */
-.top .media-icons a:nth-child(4) {
-  background: #0077B5;
-}
-/* Efeito hover do quarto ícone */
-.top .media-icons a:nth-child(4):hover {
-  color: #0077B5;
-  background: #fff;
-}
-/* Cor de fundo do quinto ícone (YouTube) */
-.top .media-icons a:nth-child(5) {
-  background: #FF0000;
-}
-/* Efeito hover do quinto ícone */
-.top .media-icons a:nth-child(5):hover {
-  color: #FF0000;
-  background: #fff;
-}
-/* Container das caixas de links */
-footer .content .link-boxes {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
-/* Estilo das caixas de links */
-footer .content .link-boxes .box {
-  width: calc(100% / 5 - 10px);
-}
-/* Estilo do nome dos links */
-.content .link-boxes .box .link_name {
-  color: #fff;
-  font-size: 18px;
-  font-weight: 400;
-  margin-bottom: 10px;
-  position: relative;
-}
-/* Linha decorativa sob o nome dos links */
-.link-boxes .box .link_name::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  height: 2px;
-  width: 35px;
-  background: #fff;
-}
-/* Estilo dos itens de lista */
-.content .link-boxes .box li {
-  margin: 6px 0;
-  list-style: none;
-}
-/* Estilo dos links nos itens de lista */
-.content .link-boxes .box li a {
-  color: #fff;
-  font-size: 14px;
-  font-weight: 400;
-  text-decoration: none;
-  opacity: 0.8;
-  transition: all 0.4s ease
-}
-/* Efeito hover nos links */
-.content .link-boxes .box li a:hover {
-  opacity: 1;
-  text-decoration: underline;
-}
-/* Estilo da caixa de input */
-.content .link-boxes .input-box {
-  margin-right: 55px;
-}
-/* Estilo do input */
-.link-boxes .input-box input {
-  height: 40px;
-  width: calc(100% + 55px);
-  outline: none;
-  border: 2px solid #AFAFB6;
-  background: #7a7a7a;
-  border-radius: 4px;
-  padding: 0 15px;
-  font-size: 15px;
-  color: #fff;
-  margin-top: 5px;
-}
-/* Estilo do placeholder do input */
-.link-boxes .input-box input::placeholder {
-  color: #AFAFB6;
-  font-size: 16px;
-}
-/* Estilo do botão de input */
-.link-boxes .input-box input[type="button"] {
-  background: #fff;
-  color: #000000;
-  border: none;
-  font-size: 18px;
-  font-weight: 500;
-  margin: 4px 0;
-  opacity: 0.8;
-  cursor: pointer;
-  transition: all 0.4s ease;
-}
-/* Efeito hover no botão */
-.input-box input[type="button"]:hover {
-  opacity: 1;
-}
-/* Estilo da seção inferior do rodapé */
-footer .bottom-details {
-  width: 100%;
-  background: #8b8989;
-}
-/* Estilo do texto inferior */
-footer .bottom-details .bottom_text {
-  max-width: 1250px;
-  margin: auto;
-  padding: 20px 40px;
-  display: flex;
-  justify-content: space-between;
-}
-/* Estilo dos spans e links no texto inferior */
-.bottom-details .bottom_text span,
-.bottom-details .bottom_text a {
-  font-size: 14px;
-  font-weight: 300;
-  color: #fff;
-  opacity: 0.8;
-  text-decoration: none;
-}
-/* Efeito hover nos links */
-.bottom-details .bottom_text a:hover {
-  opacity: 1;
-  text-decoration: underline;
-}
-/* Margem direita nos links */
-.bottom-details .bottom_text a {
-  margin-right: 10px;
+:root {
+    --bg-color: #0a0a0a;
+    --accent-color: #ccff00; /* Verde limão/neon */
+    --text-color: #ffffff;
+    --gray-text: #888888;
 }
 
-/* Media query para telas menores que 900px */
-@media (max-width: 900px) {
-  /* Ajuste das caixas de links para telas menores */
-  footer .content .link-boxes {
-    flex-wrap: wrap;
-  }
-
-  /* Ajuste da caixa de input */
-  footer .content .link-boxes .input-box {
-    width: 40%;
-    margin-top: 10px;
-  }
+.street-footer {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 60px 20px 20px;
+    font-family: 'Inter', sans-serif;
+    border-top: 4px solid var(--accent-color);
 }
 
-/* Media query para telas menores que 700px */
-@media (max-width: 700px) {
-  /* Ajuste da posição do rodapé */
-  footer {
-    position: relative;
-  }
-
-  /* Ajuste do tamanho do logo */
-  .content .top .logo-details {
-    font-size: 26px;
-  }
-
-  /* Ajuste dos ícones de mídia */
-  .content .top .media-icons a {
-    height: 35px;
-    width: 35px;
-    font-size: 14px;
-    line-height: 35px;
-  }
-
-  /* Ajuste das caixas de links */
-  footer .content .link-boxes .box {
-    width: calc(100% / 3 - 10px);
-  }
-
-  /* Ajuste da caixa de input */
-  footer .content .link-boxes .input-box {
-    width: 60%;
-  }
-
-  /* Ajuste do tamanho do texto inferior */
-  .bottom-details .bottom_text span,
-  .bottom-details .bottom_text a {
-    font-size: 12px;
-  }
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
 }
 
-/* Media query para telas menores que 520px */
-@media (max-width: 520px) {
-  /* Ajuste da linha separadora */
-  footer::before {
-    top: 145px;
-  }
+.logo-text {
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
 
-  /* Ajuste da seção superior para coluna */
-  footer .content .top {
-    flex-direction: column;
-  }
+.logo-text span {
+    -webkit-text-stroke: 1px var(--accent-color);
+    color: transparent;
+}
 
-  /* Margem superior dos ícones */
-  .content .top .media-icons {
-    margin-top: 16px;
-  }
+.footer-links h3, .footer-social h3 {
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    color: var(--gray-text);
+    margin-bottom: 20px;
+}
 
-  /* Ajuste das caixas de links */
-  footer .content .link-boxes .box {
-    width: calc(100% / 2 - 10px);
-  }
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
 
-  /* Ajuste da caixa de input */
-  footer .content .link-boxes .input-box {
-    width: 100%;
-  }
+.footer-links li { margin-bottom: 10px; }
+
+.footer-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--accent-color);
+    padding-left: 10px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.icon {
+    border: 2px solid var(--text-color);
+    padding: 8px 12px;
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.icon:hover {
+    background-color: var(--accent-color);
+    color: #000;
+    border-color: var(--accent-color);
+    transform: translateY(-5px) rotate(-3deg);
+}
+
+.footer-bottom {
+    margin-top: 50px;
+    text-align: center;
+    border-top: 1px solid #222;
+    padding-top: 20px;
+    font-size: 0.8rem;
+    color: var(--gray-text);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .footer-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .social-icons { justify-content: center; }
 }

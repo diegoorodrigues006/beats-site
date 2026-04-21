@@ -30,11 +30,6 @@ git push
                 <p class="bio">🎹 Beats originais 🔥 Qualidade pronta para gravação</p>
         </div>
     </div>
-            <h1>PROD.KAIKY</h1>
-            <span>TEXTO?</span>
-        </div>
-        </div>
-
     <!-- Estatisticas-->
         <div class="stats">
             <div class="stat-item">
@@ -56,51 +51,183 @@ git push
     </div>
 </div>
 </header>
+
+<!-- ============================================================
+   MENU DE NAVEGAÇÃO
+   ============================================================ -->
+<nav class="navbar">
+    <div class="nav-container">
+        <ul class="nav-menu">
+            <li><a href="#beats" class="nav-link active">BEATS</a></li>
+            <li><a href="#playlists" class="nav-link">PLAYLISTS</a></li>
+            <li><a href="#sobre" class="nav-link">SOBRE</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ============================================================
+   SEÇÃO PLAYLISTS
+   ============================================================ -->
+<section id="playlists" class="playlists-section">
+    <div class="section-header">
+        <h2>Playlists</h2>
+        <div class="nav-arrows">
+            <button class="arrow-btn prev" onclick="scrollPlaylist(-1)">❮</button>
+            <button class="arrow-btn next" onclick="scrollPlaylist(1)">❯</button>
+        </div>
+    </div>
+    
+    <div class="playlists-container" id="playlistsContainer">
+        <div class="playlist-card">
+            <div class="playlist-image" style="background: linear-gradient(135deg, #ff6b35, #ffa500);"></div>
+            <div class="playlist-info">
+                <h3>METRO BOOMIN</h3>
+                <p>4 Beats</p>
+            </div>
+        </div>
+        
+        <div class="playlist-card">
+            <div class="playlist-image" style="background: linear-gradient(135deg, #8b008b, #ff1493);"></div>
+            <div class="playlist-info">
+                <h3>30PRAUM</h3>
+                <p>2 Beats</p>
+            </div>
+        </div>
+
+        <div class="playlist-card">
+            <div class="playlist-image" style="background: linear-gradient(135deg, #1e90ff, #00bfff);"></div>
+            <div class="playlist-info">
+                <h3>TRAP KING</h3>
+                <p>6 Beats</p>
+            </div>
+        </div>
+
+        <div class="playlist-card">
+            <div class="playlist-image" style="background: linear-gradient(135deg, #00ff00, #00cc00);"></div>
+            <div class="playlist-info">
+                <h3>HIP HOP</h3>
+                <p>3 Beats</p>
+            </div>
+        </div>
+
+        <div class="playlist-card">
+            <div class="playlist-image" style="background: linear-gradient(135deg, #ff0000, #cc0000);"></div>
+            <div class="playlist-info">
+                <h3>DRILL</h3>
+                <p>5 Beats</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+   SEÇÃO BEATS
+   ============================================================ -->
+<section id="beats" class="beats-section">
+    <div class="section-header">
+        <h2>Beats</h2>
+        <div class="nav-arrows">
+            <button class="arrow-btn prev" onclick="scrollBeats(-1)">❮</button>
+            <button class="arrow-btn next" onclick="scrollBeats(1)">❯</button>
+        </div>
+    </div>
+    
+    <div class="beats-container" id="beatsContainer">
+        <div class="beat-card">
+            <div class="beat-image" style="background: linear-gradient(135deg, #ff6b35, #ffa500);"></div>
+            <div class="beat-artist">
+                <span class="artist-badge">GHOST USER WAV.</span>
+                <p>Grátis ↓</p>
+            </div>
+        </div>
+
+        <div class="beat-card">
+            <div class="beat-image" style="background: linear-gradient(135deg, #cc0000, #ff0000);"></div>
+            <div class="beat-artist">
+                <span class="artist-badge">GHOST USER WAV.</span>
+                <p>21 SAVAGE</p>
+                <p>Grátis ↓</p>
+            </div>
+        </div>
+
+        <div class="beat-card">
+            <div class="beat-image" style="background: linear-gradient(135deg, #404040, #606060);"></div>
+            <div class="beat-artist">
+                <span class="artist-badge">GHOST USER WAV.</span>
+                <p>Grátis ↓</p>
+            </div>
+        </div>
+
+        <div class="beat-card">
+            <div class="beat-image" style="background: linear-gradient(135deg, #663399, #9966ff);"></div>
+            <div class="beat-artist">
+                <span class="artist-badge">GHOST USER WAV.</span>
+                <p>Grátis ↓</p>
+            </div>
+        </div>
+
+        <div class="beat-card">
+            <div class="beat-image" style="background: linear-gradient(135deg, #ff8800, #cc6600);"></div>
+            <div class="beat-artist">
+                <span class="artist-badge">GHOST USER WAV.</span>
+                <p>Grátis ↓</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- ============================================================
    RODAPÉ (FOOTER)
    ============================================================ -->
-       <footer>
-        <div class="content">
-            <div class="top">
-                <div class="logo-details">
-                    <i class="fas fa-hippo"></i>
-                    <span class="logo_name">LOGO PROD.KAIKY?</span>
-                </div>
-            </div>
-            <div class="link-boxes">
-                <ul class="box">
-                    <li class="link_name">Serviços</li>
-                    <li><a href="#">Passeios</a></li>
-                    <li><a href="#">Pousadas</a></li>
-                    <li><a href="#">Alimentação</a></li>
-                    <li><a href="#">Recriação</a></li>
-                </ul>
-                <ul class="box">
-                    <li class="link_name">Account</li>
-                    <li><a href="#">Perfil</a></li>
-                    <li><a href="#">Minha conta</a></li>
-                    <li><a href="#">Preferências</a></li>
-                    <li><a href="#">Comprar</a></li>
-                </ul>
-                <ul class="box">
-                    <li class="link_name">Nosso Parque</li>
-                    <li><a href="#">Ambientes e habitats</a></li>
-                    <li><a href="#">Estrutura</a></li>
-                    <li><a href="#">Atividades</a></li>
-                    <li><a href="#">Diferencial</a></li>
+<footer class="street-footer">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <h2 class="logo-text">Prod.<span>KAIKY</span></h2>
+            <p>A cultura das ruas em cada pixel. Autenticidade e movimento.</p>
+        </div>
+        
+        <div class="footer-links">
+            <h3>Explorar</h3>
+            <ul>
+                <li><a href="#">Drops</a></li>
+                <li><a href="#">Artistas</a></li>
+                <li><a href="#">Comunidade</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-social">
+            <h3>Conecte-se</h3>
+            <div class="social-icons">
+                <a href="#" class="icon">IG</a>
+                <a href="#" class="icon">YT</a>
+                <a href="#" class="icon">TK</a>
             </div>
         </div>
-        <div class="bottom-details">
-            <div class="bottom_text">
-                <span class="copyright_text">Copyright © 2021 <a href="#">Animalia.</a>Todos os direitos
-                    reservados</span>
-                <span class="policy_terms">
-                    <a href="#">Política de Privacidade</a>
-                    <a href="#">Termos e condições</a>
-                </span>
-            </div>
-        </div>
-    </footer>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 UrbanVibe. Sem cópias, apenas originalidade.</p>
+    </div>
+</footer>
+
+<script>
+function scrollPlaylist(direction) {
+    const container = document.getElementById('playlistsContainer');
+    const scrollAmount = 250;
+    container.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+    });
+}
+
+function scrollBeats(direction) {
+    const container = document.getElementById('beatsContainer');
+    const scrollAmount = 220;
+    container.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+    });
+}
+</script>
 
 </body>
 </html>
