@@ -18,6 +18,8 @@ header {
     background-color: #0a0a0a;
     color: white;
     border-bottom: 2px solid #ccff00;
+    position: relative;
+    z-index: 10;
 }
 
 /* Estilo da foto circular do perfil */
@@ -196,11 +198,29 @@ header {
     /*-- ============================================================
    SEÇÕES PLAYLISTS E BEATS
    ============================================================ */
+
+   /* Estilo do wrapper da imagem de fundo */
+.background-image-wrapper {
+    position: fixed;
+    top: 10px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('foto fundo 2 - site.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+    pointer-events: none;
+}
+
 .playlists-section,
 .beats-section {
-    background-color: #0a0a0a;
+    background-color: rgba(10, 10, 10, 0.521);
     padding: 60px 20px;
     color: #ffffff;
+    position: relative;
+    z-index: 1;
 }
 
 .playlists-section {
@@ -481,6 +501,8 @@ header {
     padding: 60px 20px 20px;
     font-family: 'Inter', sans-serif;
     border-top: 4px solid var(--accent-color);
+    position: relative;
+    z-index: 10;
 }
 
 .footer-container {
