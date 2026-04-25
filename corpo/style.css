@@ -26,9 +26,12 @@ header {
 .foto-circulo {
     width: 150px; /* Aumentamos o tamanho como na foto */
     height: 150px;
-    border: 2px solid #ccff00;
+    border: 1px solid #ccff00;
     border-radius: 50%;
     overflow: hidden;
+    object-fit: cover;
+    transition: all 0.5s ease;
+
 }
 
 /* Estilo das informações do produtor */
@@ -124,8 +127,8 @@ header {
 }
 
 /* Cores específicas de cada rede social */
-/* Cor de fundo do Facebook */
-.redes .media-icons a:nth-child(1) { background: transparent; } /* Facebook */
+/* Cor de fundo do Tiktok */
+.redes .media-icons a:nth-child(1) { background: transparent; } /* Tiktok */
 /* Cor de fundo do Instagram */
 .redes .media-icons a:nth-child(2) { background: transparent; } /* Instagram */
 /* Cor de fundo do YouTube */
@@ -152,9 +155,11 @@ header {
 }
 
 .nav-container {
+    display: flex;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    justify-content: center;
 }
 
 .nav-menu {
@@ -206,7 +211,7 @@ header {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url('foto fundo 3.jpeg');
+    background-image: url('foto 4.jpeg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
