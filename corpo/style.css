@@ -31,6 +31,7 @@ header {
     overflow: hidden;
     object-fit: cover;
     transition: all 0.5s ease;
+    margin-left: 70px; /* Movimentar foto para a direita */
 
 }
 
@@ -623,7 +624,28 @@ header {
 
 .social-icons {
     display: flex;
-    gap: 15px;
+}
+
+.social-icons a {
+    height: 40px;
+    width: 40px;
+    margin: 0 5px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    color: #ffffff;
+    font-size: 17px;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    border: 2px solid #ccff00;
+    background: transparent;
+}
+
+.social-icons a:hover {
+    background: #ccff00;
+    color: #000000;
+    box-shadow: 0 0 20px rgba(204, 255, 0, 0.8);
+    transform: scale(1.2);
 }
 
 .icon {
