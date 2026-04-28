@@ -29,7 +29,7 @@ container.innerHTML = listaBeats.map(beat => `
         </div>
         <div class="beat-artist">
             <p class="beat-title">${beat.artista}</p>
-             <p class="beat-status">Grátis ↓</p>      
+               
              </div>
     </div>
 `).join('');}

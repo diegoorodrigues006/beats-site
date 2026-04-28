@@ -450,12 +450,16 @@ SEÇÕES BEATS
 }
 
 .beat-image {
+    position: relative;
     width: 100%;
     height: 220px;
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
     padding: 15px;
+    aspect-ratio: 1 / 1; /* Garante que a imagem seja quadrada */
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .beat-artist {
