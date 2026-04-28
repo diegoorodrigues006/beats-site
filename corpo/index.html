@@ -41,20 +41,20 @@ git push
                 <span>Plays</span>
             </div>
     </div>
+<div id="player-api" style="display: none;"></div>
+
 <div class="mini-player">
     <div class="player-controls">
-        <i class="fas fa-step-backward"></i>
-        <i class="fas fa-play-circle play-main"></i>
-        <i class="fas fa-step-forward"></i>
+        <i class="fas fa-step-backward" onclick="player.previousVideo()"></i>
+        <i class="fas fa-play-circle play-main" id="btn-play-header" onclick="togglePlay()"></i>
+        <i class="fas fa-step-forward" onclick="player.nextVideo()"></i>
     </div>
     <div class="player-track">
-        <span class="track-name">Preview: Ultimate Beat 2026</span>
+        <span class="track-name" id="current-track-name">Selecione um Beat</span>
         <div class="progress-bar">
-            <div class="progress-fill"></div>
-        </div>
-        <div class="time-info">
-            <span>0:00</span>
-            <span>3:15</span>
+            <div class="progress-fill" id="progress-fill"></div>
+            <script src="https://www.youtube.com/iframe_api"></script>
+            <script src="script.js"></script>
         </div>
     </div>
 </div>

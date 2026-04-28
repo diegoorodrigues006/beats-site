@@ -145,10 +145,11 @@ header {
 
 .progress-fill {
     height: 100%;
-    width: 30%; /* Simulação de progresso */
+    width: 0%; /* Simulação de progresso */
     background: #ccff00;
     border-radius: 2px;
     box-shadow: 0 0 8px #ccff00;
+    transform: 1s linear; /* Transição suave para o progresso */
 }
 
 .time-info {
@@ -492,51 +493,138 @@ SEÇÕES BEATS
    BOTÃO DE PLAY ESTILO SPOTIFY
    ========================================= */
 
-/* 1. Garante que a imagem do beat é o ponto de referência para o botão */
-.beat-image {
-    position: relative; /* Essencial para o posicionamento absoluto do botão */
-    /* ... seus outros estilos de imagem ... */
+/* 1. O Card (Sempre Preto) */
+.beat-card {
+    background-color: #000; /* Fundo totalmente preto */
+    border-radius: 12px;
+    padding: 15px;
+    transition: background-color 0.3s ease;
+    border: 1px solid #1a1a1a;
+    overflow: hidden;
 }
 
-/* 2. Estilo inicial do botão (Verde, Redondo, Escondido e deslocado para baixo) */
+/* 2. Container da Imagem */
+.beat-image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    background-color: #111; /* Cor de fundo enquanto a imagem não aparece */
+    border-radius: 8px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+/* 3. A Capa do YouTube (Escondida por padrão) */
+.youtube-capa {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0; /* Fica invisível */
+    transition: opacity 0.4s ease; /* Transição suave */
+}
+
+/* 4. O Botão Spotify (Também escondido) */
 .spotify-play-btn {
     position: absolute;
-    bottom: 10px;    /* Distância do fundo da imagem */
-    right: 15px;     /* Distância da direita */
-    width: 45px;
-    height: 45px;
-    background-color: #1ed760; /* Verde clássico do Spotify, ou use o seu verde neon #ccff00 */
+    bottom: 10px;
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    background-color: #ccff00; /* Seu verde neon */
     border-radius: 50%;
     border: none;
-    color: #000;      /* Ícone preto */
-    font-size: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5); /* Sombra para dar profundidade */
-    
-    /* Mágica para esconder e animar: opacity 0 e transform para subir */
     opacity: 0;
-    transform: translateY(10px); /* Começa 10px abaixo da posição final */
-    transition: all 0.3s ease;   /* Animação suave de 0.3 segundos */
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 5;
+    cursor: pointer;
 }
 
-/* 3. Centraliza o ícone de play ligeiramente */
-.spotify-play-btn i {
-    margin-left: 3px; /* Corrige visualmente o centro do triângulo */
+/* 5. HOVER: A mágica acontece aqui */
+
+/* Quando o mouse entra no card: */
+.beat-card:hover {
+    background-color: #1a1a1a; /* O card clareia um pouquinho (estilo Spotify) */
 }
 
-/* 4. Efeito de Hover no BOTÃO (quando o mouse está EM CIMA dele) */
-.spotify-play-btn:hover {
-    transform: scale(1.08) translateY(0px); /* Aumenta ligeiramente de tamanho */
-    background-color: #ccff00;            /* Muda para o seu verde neon se quiser */
+/* A imagem aparece */
+.beat-card:hover .youtube-capa {
+    opacity: 1;
 }
 
-/* 5. A MÁGICA: Quando o mouse entra no CARD, o BOTÃO aparece */
+/* O botão de play sobe e aparece */
 .beat-card:hover .spotify-play-btn {
-    opacity: 1;              /* Torna visível */
-    transform: translateY(0px); /* Sobe para a posição final */
+    opacity: 1;
+    transform: translateY(0);
+}/* 1. O Card (Sempre Preto) */
+.beat-card {
+    background-color: #000; /* Fundo totalmente preto */
+    border-radius: 12px;
+    padding: 15px;
+    transition: background-color 0.3s ease;
+    border: 1px solid #1a1a1a;
+    overflow: hidden;
+}
+
+/* 2. Container da Imagem */
+.beat-image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    background-color: #111; /* Cor de fundo enquanto a imagem não aparece */
+    border-radius: 8px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+/* 3. A Capa do YouTube (Escondida por padrão) */
+.youtube-capa {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0; /* Fica invisível */
+    transition: opacity 0.4s ease; /* Transição suave */
+}
+
+/* 4. O Botão Spotify (Também escondido) */
+.spotify-play-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    background-color: #ccff00; /* Seu verde neon */
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 5;
+    cursor: pointer;
+}
+
+/* 5. HOVER: A mágica acontece aqui */
+
+/* Quando o mouse entra no card: */
+.beat-card:hover {
+    background-color: #1a1a1a; /* O card clareia um pouquinho (estilo Spotify) */
+}
+
+/* A imagem aparece */
+.beat-card:hover .youtube-capa {
+    opacity: 1;
+}
+
+/* O botão de play sobe e aparece */
+.beat-card:hover .spotify-play-btn {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* RESPONSIVIDADE */
