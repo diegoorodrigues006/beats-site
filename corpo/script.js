@@ -7,7 +7,7 @@ const listaBeats = [
     { idYoutube: "BArHd8UY3X8", artista: "KAIKY PROD" },
     { idYoutube: "jX87GRfW6mw", artista: "KAIKY PROD" },
     { idYoutube: "gekZFuY1bC4", artista: "KAIKY PROD" },
-
+    { idYoutube: "0NOT_hZe4yM", artista: "KAIKY PROD" },
 
     
 ];
@@ -26,9 +26,7 @@ function renderizarBeats() {
                 <div class="play-overlay"><i class="fas fa-play"></i></div>
             </div>
             <div class="beat-artist">
-                <span class="artist-badge">GHOST USER WAV.</span>
                 <p>${beat.artista}</p>
-                <p>Grátis ↓</p>
             </div>
         </div>
     `).join('');
