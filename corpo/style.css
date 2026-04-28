@@ -69,7 +69,7 @@ header {
 /*Detalhes bio */
 /* Estilo da bio */
 .bio {
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-size: 14px;
     max-width: 400px;
     line-height: 1.5;
@@ -266,7 +266,7 @@ header {
 
 
     /*-- ============================================================
-   SEÇÕES PLAYLISTS E BEATS
+   SEÇÕES PLAYLISTS
    ============================================================ */
 
    /* Estilo do wrapper da imagem de fundo */
@@ -410,7 +410,12 @@ header {
     color: #ccff00;
 }
 
-/* BEATS CONTAINER */
+/*-- ============================================================
+SEÇÕES BEATS
+============================================================ */
+
+
+
 .beats-container {
     display: flex;
     gap: 20px;
@@ -477,6 +482,57 @@ header {
 .beat-card:hover .artist-badge {
     background-color: #ccff00;
     color: #000;
+}
+
+/* =========================================
+   BOTÃO DE PLAY ESTILO SPOTIFY
+   ========================================= */
+
+/* 1. Garante que a imagem do beat é o ponto de referência para o botão */
+.beat-image {
+    position: relative; /* Essencial para o posicionamento absoluto do botão */
+    /* ... seus outros estilos de imagem ... */
+}
+
+/* 2. Estilo inicial do botão (Verde, Redondo, Escondido e deslocado para baixo) */
+.spotify-play-btn {
+    position: absolute;
+    bottom: 10px;    /* Distância do fundo da imagem */
+    right: 15px;     /* Distância da direita */
+    width: 45px;
+    height: 45px;
+    background-color: #1ed760; /* Verde clássico do Spotify, ou use o seu verde neon #ccff00 */
+    border-radius: 50%;
+    border: none;
+    color: #000;      /* Ícone preto */
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5); /* Sombra para dar profundidade */
+    
+    /* Mágica para esconder e animar: opacity 0 e transform para subir */
+    opacity: 0;
+    transform: translateY(10px); /* Começa 10px abaixo da posição final */
+    transition: all 0.3s ease;   /* Animação suave de 0.3 segundos */
+}
+
+/* 3. Centraliza o ícone de play ligeiramente */
+.spotify-play-btn i {
+    margin-left: 3px; /* Corrige visualmente o centro do triângulo */
+}
+
+/* 4. Efeito de Hover no BOTÃO (quando o mouse está EM CIMA dele) */
+.spotify-play-btn:hover {
+    transform: scale(1.08) translateY(0px); /* Aumenta ligeiramente de tamanho */
+    background-color: #ccff00;            /* Muda para o seu verde neon se quiser */
+}
+
+/* 5. A MÁGICA: Quando o mouse entra no CARD, o BOTÃO aparece */
+.beat-card:hover .spotify-play-btn {
+    opacity: 1;              /* Torna visível */
+    transform: translateY(0px); /* Sobe para a posição final */
 }
 
 /* RESPONSIVIDADE */

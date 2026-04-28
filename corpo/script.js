@@ -20,17 +20,19 @@ function renderizarBeats() {
     if (!container) return; 
 
     // O .map percorre a lista e cria o HTML de cada card
-    container.innerHTML = listaBeats.map(beat => `
-        <div class="beat-card">
-            <div class="beat-image" style="background: url('https://img.youtube.com/vi/${beat.idYoutube}/maxresdefault.jpg') center/cover;">
-                <div class="play-overlay"><i class="fas fa-play"></i></div>
-            </div>
-            <div class="beat-artist">
-                <p>${beat.artista}</p>
-            </div>
+container.innerHTML = listaBeats.map(beat => `
+    <div class="beat-card">
+        <div class="beat-image" style="background: url('https://img.youtube.com/vi/${beat.idYoutube}/maxresdefault.jpg') center/cover;">
+            <button class="spotify-play-btn">
+                <i class="fas fa-play"></i>
+            </button>
         </div>
-    `).join('');
-}
+        <div class="beat-artist">
+            <p class="beat-title">${beat.artista}</p>
+             <p class="beat-status">Grátis ↓</p>      
+             </div>
+    </div>
+`).join('');}
 
 // 3. A função das setas (que você já tinha no HTML)
 function scrollBeats(direction) {
