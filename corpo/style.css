@@ -117,6 +117,30 @@ header {
     font-size: 18px;
     color: #ccff00; /* Verde neon */
 }
+/* 1. O Container que "corta" o que sai da borda */
+.track-name-container {
+    width: 200px; /* Largura fixa do seu player */
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+
+/* 2. O Texto que vai se mover */
+#current-track-name {
+    display: inline-block;
+    padding-left: 100%; /* Começa fora da visão à direita */
+    animation: marquee 10s linear infinite;
+    font-size: 11px;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* 3. A Regra do movimento (Keyframes) */
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
 
 .play-main {
     font-size: 32px;
