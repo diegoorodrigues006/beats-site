@@ -29,10 +29,6 @@ function renderizarBeats() {
                     <i class="fas fa-play"></i>
                 </button>
             </div>
-            <div class="beat-artist">
-                <p class="beat-title">${beat.artista}</p>
-                <p class="beat-status">Grátis ↓</p>
-            </div>
         </div>
     `).join('');
 }

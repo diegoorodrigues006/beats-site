@@ -69,7 +69,6 @@ header {
 /*Detalhes bio */
 /* Estilo da bio */
 .bio {
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-size: 14px;
     max-width: 400px;
     line-height: 1.5;
