@@ -13,6 +13,8 @@ git push
 -->
 </head>
 <body>
+<div id="player-api" style="display: none;"></div>
+
 <header>
     <!-- ============================================================
    TOPO (HEADER)
@@ -41,21 +43,21 @@ git push
                 <span>Plays</span>
             </div>
     </div>
-<div id="player-api" style="display: none;"></div>
-
 <div class="mini-player">
-    <div class="player-controls">
-        <i class="fas fa-step-backward" onclick="player.previousVideo()"></i>
-        <i class="fas fa-play-circle play-main" id="btn-play-header" onclick="togglePlay()"></i>
-        <i class="fas fa-step-forward" onclick="player.nextVideo()"></i>
+ <div class="player-controls">
+    <i class="fas fa-step-backward" onclick="musicaAnterior()"></i>
+    <i class="fas fa-play-circle play-main" id="btn-play-header" onclick="togglePlay()"></i>
+    <i class="fas fa-step-forward" onclick="proximaMusica()"></i>
+</div>
+<div class="player-track">
+    <span class="track-name" id="current-track-name">Selecione um Beat</span>
+    <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
     </div>
-    <div class="player-track">
-        <span class="track-name" id="current-track-name">Selecione um Beat</span>
-        <div class="progress-bar">
-            <div class="progress-fill" id="progress-fill"></div>
-            <script src="https://www.youtube.com/iframe_api"></script>
-            <script src="script.js"></script>
-        </div>
+    <div class="time-info" style="display: flex; justify-content: space-between; font-size: 10px; color: #aaa; margin-top: 5px;">
+        <span id="current-time">0:00</span>
+        <span id="duration">0:00</span>        
+    </div>
     </div>
 </div>
 
@@ -213,7 +215,9 @@ function scrollBeats(direction) {
     });
 }
 </script>
-
-<script src="script.js"></script>
+    
+    <script src="script.js"></script><script src="https://www.youtube.com/iframe_api"></script>
+    
+    <script src="script.js"></script>
 </body>
 </html>

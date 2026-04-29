@@ -151,13 +151,18 @@ header {
     box-shadow: 0 0 8px #ccff00;
     transform: 1s linear; /* Transição suave para o progresso */
 }
+/* Faz com que todos os ícones de controle do player mostrem a 'mãozinha' */
+.player-controls i, 
+.nav-arrows button,
+.spotify-play-btn {
+    cursor: pointer;
+    transition: transform 0.2s ease; /* Bônus: animação suave ao interagir */
+}
 
-.time-info {
-    display: flex;
-    justify-content: space-between;
-    font-size: 10px;
-    color: #888;
-    margin-top: 5px;
+/* Dica: Adicionar um efeito de leve aumento ou brilho ao passar o mouse */
+.player-controls i:hover {
+    transform: scale(1.1);
+    color: #ccff00; /* O seu verde neon para dar destaque */
 }
 
 /* Estilo do botão de redes sociais (não usado?) */
