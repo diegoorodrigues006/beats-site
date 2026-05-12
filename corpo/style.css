@@ -876,22 +876,58 @@ SEÇÕES BEATS
 
 /* O texto em cima da imagem */
 
+.playlists-grid-page {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 40px 5%;
+}
+
+.playlist-card-large {
+    position: relative;
+    border-radius: 20px; /* Bordas bem arredondadas como na sua ref */
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.playlist-card-large:hover {
+    transform: translateY(-8px);
+    border-color: #ccff00;
+}
+
+.playlist-card-large img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.7); /* Deixa a imagem mais escura para o texto brilhar */
+    transition: filter 0.3s ease;
+}
+
+.playlist-card-large:hover img {
+    filter: brightness(0.9);
+}
+
 .playlist-info-overlay {
     position: absolute;
     bottom: 0;
     left: 0;
-    right: 0;
-    padding: 20px;
-    background: linear-gradient(transparent, rgba(0,0,0,0.8));
-    color: white;
+    width: 100%;
+    padding: 25px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
 }
 
 .playlist-info-overlay h3 {
-    margin: 0;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .playlist-info-overlay span {
     color: #ccff00;
+    font-weight: bold;
     font-size: 0.9rem;
 }
