@@ -10,7 +10,7 @@ const listaBeats = [
     { idYoutube: "0NOT_hZe4yM", artista: "KAIKY PROD" }
 ];
 
-let player;
+let playe;
 let indiceMusicaAtual = 0;
 
 // 2. RENDERIZAÇÃO IMEDIATA (Isso faz os cards aparecerem primeiro!)
@@ -97,7 +97,7 @@ function formatarTempo(s) {
     const m = Math.floor(s / 60);
     const seg = Math.floor(s % 60);
     return `${m}:${seg < 10 ? '0' : ''}${seg}`;
-}
+}   
 
 function atualizarProgresso() {
     setInterval(() => {
