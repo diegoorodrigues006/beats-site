@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlists | Prod.Kaiky</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body style="background-color: #0a0a0a;"> <nav class="navbar">
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">BEATS</a></li>
+                <li><a href="playlists.html" class="nav-link active">PLAYLISTS</a></li>
+                <li><a href="#" class="nav-link">SOBRE</a></li>
+            </ul>
+        </div>
+    </nav>
+<header>
+    <!-- ============================================================
+   TOPO (HEADER)
+   ============================================================ -->
+
+    <!-- PERFIL E INFORMAÇÕES-->
+    <div class="perfil">
+        <img src="perfilVet.jpeg" alt="Foto do Produtor" class="foto-circulo">
+        <div class="info-produtor">
+            <div class="nome-verificado">
+            <h2 class="logo-text">Prod.<span>KAIKY</span></h2>                
+            <i class="fas fa-check-circle verificado"></i></div>
+                <!-- <span class="usuario">@prod.kaiky</span> -->
+                <p class="bio">Beatmaker direto de Barreiro, Belo Horizonte, MG. 
+<br>Desenvolvo produções exclusivas elevando o nível da cena mineira através da minha arte.</p>
+        </div>
+    </div>
+    <!-- Estatisticas-->
+        <div class="stats">
+            <div class="stat-item">
+                <strong>50</strong>
+                <span>Beats</span>
+            </div>
+            <div class="stat-item">
+                <strong>200</strong>
+                <span>Plays</span>
+            </div>
+    </div>
+<div class="mini-player">
+ <div class="player-controls">
+    <i class="fas fa-step-backward" onclick="musicaAnterior()"></i>
+    <i class="fas fa-play-circle play-main" id="btn-play-header" onclick="togglePlay()"></i>
+    <i class="fas fa-step-forward" onclick="proximaMusica()"></i>
+</div>
+<div class="player-track">
+    <div class="track-name-container">
+        <span class="track-name" id="current-track-name">Selecione um Beat</span>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <div class="time-info" style="display: flex; justify-content: space-between; font-size: 10px; color: #aaa; margin-top: 5px;">
+        <span id="current-time">0:00</span>
+        <span id="duration">0:00</span>        
+    </div>
+</div>
+</div>
+
+
+    <!--Espaço para redes socais-->
+<div class="redes">
+    <div class="media-icons">
+        <a href="https://www.tiktok.com/@nome_do_usuario" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a href="https://www.instagram.com/prod.kaiky?igsh=MXY2cm4yNmRxNzd6cQ%3D%3D&utm_source=qr" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://youtube.com/@prod_kaiky?si=hskkdHjllNHPxORh" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+</div>
+</header>
+
+
+    <section class="playlists-section" style="padding-top: 50px; min-height: 80vh;">
+        <div class="section-header">
+            <h2 style="color: white; font-family: 'Inter', sans-serif;">Gêneros</h2>
+        </div>
+        
+        <div class="playlists-grid-page">
+            <a href="playlist-detalhe.html" class="playlist-card-large">
+                <img src="https://images.unsplash.com/photo-1571330735066-03aaa9429d89?q=80&w=500" alt="Trap">
+                <div class="playlist-info-overlay">
+                    <h3>TRAP BR</h3>
+                    <span>4 Beats</span>
+                </div>
+            </a>
+            
+            </div>
+    </section>
+    <footer class="street-footer">
+    <div class="footer-container">
+        <div class="footer-brand">
+           <!-- <h2 class="logo-text">Prod.<span>KAIKY</span></h2>
+        <p>A cultura das ruas em cada pixel. Autenticidade e movimento.</p> -->
+        </div> 
+        
+        <div class="footer-links">
+            <!--<h3>Explorar</h3>
+            <ul>
+                <li><a href="#">Drops</a></li>
+                <li><a href="#">Artistas</a></li>
+                <li><a href="#">Comunidade</a></li>
+            </ul> -->
+        </div>
+
+        <div class="footer-social">
+            <h3>Sintonize</h3>
+            <div class="social-icons">
+                <a href="https://www.tiktok.com/@seu_usuario" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.instagram.com/prod.kaiky?igsh=MXY2cm4yNmRxNzd6cQ%3D%3D&utm_source=qr" target="_blank"><i class="fab fa-instagram"></i></a>
+                 <a href="https://youtube.com/@prod_kaiky?si=hskkdHjllNHPxORh" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 Prod.Kaiky. Todos os direitos reservados.</p>
+    </div>
+</footer>
+
+    </body>
+</html>

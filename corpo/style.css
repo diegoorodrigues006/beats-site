@@ -844,3 +844,54 @@ SEÇÕES BEATS
     }
     .social-icons { justify-content: center; }
 }
+
+/* estilo playlists.html */
+/* Container das playlists na página nova */
+.playlists-grid-page {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 20px 5%;
+}
+
+.playlist-card-large {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    aspect-ratio: 1 / 1; /* Faz ficar quadradinho igual na imagem */
+    display: block;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.playlist-card-large img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.playlist-card-large:hover img {
+    transform: scale(1.1); /* Efeito de zoom ao passar o mouse */
+}
+
+/* O texto em cima da imagem */
+
+.playlist-info-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    color: white;
+}
+
+.playlist-info-overlay h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.playlist-info-overlay span {
+    color: #ccff00;
+    font-size: 0.9rem;
+}
