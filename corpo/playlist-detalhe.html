@@ -7,90 +7,95 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body style="background-color: #0a0a0a;">
+<body style="background-color: #0a0a0a; color: white;">
 
-<!-- Header e Nav iguais aos outros (Copy & Paste do seu index) -->
-<header> ... </header>
-<nav class="navbar"> ... </nav>
+<header>
+    <div id="player-api" style="display: none;"></div>
+    
+    <!-- PERFIL (Copiado do seu index) -->
+    <div class="perfil">
+        <img src="perfilVet.jpeg" alt="Foto do Produtor" class="foto-circulo">
+        <div class="info-produtor">
+            <div class="nome-verificado">
+                <h2 class="logo-text">Prod.<span>KAIKY</span></h2>                
+                <i class="fas fa-check-circle verificado"></i>
+            </div>
+            <p class="bio">Beatmaker direto de Barreiro, Belo Horizonte, MG.</p>
+        </div>
+    </div>
+
+    <!-- MINI PLAYER -->
+    <div class="mini-player">
+        <div class="player-controls">
+            <i class="fas fa-step-backward" onclick="musicaAnterior()"></i>
+            <i class="fas fa-play-circle play-main" id="btn-play-header" onclick="togglePlay()"></i>
+            <i class="fas fa-step-forward" onclick="proximaMusica()"></i>
+        </div>
+        <div class="player-track">
+            <div class="track-name-container">
+                <span class="track-name" id="current-track-name">Selecione um Beat</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">BEATS</a></li>
+                <li><a href="playlists.html" class="nav-link">PLAYLISTS</a></li>
+                <li><a href="#" class="nav-link">SOBRE</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
 
 <main class="playlist-detail-page">
-    <!-- Cabeçalho Estilo image_d91202.jpg -->
+    <!-- Banner Principal da Playlist -->
     <section class="playlist-banner">
         <div class="banner-content">
-            <img id="playlist-cover" src="" alt="Capa" class="main-cover">
+            <img id="playlist-cover" src="capa-vazia.jpg" alt="Capa" class="main-cover">
             <div class="banner-text">
-                <span class="label">Playlist</span>
-                <h1 id="playlist-title">Gênero</h1>
+                <span class="label-neon">PLAYLIST</span>
+                <h1 id="playlist-title">Carregando...</h1>
                 <p id="playlist-author">PROD.KAIKY • <span id="track-count">0</span> Beats</p>
-                <button class="btn-tocar-top" onclick="tocarPrimeira()"><i class="fas fa-play"></i> Tocar</button>
+                <button class="btn-tocar-top" onclick="tocarPrimeira()"><i class="fas fa-play"></i> TOCAR TUDO</button>
             </div>
         </div>
     </section>
 
-    <!-- Grid de Beats da Playlist -->
+    <!-- Grid de Beats -->
     <section class="beats-grid-container">
         <div id="lista-tracks-dinamica" class="playlist-tracks-grid">
-            <!-- Cards gerados pelo JS entrarão aqui -->
+            <!-- O JS vai injetar os cards aqui -->
         </div>
     </section>
 </main>
 
-<footer class="street-footer"> ... </footer>
+<footer class="street-footer">
+        <p>&copy; 2026 Prod.Kaiky. Todos os direitos reservados.</p>
+    </footer>
 
-<script src="https://www.youtube.com/iframe_api"></script>
-<script src="script.js"></script>
-<!-- Script específico para carregar os dados desta página -->
-<script>
-    window.onload = function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const genero = urlParams.get('genero');
-        if(genero) carregarPlaylistDinamica(genero);
-    }
-</script>
-</body>
-</html><!DOCTYPE html>
-<html lang="PT-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playlist | Prod.Kaiky</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body style="background-color: #0a0a0a;">
+    <!-- SCRIPTS -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="script.js"></script>
+    <script>
+        // Lógica para carregar os dados assim que a página abre
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const genero = urlParams.get('genero');
+            
+            console.log("Gênero detectado na URL:", genero); // Para debug no F12
 
-<!-- Header e Nav iguais aos outros (Copy & Paste do seu index) -->
-<header> ... </header>
-<nav class="navbar"> ... </nav>
-
-<main class="playlist-detail-page">
-    <section class="playlist-header-info" style="display: flex; padding: 50px 10%; gap: 30px; align-items: center;">
-        <img id="playlist-cover" src="" style="width: 250px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-        <div class="text-info">
-            <span style="color: #ccff00; font-weight: bold;">PLAYLIST</span>
-            <h1 id="playlist-title" style="color: white; font-size: 3rem; margin: 10px 0;">Gênero</h1>
-            <p id="playlist-desc" style="color: #aaa;">Explore os melhores beats deste estilo.</p>
-        </div>
-    </section>
-
-    <section class="tracks-container" style="padding: 0 10%; margin-bottom: 100px;">
-        <div id="lista-tracks-dinamica">
-            <!-- O JavaScript vai injetar os beats aqui -->
-        </div>
-    </section>
-</main>
-
-<footer class="street-footer"> ... </footer>
-
-<script src="https://www.youtube.com/iframe_api"></script>
-<script src="script.js"></script>
-<!-- Script específico para carregar os dados desta página -->
-<script>
-    window.onload = function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const genero = urlParams.get('genero');
-        if(genero) carregarPlaylistDinamica(genero);
-    }
-</script>
+            if (genero && typeof carregarPlaylistDinamica === "function") {
+                carregarPlaylistDinamica(genero);
+            } else {
+                console.error("Erro: Função carregarPlaylistDinamica não encontrada ou gênero ausente.");
+            }
+        });
+    </script>
 </body>
 </html>

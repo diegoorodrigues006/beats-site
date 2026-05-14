@@ -1,34 +1,30 @@
-// 1. Dados dos Beats
+// 1. Dados dos Beats (Configurados por Gênero)
 const listaBeats = [
-    { idYoutube: "lz3mW653CL8", artista: "KAIKY PROD" },
-    { idYoutube: "mtzAqMH5z-E", artista: "KAIKY PROD" },
-    { idYoutube: "dAl4mV4vxZA", artista: "KAIKY PROD" },
-    { idYoutube: "ubBR3s_xyaM", artista: "KAIKY PROD" },
-    { idYoutube: "BArHd8UY3X8", artista: "KAIKY PROD" },
-    { idYoutube: "jX87GRfW6mw", artista: "KAIKY PROD" },
-    { idYoutube: "gekZFuY1bC4", artista: "KAIKY PROD" },
-    { idYoutube: "0NOT_hZe4yM", artista: "KAIKY PROD" }
+    { idYoutube: "lz3mW653CL8", artista: "KAIKY PROD", nome: "Trap Beat #1", genero: "trap" },
+    { idYoutube: "mtzAqMH5z-E", artista: "KAIKY PROD", nome: "Boombap Classic", genero: "boombap" },
+    { idYoutube: "dAl4mV4vxZA", artista: "KAIKY PROD", nome: "Detroit Style #1", genero: "detroit" },
+    { idYoutube: "ubBR3s_xyaM", artista: "KAIKY PROD", nome: "Detroit Style #2", genero: "detroit" },
+    { idYoutube: "BArHd8UY3X8", artista: "KAIKY PROD", nome: "Funk Beat", genero: "funk" },
+    { idYoutube: "jX87GRfW6mw", artista: "KAIKY PROD", nome: "Experimental Vibes", genero: "experimental" }
 ];
 
-let playe;
+let player; 
 let indiceMusicaAtual = 0;
 
-// 2. RENDERIZAÇÃO IMEDIATA (Isso faz os cards aparecerem primeiro!)
+// 2. RENDERIZAÇÃO DA INDEX (Beats Gerais)
 function renderizarBeats() {
     const container = document.getElementById('beatsContainer');
-    if (!container) {
-        console.error("Erro: Não encontrei a div 'beatsContainer' no HTML");
-        return;
-    }
+    if (!container) return; 
 
     container.innerHTML = listaBeats.map(beat => `
         <div class="beat-card">
             <div class="beat-image-container">
                 <img src="https://img.youtube.com/vi/${beat.idYoutube}/maxresdefault.jpg" class="youtube-capa">
-                <button class="spotify-play-btn" onclick="tocarBeat('${beat.idYoutube}')">
+                <button class="spotify-play-btn" onclick="tocarBeat('${beat.idYoutube}', '${beat.nome}')">
                     <i class="fas fa-play"></i>
                 </button>
             </div>
+            <p style="color:white; text-align:center; margin-top:10px;">${beat.nome}</p>
         </div>
     `).join('');
 }
@@ -49,50 +45,50 @@ function onYouTubeIframeAPIReady() {
 function onPlayerStateChange(event) {
     if (event.data === YT.PlayerState.PLAYING) {
         const dados = player.getVideoData();
-        document.getElementById('current-track-name').innerText = dados.title;
+        const nomeExibicao = document.getElementById('current-track-name').innerText;
+        if(nomeExibicao === "Selecione um Beat" || nomeExibicao === "") {
+            document.getElementById('current-track-name').innerText = dados.title;
+        }
         document.getElementById('btn-play-header').className = "fas fa-pause-circle play-main";
         atualizarProgresso();
     }
 }
 
-// 1. Função tocarBeat atualizada para manter o índice
-function tocarBeat(idYoutube) {
-    // Atualiza o índice para que as setas saibam qual música está tocando
+// 4. FUNÇÕES DE CONTROLE
+function tocarBeat(idYoutube, nome) {
     const novoIndice = listaBeats.findIndex(b => b.idYoutube === idYoutube);
     if (novoIndice !== -1) indiceMusicaAtual = novoIndice;
-
+    if (nome) document.getElementById('current-track-name').innerText = nome;
     if (player && player.loadVideoById) {
         player.loadVideoById(idYoutube);
     }
 }
 
-// 2. Função de Avançar
 function proximaMusica() {
     indiceMusicaAtual = (indiceMusicaAtual + 1) % listaBeats.length;
-    tocarBeat(listaBeats[indiceMusicaAtual].idYoutube);
+    const beat = listaBeats[indiceMusicaAtual];
+    tocarBeat(beat.idYoutube, beat.nome);
 }
 
-// 3. Função de Voltar
 function musicaAnterior() {
     indiceMusicaAtual = (indiceMusicaAtual - 1 + listaBeats.length) % listaBeats.length;
-    tocarBeat(listaBeats[indiceMusicaAtual].idYoutube);
+    const beat = listaBeats[indiceMusicaAtual];
+    tocarBeat(beat.idYoutube, beat.nome);
 }
 
-// 4. Função de Play/Pause (Botão do Header)
 function togglePlay() {
     const btn = document.getElementById('btn-play-header');
     const estado = player.getPlayerState();
-
     if (estado === YT.PlayerState.PLAYING) {
         player.pauseVideo();
-        btn.className = "fas fa-play-circle play-main"; // Volta para ícone de Play
+        btn.className = "fas fa-play-circle play-main";
     } else {
         player.playVideo();
-        btn.className = "fas fa-pause-circle play-main"; // Muda para ícone de Pause
+        btn.className = "fas fa-pause-circle play-main";
     }
 }
 
-// FORMATAR TEMPO E PROGRESSO (Mantenha as funções que já criamos aqui...)
+// 5. UTILITÁRIOS
 function formatarTempo(s) {
     const m = Math.floor(s / 60);
     const seg = Math.floor(s % 60);
@@ -100,45 +96,69 @@ function formatarTempo(s) {
 }   
 
 function atualizarProgresso() {
-    setInterval(() => {
-        if (player && player.getPlayerState() === 1) {
+    const intervalo = setInterval(() => {
+        if (player && typeof player.getPlayerState === "function" && player.getPlayerState() === 1) {
             const t = player.getCurrentTime();
             const d = player.getDuration();
-            document.getElementById('progress-fill').style.width = (t/d*100) + "%";
-            document.getElementById('current-time').innerText = formatarTempo(t);
-            document.getElementById('duration').innerText = formatarTempo(d);
+            if(d > 0) {
+                document.getElementById('progress-fill').style.width = (t/d*100) + "%";
+                document.getElementById('current-time').innerText = formatarTempo(t);
+                document.getElementById('duration').innerText = formatarTempo(d);
+            }
+        } else {
+            clearInterval(intervalo);
         }
     }, 1000);
 }
 
-// GATILHO DE ENTRADA
-document.addEventListener('DOMContentLoaded', renderizarBeats);
-
-
-// PLAYLIST-DETALHE
+// 6. PLAYLIST-DETALHE (Lógica Dinâmica)
 function carregarPlaylistDinamica(genero) {
     const titulo = document.getElementById('playlist-title');
     const capa = document.getElementById('playlist-cover');
     const listaContainer = document.getElementById('lista-tracks-dinamica');
     const contador = document.getElementById('track-count');
 
-    // 1. Filtra os beats
+    if(!listaContainer) return;
+
     const beatsFiltrados = listaBeats.filter(beat => beat.genero === genero);
     
-    // 2. Atualiza cabeçalho
-    titulo.innerText = genero.toUpperCase();
-    capa.src = `${genero}.jpeg`;
-    contador.innerText = beatsFiltrados.length;
+    if(titulo) titulo.innerText = genero.toUpperCase();
+    if(capa) capa.src = `${genero}.jpeg`;
+    if(contador) contador.innerText = beatsFiltrados.length;
 
-    // 3. Renderiza os cards estilo image_d91202.jpg
     listaContainer.innerHTML = beatsFiltrados.map(beat => `
         <div class="track-card-mini">
-            <div class="card-img-container">
-                <img src="${genero}.jpeg">
-                <i class="fas fa-play-circle play-overlay" onclick="playBeat('${beat.id}', '${beat.nome}')"></i>
+            <div class="card-img-container" style="position: relative; cursor: pointer;">
+                <img src="${genero}.jpeg" style="width:100%; border-radius:8px;">
+                <div class="play-overlay" onclick="tocarBeat('${beat.idYoutube}', '${beat.nome}')" 
+                     style="position: absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.5); opacity:0; transition:0.3s;">
+                    <i class="fas fa-play-circle" style="color:#ccff00; font-size:40px;"></i>
+                </div>
             </div>
-            <p style="color:white; font-size: 14px; margin:0;">${beat.nome}</p>
-            <span class="track-price-tag">R$ 60,00</span>
+            <div class="track-info-mini">
+                <p style="color:white; font-size: 14px; margin:5px 0 0 0; font-weight: bold;">${beat.nome}</p>
+                <span style="color:#ccff00; font-size:12px;">R$ 60,00</span>
+            </div>
         </div>
     `).join('');
+
+    // Adiciona o efeito de hover via JS
+    const cards = document.querySelectorAll('.card-img-container');
+    cards.forEach(card => {
+        card.onmouseover = () => card.querySelector('.play-overlay').style.opacity = "1";
+        card.onmouseout = () => card.querySelector('.play-overlay').style.opacity = "0";
+    });
 }
+
+function tocarPrimeira() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const genero = urlParams.get('genero');
+    const filtrados = listaBeats.filter(beat => beat.genero === genero);
+    if(filtrados.length > 0) {
+        tocarBeat(filtrados[0].idYoutube, filtrados[0].nome);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderizarBeats();
+});
