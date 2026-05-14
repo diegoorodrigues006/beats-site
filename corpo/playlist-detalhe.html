@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist | Prod.Kaiky</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body style="background-color: #0a0a0a;">
+
+<!-- Header e Nav iguais aos outros (Copy & Paste do seu index) -->
+<header> ... </header>
+<nav class="navbar"> ... </nav>
+
+<main class="playlist-detail-page">
+    <!-- Cabeçalho Estilo image_d91202.jpg -->
+    <section class="playlist-banner">
+        <div class="banner-content">
+            <img id="playlist-cover" src="" alt="Capa" class="main-cover">
+            <div class="banner-text">
+                <span class="label">Playlist</span>
+                <h1 id="playlist-title">Gênero</h1>
+                <p id="playlist-author">PROD.KAIKY • <span id="track-count">0</span> Beats</p>
+                <button class="btn-tocar-top" onclick="tocarPrimeira()"><i class="fas fa-play"></i> Tocar</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Grid de Beats da Playlist -->
+    <section class="beats-grid-container">
+        <div id="lista-tracks-dinamica" class="playlist-tracks-grid">
+            <!-- Cards gerados pelo JS entrarão aqui -->
+        </div>
+    </section>
+</main>
+
+<footer class="street-footer"> ... </footer>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="script.js"></script>
+<!-- Script específico para carregar os dados desta página -->
+<script>
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const genero = urlParams.get('genero');
+        if(genero) carregarPlaylistDinamica(genero);
+    }
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist | Prod.Kaiky</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body style="background-color: #0a0a0a;">
+
+<!-- Header e Nav iguais aos outros (Copy & Paste do seu index) -->
+<header> ... </header>
+<nav class="navbar"> ... </nav>
+
+<main class="playlist-detail-page">
+    <section class="playlist-header-info" style="display: flex; padding: 50px 10%; gap: 30px; align-items: center;">
+        <img id="playlist-cover" src="" style="width: 250px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <div class="text-info">
+            <span style="color: #ccff00; font-weight: bold;">PLAYLIST</span>
+            <h1 id="playlist-title" style="color: white; font-size: 3rem; margin: 10px 0;">Gênero</h1>
+            <p id="playlist-desc" style="color: #aaa;">Explore os melhores beats deste estilo.</p>
+        </div>
+    </section>
+
+    <section class="tracks-container" style="padding: 0 10%; margin-bottom: 100px;">
+        <div id="lista-tracks-dinamica">
+            <!-- O JavaScript vai injetar os beats aqui -->
+        </div>
+    </section>
+</main>
+
+<footer class="street-footer"> ... </footer>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="script.js"></script>
+<!-- Script específico para carregar os dados desta página -->
+<script>
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const genero = urlParams.get('genero');
+        if(genero) carregarPlaylistDinamica(genero);
+    }
+</script>
+</body>
+</html>

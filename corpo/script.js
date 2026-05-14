@@ -113,3 +113,32 @@ function atualizarProgresso() {
 
 // GATILHO DE ENTRADA
 document.addEventListener('DOMContentLoaded', renderizarBeats);
+
+
+// PLAYLIST-DETALHE
+function carregarPlaylistDinamica(genero) {
+    const titulo = document.getElementById('playlist-title');
+    const capa = document.getElementById('playlist-cover');
+    const listaContainer = document.getElementById('lista-tracks-dinamica');
+    const contador = document.getElementById('track-count');
+
+    // 1. Filtra os beats
+    const beatsFiltrados = listaBeats.filter(beat => beat.genero === genero);
+    
+    // 2. Atualiza cabeçalho
+    titulo.innerText = genero.toUpperCase();
+    capa.src = `${genero}.jpeg`;
+    contador.innerText = beatsFiltrados.length;
+
+    // 3. Renderiza os cards estilo image_d91202.jpg
+    listaContainer.innerHTML = beatsFiltrados.map(beat => `
+        <div class="track-card-mini">
+            <div class="card-img-container">
+                <img src="${genero}.jpeg">
+                <i class="fas fa-play-circle play-overlay" onclick="playBeat('${beat.id}', '${beat.nome}')"></i>
+            </div>
+            <p style="color:white; font-size: 14px; margin:0;">${beat.nome}</p>
+            <span class="track-price-tag">R$ 60,00</span>
+        </div>
+    `).join('');
+}

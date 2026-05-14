@@ -931,3 +931,87 @@ SEÇÕES BEATS
     font-weight: bold;
     font-size: 0.9rem;
 }
+
+/* playlist-detalhes.html */
+.playlist-banner {
+    background: linear-gradient(to bottom, #1a1a1a, #0a0a0a);
+    padding: 60px 10%;
+}
+
+.banner-content {
+    display: flex;
+    gap: 40px;
+    align-items: flex-end;
+}
+
+.main-cover {
+    width: 230px;
+    height: 230px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.btn-tocar-top {
+    background-color: var(--primary-color);
+    color: black;
+    border: none;
+    padding: 12px 35px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+/* Grid de Cards */
+.playlist-tracks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 40px 10%;
+}
+
+.track-card-mini {
+    background: #151515;
+    padding: 15px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.track-card-mini:hover {
+    background: #202020;
+}
+
+.card-img-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    margin-bottom: 15px;
+}
+
+.card-img-container img {
+    width: 100%;
+    border-radius: 6px;
+}
+
+.play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    color: var(--primary-color);
+    opacity: 0;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.track-card-mini:hover .play-overlay {
+    opacity: 1;
+}
+
+.track-price-tag {
+    display: block;
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-top: 10px;
+}
