@@ -2,8 +2,8 @@
 const listaBeats = [
     { idYoutube: "lz3mW653CL8", artista: "KAIKY PROD", nome: "Trap Beat #1", genero: "trap" },
     { idYoutube: "mtzAqMH5z-E", artista: "KAIKY PROD", nome: "Boombap Classic", genero: "boombap" },
-    { idYoutube: "dAl4mV4vxZA", artista: "KAIKY PROD", nome: "Detroit Style #1", genero: "detroit" },
-    { idYoutube: "ubBR3s_xyaM", artista: "KAIKY PROD", nome: "Detroit Style #2", genero: "detroit" },
+    { idYoutube: "dAl4mV4vxZA", artista: "KAIKY PROD", nome: "Detroit Style #1", genero: "drill" },
+    { idYoutube: "ubBR3s_xyaM", artista: "KAIKY PROD", nome: "Detroit Style #2", genero: "drill" },
     { idYoutube: "BArHd8UY3X8", artista: "KAIKY PROD", nome: "Funk Beat", genero: "funk" },
     { idYoutube: "jX87GRfW6mw", artista: "KAIKY PROD", nome: "Experimental Vibes", genero: "experimental" }
 ];
@@ -114,26 +114,30 @@ function atualizarProgresso() {
 // 6. PLAYLIST-DETALHE (Lógica Dinâmica)
 function carregarPlaylistDinamica(genero) {
     const titulo = document.getElementById('playlist-title');
-    const capa = document.getElementById('playlist-cover');
+    const capaPlaylist = document.getElementById('playlist-cover'); // Capa grande do topo
     const listaContainer = document.getElementById('lista-tracks-dinamica');
     const contador = document.getElementById('track-count');
 
     if(!listaContainer) return;
 
-    // Define o nome do ficheiro de imagem com base no género
-    // Se for trap, usa 'beats-trap.jpeg', senão usa o padrão '{genero}.jpeg'
-    const nomeImagem = (genero === 'trap') ? 'beats-trap.jpeg' : `${genero}.jpeg`;
+    // 1. Definição da Capa do Topo (Hero)
+    // Usa o padrão beats-{genero}.jpeg para todos os gêneros
+    const imagemHero = `beats-${genero}.jpeg`;
 
     const beatsFiltrados = listaBeats.filter(beat => beat.genero === genero);
     
     if(titulo) titulo.innerText = genero.toUpperCase();
-    if(capa) capa.src = nomeImagem; // Aqui ele aplica o nome correto
+    if(capaPlaylist) capaPlaylist.src = imagemHero; 
     if(contador) contador.innerText = beatsFiltrados.length;
 
+    // 2. Renderização da Grade de Beats
     listaContainer.innerHTML = beatsFiltrados.map(beat => `
         <div class="track-card-mini">
             <div class="card-img-container" style="position: relative; cursor: pointer;">
-                <img src="${nomeImagem}" style="width:100%; border-radius:8px;">
+                <img src="https://img.youtube.com/vi/${beat.idYoutube}/maxresdefault.jpg" 
+                     alt="${beat.nome}" 
+                     style="width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:8px;">
+                
                 <div class="play-overlay" onclick="tocarBeat('${beat.idYoutube}', '${beat.nome}')" 
                      style="position: absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.5); opacity:0; transition:0.3s;">
                     <i class="fas fa-play-circle" style="color:#ccff00; font-size:40px;"></i>
@@ -146,10 +150,17 @@ function carregarPlaylistDinamica(genero) {
         </div>
     `).join('');
 
-    // Re-aplica os efeitos de hover
+    // Re-ativa os hovers
     const cards = document.querySelectorAll('.card-img-container');
     cards.forEach(card => {
         card.onmouseover = () => card.querySelector('.play-overlay').style.opacity = "1";
         card.onmouseout = () => card.querySelector('.play-overlay').style.opacity = "0";
     });
 }
+
+    // Re-aplica os efeitos de hover
+    const cards = document.querySelectorAll('.card-img-container');
+    cards.forEach(card => {
+        card.onmouseover = () => card.querySelector('.play-overlay').style.opacity = "1";
+        card.onmouseout = () => card.querySelector('.play-overlay').style.opacity = "0";
+    });
