@@ -131,24 +131,23 @@ function carregarPlaylistDinamica(genero) {
     if(contador) contador.innerText = beatsFiltrados.length;
 
     // 2. Renderização da Grade de Beats
-    listaContainer.innerHTML = beatsFiltrados.map(beat => `
-        <div class="track-card-mini">
-            <div class="card-img-container" style="position: relative; cursor: pointer;">
-                <img src="https://img.youtube.com/vi/${beat.idYoutube}/maxresdefault.jpg" 
-                     alt="${beat.nome}" 
-                     style="width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:8px;">
-                
-                <div class="play-overlay" onclick="tocarBeat('${beat.idYoutube}', '${beat.nome}')" 
-                     style="position: absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.5); opacity:0; transition:0.3s;">
-                    <i class="fas fa-play-circle" style="color:#ccff00; font-size:40px;"></i>
-                </div>
-            </div>
-            <div class="track-info-mini">
-                <p style="color:white; font-size: 14px; margin:5px 0 0 0; font-weight: bold;">${beat.nome}</p>
-                <span style="color:#ccff00; font-size:12px;">R$ 60,00</span>
+// Dentro do seu .map no script.js
+listaContainer.innerHTML = beatsFiltrados.map(beat => `
+    <div class="track-card-mini">
+        <div class="card-img-container">
+            <img src="https://img.youtube.com/vi/${beat.idYoutube}/maxresdefault.jpg" alt="${beat.nome}">
+            
+            <div class="play-overlay" onclick="tocarBeat('${beat.idYoutube}', '${beat.nome}')">
+                <i class="fas fa-play-circle"></i>
             </div>
         </div>
-    `).join('');
+        
+        <div class="track-info-mini">
+            <p class="track-name-text">${beat.nome}</p>
+            <button class="btn-buy-green">R$ 60,00</button>
+        </div>
+    </div>
+`).join('');
 
     // Re-ativa os hovers
     const cards = document.querySelectorAll('.card-img-container');
