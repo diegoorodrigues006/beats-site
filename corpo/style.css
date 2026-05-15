@@ -1088,3 +1088,107 @@ SEÇÕES BEATS
     border-radius: 6px;
     margin-bottom: 10px;
 }
+
+.playlist-tracks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 30px;
+    padding: 40px 10%;
+}
+
+.track-card-mini {
+    background: #111;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #222;
+    transition: 0.3s;
+}
+
+.card-img-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Garante que o card seja sempre quadrado */
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.card-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Faz a imagem preencher o espaço sem distorcer */
+}
+
+.play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 50px;
+    color: #ccff00;
+    opacity: 0;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.track-card-mini:hover .play-overlay {
+    opacity: 1;
+}
+
+.playlist-hero {
+    background: linear-gradient(to bottom, #222, #0a0a0a); /* Você pode mudar o #222 pela cor do gênero */
+    padding: 60px 8% 40px 8%;
+    display: flex;
+    align-items: flex-end;
+}
+
+.hero-content {
+    display: flex;
+    gap: 30px;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.hero-cover {
+    width: 230px;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+}
+
+.hero-info .badge {
+    font-size: 12px;
+    font-weight: bold;
+    color: #ccff00;
+}
+
+.hero-info h1 {
+    font-size: 4rem;
+    margin: 10px 0;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.btn-play-hero {
+    background-color: #ccff00;
+    color: #000;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: 0.2s;
+}
+
+.btn-play-hero:hover {
+    transform: scale(1.05);
+}
+
+/* Ajuste na Grade para não ficar colado */
+.playlist-content {
+    padding: 40px 8%;
+    background-color: #0a0a0a;
+}

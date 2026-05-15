@@ -120,16 +120,20 @@ function carregarPlaylistDinamica(genero) {
 
     if(!listaContainer) return;
 
+    // Define o nome do ficheiro de imagem com base no género
+    // Se for trap, usa 'beats-trap.jpeg', senão usa o padrão '{genero}.jpeg'
+    const nomeImagem = (genero === 'trap') ? 'beats-trap.jpeg' : `${genero}.jpeg`;
+
     const beatsFiltrados = listaBeats.filter(beat => beat.genero === genero);
     
     if(titulo) titulo.innerText = genero.toUpperCase();
-    if(capa) capa.src = `${genero}.jpeg`;
+    if(capa) capa.src = nomeImagem; // Aqui ele aplica o nome correto
     if(contador) contador.innerText = beatsFiltrados.length;
 
     listaContainer.innerHTML = beatsFiltrados.map(beat => `
         <div class="track-card-mini">
             <div class="card-img-container" style="position: relative; cursor: pointer;">
-                <img src="${genero}.jpeg" style="width:100%; border-radius:8px;">
+                <img src="${nomeImagem}" style="width:100%; border-radius:8px;">
                 <div class="play-overlay" onclick="tocarBeat('${beat.idYoutube}', '${beat.nome}')" 
                      style="position: absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.5); opacity:0; transition:0.3s;">
                     <i class="fas fa-play-circle" style="color:#ccff00; font-size:40px;"></i>
@@ -142,23 +146,10 @@ function carregarPlaylistDinamica(genero) {
         </div>
     `).join('');
 
-    // Adiciona o efeito de hover via JS
+    // Re-aplica os efeitos de hover
     const cards = document.querySelectorAll('.card-img-container');
     cards.forEach(card => {
         card.onmouseover = () => card.querySelector('.play-overlay').style.opacity = "1";
         card.onmouseout = () => card.querySelector('.play-overlay').style.opacity = "0";
     });
 }
-
-function tocarPrimeira() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const genero = urlParams.get('genero');
-    const filtrados = listaBeats.filter(beat => beat.genero === genero);
-    if(filtrados.length > 0) {
-        tocarBeat(filtrados[0].idYoutube, filtrados[0].nome);
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    renderizarBeats();
-});
