@@ -158,9 +158,16 @@ function carregarPlaylistDinamica(genero) {
     });
 }
 
-    // Re-aplica os efeitos de hover
-    const cards = document.querySelectorAll('.card-img-container');
-    cards.forEach(card => {
-        card.onmouseover = () => card.querySelector('.play-overlay').style.opacity = "1";
-        card.onmouseout = () => card.querySelector('.play-overlay').style.opacity = "0";
-    });
+// 7. FUNÇÃO PARA TOCAR PRIMEIRA MÚSICA DA PLAYLIST
+function tocarPrimeira() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const genero = urlParams.get('genero');
+    const beatsFiltrados = listaBeats.filter(beat => beat.genero === genero);
+    
+    if (beatsFiltrados.length > 0) {
+        const primeiroBeat = beatsFiltrados[0];
+        indiceMusicaAtual = listaBeats.findIndex(b => b.idYoutube === primeiroBeat.idYoutube);
+        tocarBeat(primeiroBeat.idYoutube, primeiroBeat.nome);
+        if (player) player.playVideo();
+    }
+}
