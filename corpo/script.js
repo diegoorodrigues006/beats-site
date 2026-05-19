@@ -11,10 +11,45 @@ const listaBeats = [
 let player; 
 let indiceMusicaAtual = 0;
 
-// ========== FUNÇÕES DE CONTAGEM DE BEATS ==========
+// ========== SISTEMA DE CONTADORES ==========
+// Inicializa o sistema de plays
+function inicializarPlays() {
+    if (!localStorage.getItem('totalPlays')) {
+        localStorage.setItem('totalPlays', '0');
+    }
+}
+
+// Incrementa o contador de plays
+function incrementarPlays() {
+    inicializarPlays();
+    const totalPlays = parseInt(localStorage.getItem('totalPlays')) || 0;
+    localStorage.setItem('totalPlays', totalPlays + 1);
+    atualizarStats();
+}
+
+// Retorna o total de beats
+function getTotalBeats() {
+    return listaBeats.length;
+}
+
+// Retorna o total de plays
+function getTotalPlays() {
+    inicializarPlays();
+    return parseInt(localStorage.getItem('totalPlays')) || 0;
+}
+
+// Atualiza os contadores de stats na página
+function atualizarStats() {
+    const statsItems = document.querySelectorAll('.stat-item strong');
+    if (statsItems.length >= 2) {
+        statsItems[0].innerText = getTotalBeats();
+        statsItems[1].innerText = getTotalPlays();
+    }
+}
+
 // Inicializa o sistema (compatibilidade)
 function inicializarPlaylists() {
-    // Função mantida para compatibilidade com o HTML
+    inicializarPlays();
 }
 
 // Retorna a contagem de músicas disponíveis para um gênero
@@ -83,6 +118,7 @@ function onYouTubeIframeAPIReady() {
 
 function onPlayerStateChange(event) {
     if (event.data === YT.PlayerState.PLAYING) {
+        incrementarPlays(); // Incrementa o contador de plays
         const dados = player.getVideoData();
         const nomeExibicao = document.getElementById('current-track-name').innerText;
         if(nomeExibicao === "Selecione um Beat" || nomeExibicao === "") {

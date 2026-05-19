@@ -224,10 +224,12 @@ function scrollBeats(direction) {
     <script src="https://www.youtube.com/iframe_api"></script>
     
     <script>
-        // Renderiza as playlists com capas e contadores
+        // Renderiza as playlists com capas e contadores e atualiza stats
         window.addEventListener('load', function() {
+            inicializarPlays();
             renderizarBeats();
             renderizarPlaylists();
+            atualizarStats();
         });
     </script>
 </body>
