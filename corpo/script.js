@@ -76,31 +76,26 @@ function renderizarBeats() {
     `).join('');
 }
 
-// 2.5 RENDERIZAÇÃO DAS PLAYLISTS NA PÁGINA INICIAL
-function renderizarPlaylists() {
-    const container = document.getElementById('playlistsContainer');
-    if (!container) return;
+// NOVA FUNÇÃO: Renderiza todos os beats sem filtro
+function renderizarTodosBeats() {
+    const container = document.getElementById('lista-todos-beats');
+    if (!container) return; // Só executa se estiver na página musicas.html
 
-    const playlists = [
-        { genero: 'trap', nome: 'TRAP BR', imagem: 'beats-trap.jpeg' },
-        { genero: 'boombap', nome: 'BOOMBAP', imagem: 'beats-boombap.jpeg' },
-        { genero: 'detroit', nome: 'DETROIT', imagem: 'beats-detroit.jpeg' },
-        { genero: 'funk', nome: 'FUNK', imagem: 'beats-funk.jpeg' },
-        { genero: 'experimental', nome: 'EXPERIMENTAL', imagem: 'beats-experimental.jpeg' }
-    ];
-
-    container.innerHTML = playlists.map(playlist => {
-        const count = contarMusicas(playlist.genero);
-        return `
-            <a href="playlist-detalhe.html?genero=${playlist.genero}" class="playlist-card" style="text-decoration: none; color: inherit;">
-                <div class="playlist-image" style="background-image: url('${playlist.imagem}'); background-size: cover; background-position: center;"></div>
-                <div class="playlist-info">
-                    <h3>${playlist.nome}</h3>
-                    <p>${count} Beats</p>
+    // Mapeia o array inteiro listaBeats diretamente
+    container.innerHTML = listaBeats.map(beat => `
+        <div class="track-card-mini">
+            <div class="card-img-container">
+                <img src="https://img.youtube.com/vi/${beat.idYoutube}/maxresdefault.jpg" alt="${beat.nome}">
+                <div class="play-overlay" onclick="tocarBeat('${beat.idYoutube}', '${beat.nome}')">
+                    <i class="fas fa-play-circle"></i>
                 </div>
-            </a>
-        `;
-    }).join('');
+            </div>
+            <div class="track-info-mini">
+                <p class="track-name-text">${beat.nome}</p>
+                <button class="btn-buy-green">R$ 60,00</button>
+            </div>
+        </div>
+    `).join('');
 }
 
 // 3. Inicialização da API do YouTube
@@ -249,3 +244,34 @@ function tocarPrimeira() {
         if (player) player.playVideo();
     }
 }
+
+// 8. RENDERIZAÇÃO DAS PLAYLISTS (por gênero)
+function renderizarPlaylists() {
+    const container = document.getElementById('playlistsContainer');
+    if (!container) return; 
+
+    // Define os gêneros disponíveis
+    const generos = ['trap', 'boombap', 'detroit', 'funk', 'experimental'];
+    
+    // Mapeia cada gênero em um card de playlist
+    container.innerHTML = generos.map(genero => {
+        const total = contarMusicas(genero);
+        const imagemCapa = (genero === 'trap') ? 'beats-trap.jpeg' : `beats-${genero}.jpeg`;
+        return `
+            <div class="playlist-card" onclick="window.location.href='playlist-detalhe.html?genero=${genero}'">
+                <div class="playlist-image" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('${imagemCapa}'); background-size: cover; background-position: center;">
+                </div>
+                <div class="playlist-info">
+                    <h3>${genero}</h3>
+                    <p>${total} Beats</p>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// GATILHO DE ENTRADA (Fica no final do arquivo script.js)
+document.addEventListener('DOMContentLoaded', () => {
+    renderizarBeats(); // Para a index principal
+    renderizarTodosBeats(); // Para a nova página musicas.html
+});
