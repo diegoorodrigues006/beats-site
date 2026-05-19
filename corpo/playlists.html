@@ -159,5 +159,43 @@
     </div>
 </footer>
 
+<script src="script.js"></script>
+<script>
+    // Inicializa o sistema de playlists
+    inicializarPlaylists();
+
+    // Atualiza os contadores de playlists dinamicamente
+    function atualizarContadoresPlaylists() {
+        const playlistCards = document.querySelectorAll('.playlist-info-overlay');
+        
+        playlistCards.forEach(card => {
+            const titulo = card.querySelector('h3')?.innerText?.toUpperCase() || '';
+            const spanBeat = card.querySelector('span');
+            
+            if (spanBeat) {
+                // Mapeia os títulos aos gêneros
+                const generoMap = {
+                    'TRAP BR': 'trap',
+                    'BOOMBAP': 'boombap',
+                    'DETROIT': 'detroit',
+                    'FUNK': 'funk',
+                    'EXPERIMENTAL': 'experimental'
+                };
+                
+                const genero = generoMap[titulo];
+                if (genero) {
+                    const count = contarMusicas(genero);
+                    spanBeat.innerText = `${count} Beats`;
+                }
+            }
+        });
+    }
+
+    // Atualiza os contadores ao carregar a página
+    window.addEventListener('load', function() {
+        atualizarContadoresPlaylists();
+    });
+</script>
+
     </body>
 </html>

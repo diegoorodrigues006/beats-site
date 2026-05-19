@@ -9,8 +9,6 @@
 </head>
 <body style="background-color: #0a0a0a; color: white;">
 
-
-<!-- NAVBAR -->
     <nav class="navbar">
         <div class="nav-container">
             <ul class="nav-menu">
@@ -21,48 +19,59 @@
         </div>
     </nav>
 
-<main class="playlist-detail-page">
-    <!-- Banner Principal da Playlist -->
-    <section class="playlist-banner">
-        <div class="banner-content">
-            <img id="playlist-cover" src="capa-vazia.jpg" alt="Capa" class="main-cover">
-            <div class="banner-text">
-                <span class="label-neon">PLAYLIST</span>
-                <h1 id="playlist-title">Carregando...</h1>
-                <p id="playlist-author">PROD.KAIKY • <span id="track-count">0</span> Beats</p>
-                <button class="btn-tocar-top" onclick="tocarPrimeira()"><i class="fas fa-play"></i> TOCAR TUDO</button>
+    <main class="playlist-detail-page">
+        <section class="playlist-banner">
+            <div class="banner-content">
+                <img id="playlist-cover" src="" alt="Capa" class="main-cover">
+                <div class="banner-text">
+                    <span class="label-neon">PLAYLIST</span>
+                    <h1 id="playlist-title">Carregando...</h1>
+                    <p id="playlist-author">PROD.KAIKY • <span id="track-count">0</span> Beats</p>
+                    <button class="btn-tocar-top" onclick="tocarPrimeira()"><i class="fas fa-play"></i> TOCAR TUDO</button>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Grid de Beats -->
-    <section class="beats-grid-container">
-        <div id="lista-tracks-dinamica" class="playlist-tracks-grid">
-            <!-- O JS vai injetar os cards aqui -->
-        </div>
-    </section>
-</main>
+        <section class="beats-grid-container">
+            <div id="lista-tracks-dinamica" class="playlist-tracks-grid">
+                </div>
+        </section>
+    </main>
 
-<footer class="street-footer">
+    <footer class="street-footer">
         <p>&copy; 2026 Prod.Kaiky. Todos os direitos reservados.</p>
     </footer>
 
-    <!-- SCRIPTS -->
-    <script src="https://www.youtube.com/iframe_api"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
     <script src="script.js"></script>
     <script>
-        // Lógica para carregar os dados assim que a página abre
+        // Inicializa o sistema de playlists
+        inicializarPlaylists();
+
+        // Lógica corrigida para evitar que a página abra vazia
         window.addEventListener('load', function() {
             const urlParams = new URLSearchParams(window.location.search);
-            const genero = urlParams.get('genero');
+            let genero = urlParams.get('genero');
             
-            console.log("Gênero detectado na URL:", genero); // Para debug no F12
+            // Se o gênero não vier na URL (primeira imagem), definimos 'trap' como padrão
+            if (!genero) {
+                genero = 'trap'; 
+                console.log("Nenhum gênero na URL. Carregando gênero padrão: trap");
+            } else {
+                console.log("Gênero detectado na URL:", genero);
+            }
 
-            if (genero && typeof carregarPlaylistDinamica === "function") {
+            // Agora a função sempre recebe um gênero válido e nunca fica travada!
+            if (typeof carregarPlaylistDinamica === "function") {
                 carregarPlaylistDinamica(genero);
             } else {
-                console.error("Erro: Função carregarPlaylistDinamica não encontrada ou gênero ausente.");
+                console.error("Erro: Função carregarPlaylistDinamica não encontrada no script.js.");
             }
+
+            // Atualiza os contadores a cada 1 segundo para sincronização
+            setInterval(() => {
+                atualizarTodosContadores();
+            }, 1000);
         });
     </script>
 </body>

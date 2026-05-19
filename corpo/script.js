@@ -11,6 +11,18 @@ const listaBeats = [
 let player; 
 let indiceMusicaAtual = 0;
 
+// ========== FUNÇÕES DE CONTAGEM DE BEATS ==========
+// Inicializa o sistema (compatibilidade)
+function inicializarPlaylists() {
+    // Função mantida para compatibilidade com o HTML
+}
+
+// Retorna a contagem de músicas disponíveis para um gênero
+function contarMusicas(genero) {
+    const beatsDogenero = listaBeats.filter(beat => beat.genero === genero);
+    return beatsDogenero.length;
+}
+
 // 2. RENDERIZAÇÃO DA INDEX (Beats Gerais)
 function renderizarBeats() {
     const container = document.getElementById('beatsContainer');
@@ -114,48 +126,52 @@ function atualizarProgresso() {
 // 6. PLAYLIST-DETALHE (Lógica Dinâmica)
 function carregarPlaylistDinamica(genero) {
     const titulo = document.getElementById('playlist-title');
-    const capaPlaylist = document.getElementById('playlist-cover'); // Capa grande do topo
+    const capaPlaylist = document.getElementById('playlist-cover');
     const listaContainer = document.getElementById('lista-tracks-dinamica');
-    const contador = document.getElementById('track-count');
+    
+    const autorElemento = document.getElementById('playlist-author'); 
 
     if(!listaContainer) return;
 
-    // 1. Definição da Capa do Topo (Hero)
-    // Usa o padrão beats-{genero}.jpeg para todos os gêneros
-    const imagemHero = `beats-${genero}.jpeg`;
-
+    // Filtra os beats pelo gênero atual
     const beatsFiltrados = listaBeats.filter(beat => beat.genero === genero);
     
+    // Atualiza o título (ex: DETROIT)
     if(titulo) titulo.innerText = genero.toUpperCase();
-    if(capaPlaylist) capaPlaylist.src = imagemHero; 
-    if(contador) contador.innerText = beatsFiltrados.length;
+    
+    // ATUALIZA O CONTADOR DO BANNER COM A CONTAGEM TOTAL DE BEATS DO GÊNERO
+    if(autorElemento) {
+        const countTotal = contarMusicas(genero);
+        autorElemento.innerHTML = `PROD.KAIKY • <span id="track-count" style="color: #ccff00; font-weight: bold;">${countTotal}</span> Beats`;
+    }
 
-    // 2. Renderização da Grade de Beats
-// Dentro do seu .map no script.js
-listaContainer.innerHTML = beatsFiltrados.map(beat => `
-    <div class="track-card-mini">
-        <div class="card-img-container">
-            <img src="https://img.youtube.com/vi/${beat.idYoutube}/maxresdefault.jpg" alt="${beat.nome}">
-            
-            <div class="play-overlay" onclick="tocarBeat('${beat.idYoutube}', '${beat.nome}')">
-                <i class="fas fa-play-circle"></i>
+    // Configuração da capa da playlist
+    const imagemHero = (genero === 'trap') ? 'beats-trap.jpeg' : `beats-${genero}.jpeg`;
+    if(capaPlaylist) capaPlaylist.src = imagemHero;
+
+    // Renderiza a grade de músicas com capas do YouTube
+    listaContainer.innerHTML = beatsFiltrados.map(beat => `
+        <div class="track-card-mini">
+            <div class="card-img-container">
+                <img src="https://img.youtube.com/vi/${beat.idYoutube}/maxresdefault.jpg" alt="${beat.nome}">
+                <div class="play-overlay" onclick="tocarBeat('${beat.idYoutube}', '${beat.nome}')">
+                    <i class="fas fa-play-circle"></i>
+                </div>
+            </div>
+            <div class="track-info-mini">
+                <p class="track-name-text">${beat.nome}</p>
+                <button class="btn-buy-green">R$ 60,00</button>
             </div>
         </div>
-        
-        <div class="track-info-mini">
-            <p class="track-name-text">${beat.nome}</p>
-            <button class="btn-buy-green">R$ 60,00</button>
-        </div>
-    </div>
-`).join('');
+    `).join('');
 
-    // Re-ativa os hovers
-    const cards = document.querySelectorAll('.card-img-container');
-    cards.forEach(card => {
+    // Efeitos de hover
+    document.querySelectorAll('.card-img-container').forEach(card => {
         card.onmouseover = () => card.querySelector('.play-overlay').style.opacity = "1";
         card.onmouseout = () => card.querySelector('.play-overlay').style.opacity = "0";
     });
 }
+
 
 // 7. FUNÇÃO PARA TOCAR PRIMEIRA MÚSICA DA PLAYLIST
 function tocarPrimeira() {
