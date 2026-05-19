@@ -974,57 +974,92 @@ SEÇÕES BEATS
 }
 
 /* Grid de Cards */
-.playlist-tracks-grid {
+/* 1. CORREÇÃO DA GRADE GERAL (Previne quebras de linha e sobreposições invisíveis) */
+.playlist-tracks-grid, .beats-grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
-    padding: 40px 10%;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+    align-items: start; /* Garante que os cards comecem todos na mesma linha de altura */
 }
 
-.track-card-mini {
-    background: #151515;
-    padding: 15px;
-    border-radius: 10px;
-    transition: 0.3s;
+/* 2. AJUSTE DO CARD MINI (Onde o corte acontece no hover) */
+.track-card-mini, .beat-card {
+    background: #111111;
+    border-radius: 12px;
+    padding: 14px;
+    border: 1px solid #222222;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+    overflow: hidden; /* CRÍTICO: Não deixa nada de dentro cortar ou vazar no hover */
+    position: relative;
+    box-sizing: border-box;
 }
 
-.track-card-mini:hover {
-    background: #202020;
+.track-card-mini:hover, .beat-card:hover {
+    transform: translateY(-5px); /* Efeito suave para cima, sem quebrar o layout */
+    box-shadow: 0 8px 24px rgba(204, 255, 0, 0.15); /* Leve brilho neon do seu site */
+    border-color: #ccff00;
 }
 
-.card-img-container {
+/* 3. CONTAINER DA IMAGEM (Onde o botão de play fica dentro) */
+.card-img-container, .beat-image-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 1/1;
-    margin-bottom: 15px;
+    aspect-ratio: 1 / 1; /* Força o quadrado perfeito */
+    border-radius: 8px;
+    overflow: hidden; /* Previne que a imagem ou o overlay passem da borda */
+    background-color: #1a1a1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.card-img-container img {
+.card-img-container img, .beat-image-container img {
     width: 100%;
-    border-radius: 6px;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
+/* Efeito sutil na foto ao passar o mouse */
+.track-card-mini:hover .card-img-container img,
+.beat-card:hover .beat-image-container img {
+    transform: scale(1.04); 
+}
+
+/* 4. REESTRUTURAÇÃO DO OVERLAY (Zera o problema de "cortar" pela metade) */
 .play-overlay {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 40px;
-    color: var(--primary-color);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5) !important; /* Camada escura uniforme */
+    display: flex !important;
+    justify-content: center; /* Centraliza na horizontal morto */
+    align-items: center;     /* Centraliza na vertical morto */
     opacity: 0;
-    transition: 0.3s;
-    cursor: pointer;
+    transition: opacity 0.25s ease;
+    z-index: 3; /* Garante que fica acima da foto, mas sem vazar do card */
+    pointer-events: auto; /* Garante que o clique seja registrado perfeitamente */
 }
 
-.track-card-mini:hover .play-overlay {
+/* Alinhamento do ícone FontAwesome interno */
+.play-overlay i {
+    font-size: 45px;
+    color: #ccff00;
+    transform: scale(0.8);
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Disparadores de hover limpos via CSS estruturado (Evita bugs do JS de hover antigo) */
+.track-card-mini:hover .play-overlay,
+.beat-card:hover .play-overlay {
     opacity: 1;
 }
 
-.track-price-tag {
-    display: block;
-    color: var(--primary-color);
-    font-weight: bold;
-    margin-top: 10px;
+.track-card-mini:hover .play-overlay i,
+.beat-card:hover .play-overlay i {
+    transform: scale(1); /* Dá um leve "pop" no ícone do play */
 }
 
 /* Layout da Página de Detalhes */
