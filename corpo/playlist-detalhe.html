@@ -45,9 +45,6 @@
 <script src="https://www.youtube.com/iframe_api"></script>
     <script src="script.js"></script>
     <script>
-        // Inicializa o sistema de playlists
-        inicializarPlaylists();
-
         // Lógica corrigida para evitar que a página abra vazia
         window.addEventListener('load', function() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -67,11 +64,6 @@
             } else {
                 console.error("Erro: Função carregarPlaylistDinamica não encontrada no script.js.");
             }
-
-            // Atualiza os contadores a cada 1 segundo para sincronização
-            setInterval(() => {
-                atualizarTodosContadores();
-            }, 1000);
         });
     </script>
 </body>

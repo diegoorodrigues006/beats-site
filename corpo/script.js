@@ -41,6 +41,33 @@ function renderizarBeats() {
     `).join('');
 }
 
+// 2.5 RENDERIZAÇÃO DAS PLAYLISTS NA PÁGINA INICIAL
+function renderizarPlaylists() {
+    const container = document.getElementById('playlistsContainer');
+    if (!container) return;
+
+    const playlists = [
+        { genero: 'trap', nome: 'TRAP BR', imagem: 'beats-trap.jpeg' },
+        { genero: 'boombap', nome: 'BOOMBAP', imagem: 'beats-boombap.jpeg' },
+        { genero: 'detroit', nome: 'DETROIT', imagem: 'beats-detroit.jpeg' },
+        { genero: 'funk', nome: 'FUNK', imagem: 'beats-funk.jpeg' },
+        { genero: 'experimental', nome: 'EXPERIMENTAL', imagem: 'beats-experimental.jpeg' }
+    ];
+
+    container.innerHTML = playlists.map(playlist => {
+        const count = contarMusicas(playlist.genero);
+        return `
+            <a href="playlist-detalhe.html?genero=${playlist.genero}" class="playlist-card" style="text-decoration: none; color: inherit;">
+                <div class="playlist-image" style="background-image: url('${playlist.imagem}'); background-size: cover; background-position: center;"></div>
+                <div class="playlist-info">
+                    <h3>${playlist.nome}</h3>
+                    <p>${count} Beats</p>
+                </div>
+            </a>
+        `;
+    }).join('');
+}
+
 // 3. Inicialização da API do YouTube
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player-api', {

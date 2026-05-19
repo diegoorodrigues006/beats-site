@@ -95,6 +95,22 @@ git push
 <div class="background-image-wrapper"></div>
 
 <!-- ============================================================
+   SEÇÃO BEATS // add ao arquivo javascript
+   ============================================================ -->
+<section id="beats" class="beats-section">
+    <div class="section-header">
+        <h2>Beats</h2>
+        <div class="nav-arrows">
+            <button class="arrow-btn prev" onclick="scrollBeats(-1)">❮</button>
+            <button class="arrow-btn next" onclick="scrollBeats(1)">❯</button>
+        </div>
+    </div>
+    
+    <div class="beats-container" id="beatsContainer">
+        </div>
+</section>
+
+<!-- ============================================================
    SEÇÃO PLAYLISTS
    ============================================================ -->
 <section id="playlists" class="playlists-section">
@@ -147,22 +163,6 @@ git push
             </div>
         </div>
     </div>
-</section>
-
-<!-- ============================================================
-   SEÇÃO BEATS // add ao arquivo javascript
-   ============================================================ -->
-<section id="beats" class="beats-section">
-    <div class="section-header">
-        <h2>Beats</h2>
-        <div class="nav-arrows">
-            <button class="arrow-btn prev" onclick="scrollBeats(-1)">❮</button>
-            <button class="arrow-btn next" onclick="scrollBeats(1)">❯</button>
-        </div>
-    </div>
-    
-    <div class="beats-container" id="beatsContainer">
-        </div>
 </section>
 
 
@@ -220,8 +220,15 @@ function scrollBeats(direction) {
 }
 </script>
     
-    <script src="script.js"></script><script src="https://www.youtube.com/iframe_api"></script>
-    
     <script src="script.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    
+    <script>
+        // Renderiza as playlists com capas e contadores
+        window.addEventListener('load', function() {
+            renderizarBeats();
+            renderizarPlaylists();
+        });
+    </script>
 </body>
 </html>

@@ -934,8 +934,17 @@ SEÇÕES BEATS
 
 /* playlist-detalhes.html */
 .playlist-banner {
-    background: linear-gradient(to bottom, #1a1a1a, #0a0a0a);
-    padding: 60px 10%;
+    position: relative;
+    /* Alinha a imagem no centro e faz ela cobrir todo o espaço do topo */
+    background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.6), #0a0a0a), url('foto 5.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Espaçamento interno para os textos respirarem */
+    padding: 60px 10% 40px 10%; 
+    display: flex;
+    align-items: flex-end;
 }
 
 .banner-content {
