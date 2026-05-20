@@ -12,6 +12,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">INÍCIO</a></li>
                 <li><a href="musicas.html" class="nav-link">BEATS</a></li>
                 <li><a href="playlists.html" class="nav-link">PLAYLISTS</a></li>
             </ul>
@@ -27,7 +28,17 @@
         </section>
 
         <section class="beats-grid-container" style="padding: 40px 10%;">
-            <div id="lista-todos-beats" class="playlist-tracks-grid">
+            <!-- Filtros -->
+            <div class="filter-section" style="grid-column: 1 / -1; margin-bottom: 30px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                <button class="filter-btn active" onclick="filtrarBeats('todos')">Todos</button>
+                <button class="filter-btn" onclick="filtrarBeats('trap')">Trap</button>
+                <button class="filter-btn" onclick="filtrarBeats('boombap')">Boombap</button>
+                <button class="filter-btn" onclick="filtrarBeats('detroit')">Detroit</button>
+                <button class="filter-btn" onclick="filtrarBeats('funk')">Funk</button>
+                <button class="filter-btn" onclick="filtrarBeats('experimental')">Experimental</button>
+            </div>
+            
+            <div id="lista-todos-beats" class="playlist-tracks-grid" style="grid-column: 1 / -1;">
                 </div>
         </section>
     </main>

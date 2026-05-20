@@ -1098,6 +1098,43 @@ SEÇÕES BEATS
     transition: 0.3s;
 }
 
+/* ============================================================
+   ESTILOS DOS FILTROS
+   ============================================================ */
+.filter-section {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.filter-btn {
+    background: transparent;
+    border: 2px solid #555;
+    color: #aaa;
+    padding: 8px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    border-color: #ccff00;
+    color: #ccff00;
+}
+
+.filter-btn.active {
+    background: #ccff00;
+    color: #000;
+    border-color: #ccff00;
+    box-shadow: 0 0 15px rgba(204, 255, 0, 0.5);
+}
+
 .btn-tocar-top:hover {
     transform: scale(1.05);
     background: #e6ff70;
@@ -1295,4 +1332,13 @@ SEÇÕES BEATS
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; /* Evita que o nome quebre o card */
+}
+
+/* Força a grade na página de Todos os Beats */
+#lista-todos-beats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+    width: 100%;
+    align-items: start;
 }

@@ -76,13 +76,16 @@ function renderizarBeats() {
     `).join('');
 }
 
-// NOVA FUNÇÃO: Renderiza todos os beats sem filtro
-function renderizarTodosBeats() {
+// NOVA FUNÇÃO: Renderiza todos os beats com filtro
+function renderizarTodosBeats(generoFiltro = 'todos') {
     const container = document.getElementById('lista-todos-beats');
     if (!container) return; // Só executa se estiver na página musicas.html
 
+    // Filtra os beats se necessário
+    const beatsFiltrados = generoFiltro === 'todos' ? listaBeats : listaBeats.filter(beat => beat.genero === generoFiltro);
+
     // Mapeia o array inteiro listaBeats diretamente
-    container.innerHTML = listaBeats.map(beat => `
+    container.innerHTML = beatsFiltrados.map(beat => `
         <div class="track-card-mini">
             <div class="card-img-container">
                 <img src="https://img.youtube.com/vi/${beat.idYoutube}/maxresdefault.jpg" alt="${beat.nome}">
@@ -96,6 +99,17 @@ function renderizarTodosBeats() {
             </div>
         </div>
     `).join('');
+}
+
+// FUNÇÃO DE FILTRO
+function filtrarBeats(genero) {
+    // Atualiza o botão ativo
+    const botoes = document.querySelectorAll('.filter-btn');
+    botoes.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Renderiza os beats filtrados
+    renderizarTodosBeats(genero);
 }
 
 // 3. Inicialização da API do YouTube
