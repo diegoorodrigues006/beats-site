@@ -28,6 +28,31 @@
         </section>
 
         <section class="beats-grid-container" style="padding: 40px 10%;">
+            <!-- MUSIC PLAYER -->
+            <div style="grid-column: 1 / -1; display: flex; justify-content: center; margin-bottom: 30px;">
+                <div class="mini-player" style="width: 100%; max-width: 500px; padding: 20px; background: rgba(30, 30, 30, 0.8); border-radius: 12px; border: 1px solid #333;">
+                    <div class="player-controls" style="margin-bottom: 15px;">
+                        <i class="fas fa-step-backward" onclick="musicaAnterior()" style="cursor: pointer;"></i>
+                        <i class="fas fa-play-circle play-main" id="btn-play-header" onclick="togglePlay()" style="cursor: pointer;"></i>
+                        <i class="fas fa-step-forward" onclick="proximaMusica()" style="cursor: pointer;"></i>
+                    </div>
+                    <div class="player-track">
+                        <div class="track-name-container">
+                            <span class="track-name" id="current-track-name">Selecione um Beat</span>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+
+                        <div class="time-info" style="display: flex; justify-content: space-between; font-size: 10px; color: #aaa; margin-top: 5px;">
+                            <span id="current-time">0:00</span>
+                            <span id="duration">0:00</span>        
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Filtros -->
             <div class="filter-section" style="grid-column: 1 / -1; margin-bottom: 30px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
                 <button class="filter-btn active" onclick="filtrarBeats('todos')">Todos</button>
@@ -42,6 +67,8 @@
                 </div>
         </section>
     </main>
+
+    <div id="player-api" style="display: none;"></div>
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="script.js"></script>
