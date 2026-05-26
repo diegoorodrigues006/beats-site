@@ -1,4 +1,4 @@
-    /*-- ============================================================
+/*-- ============================================================
    TOPO (HEADER)
    ============================================================ */
 /*margens pag */
@@ -9,112 +9,107 @@
     box-sizing: border-box;
     font-family: Arial, sans-serif; /*escolher fonte depois*/
 }
-/* Estilo do cabeçalho principal */
-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
+
+/* ALINHAMENTO DO BANNER PRINCIPAL CORRIGIDO */
+.main-header {
+    position: relative;
+    width: 100%;
+    height: 280px; /* Mantém a altura perfeita da faixa horizontal */
     background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.3), rgba(10, 10, 10, 0.4)), url('prodkaiky.png');
     background-size: cover;
-    background-position: center;
+    background-position: center bottom; /* Garante que a logo central não seja cortada */
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    color: white;
+    display: flex;
+    align-items: center; /* Centraliza o player e o grupo da direita verticalmente */
+    justify-content: space-between; /* Joga o player para a esquerda e o grupo para a direita */
+    padding: 0 8%;
+    box-sizing: border-box;
     border-bottom: 2px solid #ccff00;
-    position: relative;
     z-index: 10;
-    height: 85vh;
 }
 
-/* Estilo do título principal (PROD.KAIKY) */
-.main-title {
-    font-size: 5.5rem;
-    font-weight: 900;
-    letter-spacing: -2px;
+/* CONTAINER QUE SEGURA STATS E REDES JUNTOS NA DIREITA */
+.header-right-group {
+    display: flex;
+    align-items: center;
+    gap: 40px; /* Espaço entre os números e os ícones das redes */
+}
+
+/* ESTILIZAÇÃO DOS SEUS STATS (NÚMEROS) */
+.stats {
+    display: flex;
+    gap: 30px;
+}
+
+.stat-item {
+    text-align: center;
     text-transform: uppercase;
+    font-size: 11px;
+    color: #aaa;
+    font-weight: bold;
+}
+
+.stat-item strong {
+    display: block;
+    font-size: 26px;
+    color: #ccff00; /* Cor verde neon idêntica à maquete */
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+/* ESTILIZAÇÃO DAS SUAS REDES SOCIAIS */
+.media-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.media-icons a {
     color: white;
-    margin: 0;
-    text-shadow: 0 0 30px rgba(204, 255, 0, 0.9);
-    line-height: 1.1;
-    font-family: Arial, sans-serif;
+    font-size: 18px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
 }
 
-.main-title span {
-    color: #ccff00;
-}
-
-/* Posicionamento do conteúdo do header */
-.header-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 5;
-}
-
-.header-top-left {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 6;
-}
-
-.header-top-right {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 6;
+.media-icons a:hover {
+    background: #ccff00;
+    color: black;
+    transform: translateY(-3px);
 }
 
 .mini-player-header {
     background: rgba(255, 255, 255, 0.05);
-    padding: 12px 15px;
-    border-radius: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
     border: 1px solid #333;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 .mini-player-header .player-controls {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 16px;
+    gap: 8px;
+    font-size: 14px;
     color: #ccff00;
 }
 
 .mini-player-header .play-main {
-    font-size: 28px;
+    font-size: 22px;
     cursor: pointer;
 }
 
 .mini-player-header .player-track {
     flex-grow: 1;
-    min-width: 180px;
-}
-
-/* Estilo das estatísticas */
-.stats {
-    display: flex;
-    gap: 50px;
-    text-align: center;
-}
-
-/* Estilo do número nas estatísticas */
-.stat-item strong {
-    display: block;
-    font-size: 24px;
-    color: #ccff00;
-    font-weight: 900;
-}
-
-/* Estilo do texto nas estatísticas */
-.stat-item span {
-    font-size: 12px;
-    color: #aaa;
+    min-width: 150px;
 }
 
 /* =========================================
@@ -142,7 +137,7 @@ header {
 }
 /* 1. O Container que "corta" o que sai da borda */
 .track-name-container {
-    width: 200px; /* Largura fixa do seu player */
+    width: 140px; /* Largura ajustada para o header */
     overflow: hidden;
     white-space: nowrap;
     position: relative;
@@ -186,7 +181,7 @@ header {
     height: 4px;
     background: #333;
     border-radius: 2px;
-    width: 200px; /* Largura fixa inicial */
+    width: 140px; /* Ajustado para o header */
     position: relative;
 }
 
@@ -223,29 +218,6 @@ header {
     border-radius: 5px; /*borda arredondada */
 
 }
-/* Estilo dos círculos das redes sociais no topo */
-/* Estilo do container de ícones de redes sociais */
-.redes .media-icons {
-    display: flex;
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-}
-
-/* Estilo dos links dos ícones de redes sociais */
-.redes .media-icons a {
-    height: 40px;
-    width: 40px;
-    margin: 0 5px; /* Espaçamento entre os círculos */
-    border-radius: 50%;
-    text-align: center;
-    line-height: 40px; /* Alinha o ícone verticalmente */
-    color: #ffffff;
-    font-size: 17px;
-    text-decoration: none;
-    transition: all 0.4s ease;
-    border: 2px solid #ccff00;
-}
 
 /* Cores específicas de cada rede social */
 /* Cor de fundo do Tiktok */
@@ -255,18 +227,9 @@ header {
 /* Cor de fundo do YouTube */
 .redes .media-icons a:nth-child(3) { background: transparent; } /* Youtube */
 
-/* Efeito de passar o mouse (Hover) */
-/* Efeito hover nos ícones de redes sociais */
-.redes .media-icons a:hover {
-    background: #ccff00;
-    color: #000000;
-    box-shadow: 0 0 20px rgba(204, 255, 0, 0.8);
-    transform: scale(1.2);
-}
-
 /* ============================================================
-   MENU DE NAVEGAÇÃO
-   ============================================================ */
+    MENU DE NAVEGAÇÃO
+    ============================================================ */
 .navbar {
     background-color: #1a1a1a;
     border-bottom: 3px solid #ccff00;
@@ -319,11 +282,9 @@ header {
     }
 }
 
-
-
     /*-- ============================================================
-   SEÇÕES PLAYLISTS
-   ============================================================ */
+    SEÇÕES PLAYLISTS
+    ============================================================ */
 
    /* Estilo do wrapper da imagem de fundo */
 .background-image-wrapper {
@@ -470,8 +431,6 @@ header {
 SEÇÕES BEATS
 ============================================================ */
 
-
-
 .beats-container {
     display: flex;
     gap: 20px;
@@ -548,7 +507,7 @@ SEÇÕES BEATS
    BOTÃO DE PLAY ESTILO SPOTIFY
    ========================================= */
 
-/* 1. O Card (Sempre Preto) */
+/* O Card (Sempre Preto) */
 .beat-card {
     background-color: #000; /* Fundo totalmente preto */
     border-radius: 12px;
@@ -558,7 +517,7 @@ SEÇÕES BEATS
     overflow: hidden;
 }
 
-/* 2. Container da Imagem */
+/* Container da Imagem */
 .beat-image-container {
     position: relative;
     width: 100%;
@@ -569,7 +528,7 @@ SEÇÕES BEATS
     overflow: hidden;
 }
 
-/* 3. A Capa do YouTube (Escondida por padrão) */
+/* A Capa do YouTube (Escondida por padrão) */
 .youtube-capa {
     width: 100%;
     height: 100%;
@@ -578,7 +537,7 @@ SEÇÕES BEATS
     transition: opacity 0.4s ease; /* Transição suave */
 }
 
-/* 4. O Botão Spotify (Também escondido) */
+/* O Botão Spotify (Também escondido) */
 .spotify-play-btn {
     position: absolute;
     bottom: 10px;
@@ -598,73 +557,7 @@ SEÇÕES BEATS
     cursor: pointer;
 }
 
-/* 5. HOVER: A mágica acontece aqui */
-
-/* Quando o mouse entra no card: */
-.beat-card:hover {
-    background-color: #1a1a1a; /* O card clareia um pouquinho (estilo Spotify) */
-}
-
-/* A imagem aparece */
-.beat-card:hover .youtube-capa {
-    opacity: 1;
-}
-
-/* O botão de play sobe e aparece */
-.beat-card:hover .spotify-play-btn {
-    opacity: 1;
-    transform: translateY(0);
-}/* 1. O Card (Sempre Preto) */
-.beat-card {
-    background-color: #000; /* Fundo totalmente preto */
-    border-radius: 12px;
-    padding: 15px;
-    transition: background-color 0.3s ease;
-    border: 1px solid #1a1a1a;
-    overflow: hidden;
-}
-
-/* 2. Container da Imagem */
-.beat-image-container {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1/1;
-    background-color: #111; /* Cor de fundo enquanto a imagem não aparece */
-    border-radius: 8px;
-    margin-bottom: 15px;
-    overflow: hidden;
-}
-
-/* 3. A Capa do YouTube (Escondida por padrão) */
-.youtube-capa {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0; /* Fica invisível */
-    transition: opacity 0.4s ease; /* Transição suave */
-}
-
-/* 4. O Botão Spotify (Também escondido) */
-.spotify-play-btn {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    width: 48px;
-    height: 48px;
-    background-color: #ccff00; /* Seu verde neon */
-    border-radius: 50%;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
-    z-index: 5;
-    cursor: pointer;
-}
-
-/* 5. HOVER: A mágica acontece aqui */
+/* HOVER: A mágica acontece aqui */
 
 /* Quando o mouse entra no card: */
 .beat-card:hover {
@@ -745,8 +638,8 @@ SEÇÕES BEATS
 }
 
     /*-- ============================================================
-   RODAPÉ (FOOTER)
-   ============================================================ */
+    RODAPÉ (FOOTER)
+    ============================================================ */
 :root {
     --bg-color: #0a0a0a;
     --accent-color: #ccff00; /* Verde limão/neon */
@@ -1035,7 +928,6 @@ SEÇÕES BEATS
 }
 
 /* Grid de Cards */
-/* 1. CORREÇÃO DA GRADE GERAL (Previne quebras de linha e sobreposições invisíveis) */
 .playlist-tracks-grid, .beats-grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -1043,7 +935,6 @@ SEÇÕES BEATS
     align-items: start; /* Garante que os cards comecem todos na mesma linha de altura */
 }
 
-/* 2. AJUSTE DO CARD MINI (Onde o corte acontece no hover) */
 .track-card-mini, .beat-card {
     background: #111111;
     border-radius: 12px;
@@ -1061,7 +952,6 @@ SEÇÕES BEATS
     border-color: #ccff00;
 }
 
-/* 3. CONTAINER DA IMAGEM (Onde o botão de play fica dentro) */
 .card-img-container, .beat-image-container {
     position: relative;
     width: 100%;
@@ -1087,7 +977,6 @@ SEÇÕES BEATS
     transform: scale(1.04); 
 }
 
-/* 4. REESTRUTURAÇÃO DO OVERLAY (Zera o problema de "cortar" pela metade) */
 .play-overlay {
     position: absolute;
     top: 0;
@@ -1097,310 +986,5 @@ SEÇÕES BEATS
     background: rgba(0, 0, 0, 0.5) !important; /* Camada escura uniforme */
     display: flex !important;
     justify-content: center; /* Centraliza na horizontal morto */
-    align-items: center;     /* Centraliza na vertical morto */
-    opacity: 0;
-    transition: opacity 0.25s ease;
-    z-index: 3; /* Garante que fica acima da foto, mas sem vazar do card */
-    pointer-events: auto; /* Garante que o clique seja registrado perfeitamente */
-}
-
-/* Alinhamento do ícone FontAwesome interno */
-.play-overlay i {
-    font-size: 45px;
-    color: #ccff00;
-    transform: scale(0.8);
-    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-/* Disparadores de hover limpos via CSS estruturado (Evita bugs do JS de hover antigo) */
-.track-card-mini:hover .play-overlay,
-.beat-card:hover .play-overlay {
-    opacity: 1;
-}
-
-.track-card-mini:hover .play-overlay i,
-.beat-card:hover .play-overlay i {
-    transform: scale(1); /* Dá um leve "pop" no ícone do play */
-}
-
-/* Layout da Página de Detalhes */
-
-.banner-content {
-    display: flex;
-    gap: 30px;
-    align-items: flex-end;
-}
-
-.main-cover {
-    width: 200px;
-    height: 200px;
-    border-radius: 12px;
-    object-fit: cover;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-}
-
-.label-neon {
-    color: #ccff00;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 12px;
-    letter-spacing: 2px;
-}
-
-.btn-tocar-top {
-    background: #ccff00;
-    color: #000;
-    border: none;
-    padding: 10px 25px;
-    border-radius: 4px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 15px;
-    transition: 0.3s;
-    align-self: flex-start;
-}
-
-/* ============================================================
-   ESTILOS DOS FILTROS
-   ============================================================ */
-.filter-section {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
-}
-
-.filter-btn {
-    background: transparent;
-    border: 2px solid #555;
-    color: #aaa;
-    padding: 8px 18px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 0.85rem;
-    transition: all 0.3s ease;
-}
-
-.filter-btn:hover {
-    border-color: #ccff00;
-    color: #ccff00;
-}
-
-.filter-btn.active {
-    background: #ccff00;
-    color: #000;
-    border-color: #ccff00;
-    box-shadow: 0 0 15px rgba(204, 255, 0, 0.5);
-}
-
-.btn-tocar-top:hover {
-    transform: scale(1.05);
-    background: #e6ff70;
-}
-
-/* Grid de Beats Internos */
-.playlist-tracks-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    padding: 40px 10%;
-}
-
-.track-card-mini {
-    background: #111;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    border: 1px solid transparent;
-}
-
-.track-card-mini:hover {
-    border-color: #ccff00;
-    background: #161616;
-}
-
-.track-card-mini img {
-    width: 100%;
-    border-radius: 6px;
-    margin-bottom: 10px;
-}
-
-.playlist-tracks-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 30px;
-    padding: 40px 10%;
-}
-
-.track-card-mini {
-    background: #111;
-    padding: 15px;
-    border-radius: 12px;
-    border: 1px solid #222;
-    transition: 0.3s;
-}
-
-.card-img-container {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1; /* Garante que o card seja sempre quadrado */
-    overflow: hidden;
-    border-radius: 8px;
-}
-
-.card-img-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Faz a imagem preencher o espaço sem distorcer */
-}
-
-.play-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 50px;
-    color: #ccff00;
-    opacity: 0;
-    transition: 0.3s;
-    cursor: pointer;
-    z-index: 2;
-}
-
-.track-card-mini:hover .play-overlay {
-    opacity: 1;
-}
-
-.playlist-hero {
-    background: linear-gradient(to bottom, #222, #0a0a0a); /* Você pode mudar o #222 pela cor do gênero */
-    padding: 60px 8% 40px 8%;
-    display: flex;
-    align-items: flex-end;
-}
-
-.hero-content {
-    display: flex;
-    gap: 30px;
-    align-items: flex-end;
-    width: 100%;
-}
-
-.hero-cover {
-    width: 230px;
-    height: 230px;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-}
-
-.hero-info .badge {
-    font-size: 12px;
-    font-weight: bold;
-    color: #ccff00;
-}
-
-.hero-info h1 {
-    font-size: 4rem;
-    margin: 10px 0;
-    color: #fff;
-    text-transform: uppercase;
-}
-
-.btn-play-hero {
-    background-color: #ccff00;
-    color: #000;
-    border: none;
-    padding: 15px 40px;
-    border-radius: 30px;
-    font-weight: bold;
-    font-size: 1.1rem;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: 0.2s;
-}
-
-.btn-play-hero:hover {
-    transform: scale(1.05);
-}
-
-/* Ajuste na Grade para não ficar colado */
-.playlist-content {
-    padding: 40px 8%;
-    background-color: #0a0a0a;
-}
-
-/* Centralização Perfeita do Play */
-.card-img-container {
-    position: relative;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    overflow: hidden;
-    border-radius: 8px;
-    background-color: #111;
-}
-
-.play-overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center;     /* Centraliza verticalmente */
-    background: rgba(0,0,0,0.4);
-    opacity: 0;
-    transition: 0.3s ease;
-    cursor: pointer;
-}
-
-.play-overlay i {
-    font-size: 50px; /* Tamanho do ícone no centro */
-    color: #ccff00;
-}
-
-.track-card-mini:hover .play-overlay {
-    opacity: 1;
-}
-
-/* Estilização do Botão de Preço/Compra */
-.btn-buy-green {
-    background-color: #ccff00; /* Verde Neon do site */
-    color: #000;
-    border: none;
-    padding: 8px 0;
-    width: 100%; /* Ocupa a largura do card */
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: 0.9rem;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: 0.2s;
-}
-
-.btn-buy-green:hover {
-    background-color: #e6ff70; /* Um tom mais claro no hover */
-    transform: translateY(-2px);
-}
-
-.track-name-text {
-    color: white;
-    font-size: 14px;
-    margin: 10px 0 5px 0;
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; /* Evita que o nome quebre o card */
-}
-
-/* Força a grade na página de Todos os Beats */
-#lista-todos-beats {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 25px;
-    width: 100%;
-    align-items: start;
 }
