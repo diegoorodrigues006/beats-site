@@ -17,22 +17,34 @@ git push
 
 <header>
     <!-- ============================================================
-   TOPO (HEADER)
+   TOPO (HEADER) - MAIN BANNER
    ============================================================ -->
-
-    <!-- PERFIL E INFORMAÇÕES-->
-    <div class="perfil">
-        <img src="perfilVet.jpeg" alt="Foto do Produtor" class="foto-circulo">
-        <div class="info-produtor">
-            <div class="nome-verificado">
-            <h2 class="logo-text">Prod.<span>KAIKY</span></h2>                
-            <i class="fas fa-check-circle verificado"></i></div>
-                <!-- <span class="usuario">@prod.kaiky</span> -->
-                <p class="bio">Beatmaker direto de Barreiro, Belo Horizonte, MG. 
-<br>Desenvolvo produções exclusivas elevando o nível da cena mineira através da minha arte.</p>
+    
+    <!-- MINI PLAYER (TOP LEFT) -->
+    <div class="header-top-left">
+        <div class="mini-player-header">
+            <div class="player-controls">
+                <i class="fas fa-step-backward" onclick="musicaAnterior()"></i>
+                <i class="fas fa-play-circle play-main" id="btn-play-header" onclick="togglePlay()"></i>
+                <i class="fas fa-step-forward" onclick="proximaMusica()"></i>
+            </div>
+            <div class="player-track">
+                <div class="track-name-container">
+                    <span class="track-name" id="current-track-name">Selecione um Beat</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="time-info" style="display: flex; justify-content: space-between; font-size: 10px; color: #aaa; margin-top: 5px;">
+                    <span id="current-time">0:00</span>
+                    <span id="duration">0:00</span>        
+                </div>
+            </div>
         </div>
     </div>
-    <!-- Estatisticas-->
+
+    <!-- STATS (TOP RIGHT) -->
+    <div class="header-top-right">
         <div class="stats">
             <div class="stat-item">
                 <strong>0</strong>
@@ -42,38 +54,22 @@ git push
                 <strong>0</strong>
                 <span>Plays</span>
             </div>
-    </div>
-<div class="mini-player">
- <div class="player-controls">
-    <i class="fas fa-step-backward" onclick="musicaAnterior()"></i>
-    <i class="fas fa-play-circle play-main" id="btn-play-header" onclick="togglePlay()"></i>
-    <i class="fas fa-step-forward" onclick="proximaMusica()"></i>
-</div>
-<div class="player-track">
-    <div class="track-name-container">
-        <span class="track-name" id="current-track-name">Selecione um Beat</span>
+        </div>
     </div>
 
-    <div class="progress-bar">
-        <div class="progress-fill" id="progress-fill"></div>
+    <!-- TITULO CENTRAL -->
+    <div class="header-center">
+        <h1 class="main-title">PROD.<span>KAIKY</span></h1>
     </div>
 
-    <div class="time-info" style="display: flex; justify-content: space-between; font-size: 10px; color: #aaa; margin-top: 5px;">
-        <span id="current-time">0:00</span>
-        <span id="duration">0:00</span>        
+    <!--Espaço para redes sociais-->
+    <div class="redes">
+        <div class="media-icons">
+            <a href="https://www.tiktok.com/@nome_do_usuario" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.instagram.com/prod.kaiky?igsh=MXY2cm4yNmRxNzd6cQ%3D%3D&utm_source=qr" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://youtube.com/@prod_kaiky?si=hskkdHjllNHPxORh" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
     </div>
-</div>
-</div>
-
-
-    <!--Espaço para redes socais-->
-<div class="redes">
-    <div class="media-icons">
-        <a href="https://www.tiktok.com/@nome_do_usuario" target="_blank"><i class="fab fa-tiktok"></i></a>
-        <a href="https://www.instagram.com/prod.kaiky?igsh=MXY2cm4yNmRxNzd6cQ%3D%3D&utm_source=qr" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://youtube.com/@prod_kaiky?si=hskkdHjllNHPxORh" target="_blank"><i class="fab fa-youtube"></i></a>
-    </div>
-</div>
 </header>
 
 <!-- ============================================================
