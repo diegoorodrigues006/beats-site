@@ -106,7 +106,9 @@ header {
     display: flex;
     align-items: center;
     gap: 20px;
-    margin-top: 20px; /* Distância das Plays */
+    margin-top: 0;
+    min-width: 320px;
+    flex-shrink: 0;
 }
 
 .player-controls {
@@ -305,7 +307,7 @@ header {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url('foto 5.jpeg');
+    background-image: url('fundo-site.jpeg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -952,7 +954,41 @@ SEÇÕES BEATS
 .banner-content {
     display: flex;
     gap: 40px;
-    align-items: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.banner-text {
+    flex: 1;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.banner-text .label-neon {
+    font-size: 0.85rem;
+    color: #ccff00;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.banner-text h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 10px;
+    line-height: 1.1;
+}
+
+.banner-text p {
+    font-size: 1rem;
+    color: #aaa;
+    margin-bottom: 20px;
 }
 
 .main-cover {
@@ -1096,6 +1132,7 @@ SEÇÕES BEATS
     cursor: pointer;
     margin-top: 15px;
     transition: 0.3s;
+    align-self: flex-start;
 }
 
 /* ============================================================

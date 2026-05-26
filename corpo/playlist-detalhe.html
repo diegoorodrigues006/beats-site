@@ -9,6 +9,8 @@
 </head>
 <body style="background-color: #0a0a0a; color: white;">
 
+<div id="player-api" style="display: none;"></div>
+
     <nav class="navbar">
         <div class="nav-container">
             <ul class="nav-menu">
@@ -29,6 +31,27 @@
                     <p id="playlist-author">PROD.KAIKY • <span id="track-count">0</span> Beats</p>
                     <button class="btn-tocar-top" onclick="tocarPrimeira()"><i class="fas fa-play"></i> TOCAR TUDO</button>
                 </div>
+                <div class="mini-player">
+ <div class="player-controls">
+    <i class="fas fa-step-backward" onclick="musicaAnterior()"></i>
+    <i class="fas fa-play-circle play-main" id="btn-play-header" onclick="togglePlay()"></i>
+    <i class="fas fa-step-forward" onclick="proximaMusica()"></i>
+</div>
+<div class="player-track">
+    <div class="track-name-container">
+        <span class="track-name" id="current-track-name">Selecione um Beat</span>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <div class="time-info" style="display: flex; justify-content: space-between; font-size: 10px; color: #aaa; margin-top: 5px;">
+        <span id="current-time">0:00</span>
+        <span id="duration">0:00</span>        
+    </div>
+</div>
+</div>
             </div>
         </section>
 
