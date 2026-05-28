@@ -21,11 +21,11 @@
     /* ALTERAÇÃO 2: Fundo preto puro caso a tela do usuário seja muito larga */
     background-color: #0b0b0b; 
 
-    background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.1), rgba(10, 10, 10, 0.3)), url('prodkaiky.png');
+    background-image: url('prodkaiky2.png');
     
     /* ALTERAÇÃO 3: 'cover' ajustado com o 'center' faz os circuitos das laterais reaparecerem */
     background-size: cover; 
-    background-position: center bottom; 
+    background-position: center center; 
     background-repeat: no-repeat;
     
     /* ALTERAÇÃO 4: Removemos o attachment fixed temporariamente se ele estiver distorcendo o zoom */
@@ -45,8 +45,9 @@
 /* CONTAINER QUE SEGURA STATS E REDES JUNTOS NA DIREITA */
 .header-right-group {
     display: flex;
+    margin: 0;
     align-items: center;
-    gap: 40px; /* Espaço entre os números e os ícones das redes */
+    gap: 20px; /* Espaço entre os números e os ícones das redes */
 }
 
 /* ESTILIZAÇÃO DOS SEUS STATS (NÚMEROS) */
@@ -102,30 +103,30 @@
 
 .mini-player-header {
     background: rgba(255, 255, 255, 0.05);
-    padding: 8px 12px;
-    border-radius: 6px;
+    padding: 15px 20px;
+    border-radius: 8px;
     border: 1px solid #333;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 18px;
 }
 
 .mini-player-header .player-controls {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 14px;
+    gap: 15px;
+    font-size: 22px;
     color: #ccff00;
 }
 
 .mini-player-header .play-main {
-    font-size: 22px;
+    font-size: 32px;
     cursor: pointer;
 }
 
 .mini-player-header .player-track {
     flex-grow: 1;
-    min-width: 150px;
+    min-width: 200px;
 }
 
 /* =========================================
@@ -133,22 +134,22 @@
    ========================================= */
 .mini-player {
     background: rgba(255, 255, 255, 0.05); /* Efeito de transparência */
-    padding: 15px 25px;
+    padding: 25px 40px;
     border-radius: 12px;
     border: 1px solid #333;
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 30px;
     margin-top: 0;
-    min-width: 320px;
+    min-width: 480px;
     flex-shrink: 0;
 }
 
 .player-controls {
     display: flex;
     align-items: center;
-    gap: 15px;
-    font-size: 18px;
+    gap: 25px;
+    font-size: 28px;
     color: #ccff00; /* Verde neon */
 }
 /* 1. O Container que "corta" o que sai da borda */
@@ -177,7 +178,7 @@
 
 
 .play-main {
-    font-size: 32px;
+    font-size: 48px;
     cursor: pointer;
 }
 
@@ -186,18 +187,18 @@
 }
 
 .track-name {
-    font-size: 12px;
+    font-size: 16px;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     color: #fff;
     font-weight: bold;
 }
 
 .progress-bar {
-    height: 4px;
+    height: 6px;
     background: #333;
-    border-radius: 2px;
-    width: 140px; /* Ajustado para o header */
+    border-radius: 3px;
+    width: 100%;
     position: relative;
 }
 
