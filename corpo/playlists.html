@@ -8,65 +8,48 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body style="background-color: #0a0a0a;"> 
-<header>
+<header class="main-header">
     <!-- ============================================================
-   TOPO (HEADER)
+   TOPO (HEADER) - ESTRUTURA MODERNA FLEXBOX
    ============================================================ -->
-
-    <!-- PERFIL E INFORMAÇÕES-->
-    <div class="perfil">
-        <img src="perfilVet.jpeg" alt="Foto do Produtor" class="foto-circulo">
-        <div class="info-produtor">
-            <div class="nome-verificado">
-            <h2 class="logo-text">Prod.<span>KAIKY</span></h2>                
-            <i class="fas fa-check-circle verificado"></i></div>
-                <!-- <span class="usuario">@prod.kaiky</span> -->
-                <p class="bio">Beatmaker direto de Barreiro, Belo Horizonte, MG. 
-<br>Desenvolvo produções exclusivas elevando o nível da cena mineira através da minha arte.</p>
+    <div class="header-top-left">
+        <div class="header-top-right">
         </div>
     </div>
-    <!-- Estatisticas-->
+
+    <div class="header-right-group">
+        <div class="mini-player-header">
+            <div class="player-controls">
+                <i class="fas fa-step-backward" onclick="musicaAnterior()"></i>
+                <i class="fas fa-play-circle play-main" id="btn-play-header" onclick="togglePlay()"></i>
+                <i class="fas fa-step-forward" onclick="proximaMusica()"></i>
+            </div>
+            <div class="player-track">
+                <div class="track-name-container">
+                    <span class="track-name" id="current-track-name">Selecione um Beat</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="time-info" style="display: flex; justify-content: space-between; font-size: 10px; color: #aaa; margin-top: 5px;">
+                    <span id="current-time">0:00</span>
+                    <span id="duration">0:00</span>        
+                </div>
+            </div>
+        </div>
+
         <div class="stats">
             <div class="stat-item">
-                <strong>50</strong>
+                <strong>0</strong>
                 <span>Beats</span>
             </div>
             <div class="stat-item">
-                <strong>200</strong>
+                <strong>0</strong>
                 <span>Plays</span>
             </div>
-    </div>
-<div class="mini-player">
- <div class="player-controls">
-    <i class="fas fa-step-backward" onclick="musicaAnterior()"></i>
-    <i class="fas fa-play-circle play-main" id="btn-play-header" onclick="togglePlay()"></i>
-    <i class="fas fa-step-forward" onclick="proximaMusica()"></i>
-</div>
-<div class="player-track">
-    <div class="track-name-container">
-        <span class="track-name" id="current-track-name">Selecione um Beat</span>
-    </div>
+        </div>
 
-    <div class="progress-bar">
-        <div class="progress-fill" id="progress-fill"></div>
     </div>
-
-    <div class="time-info" style="display: flex; justify-content: space-between; font-size: 10px; color: #aaa; margin-top: 5px;">
-        <span id="current-time">0:00</span>
-        <span id="duration">0:00</span>        
-    </div>
-</div>
-</div>
-
-
-    <!--Espaço para redes socais-->
-<div class="redes">
-    <div class="media-icons">
-        <a href="https://www.tiktok.com/@nome_do_usuario" target="_blank"><i class="fab fa-tiktok"></i></a>
-        <a href="https://www.instagram.com/prod.kaiky?igsh=MXY2cm4yNmRxNzd6cQ%3D%3D&utm_source=qr" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://youtube.com/@prod_kaiky?si=hskkdHjllNHPxORh" target="_blank"><i class="fab fa-youtube"></i></a>
-    </div>
-</div>
 </header>
 
     <nav class="navbar">
@@ -162,8 +145,12 @@
 
 <script src="script.js"></script>
 <script>
-    // Inicializa o sistema de playlists
-    inicializarPlaylists();
+    // Inicializa o sistema de playlists e stats
+    window.addEventListener('load', function() {
+        inicializarPlaylists();
+        atualizarStats();
+        atualizarContadoresPlaylists();
+    });
 
     // Atualiza os contadores de playlists dinamicamente
     function atualizarContadoresPlaylists() {
@@ -191,11 +178,6 @@
             }
         });
     }
-
-    // Atualiza os contadores ao carregar a página
-    window.addEventListener('load', function() {
-        atualizarContadoresPlaylists();
-    });
 </script>
 
     </body>
