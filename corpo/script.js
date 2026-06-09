@@ -273,7 +273,7 @@ function renderizarPlaylists() {
         const imagemCapa = (genero === 'trap') ? 'beats-trap.jpeg' : `beats-${genero}.jpeg`;
         return `
             <div class="playlist-card" onclick="window.location.href='playlist-detalhe.html?genero=${genero}'">
-                <div class="playlist-image" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('${imagemCapa}'); background-size: cover; background-position: center;">
+                <div class="playlist-image" style="background: url('${imagemCapa}'); background-size: cover; background-position: center;">
                 </div>
                 <div class="playlist-info">
                     <h3>${genero}</h3>

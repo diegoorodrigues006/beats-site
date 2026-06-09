@@ -870,7 +870,7 @@ SEÇÕES BEATS
 .playlist-banner {
     position: relative;
     /* Alinha a imagem no centro e faz ela cobrir todo o espaço do topo */
-    background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.5)), url("foto 5.jpeg");
+    background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.5)), url("fundo-site.jpeg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
