@@ -317,7 +317,6 @@
 
 .playlists-section,
 .beats-section {
-    background-color: rgba(10, 10, 10, 0.521);
     padding: 60px 20px;
     color: #ffffff;
     position: relative;
@@ -331,9 +330,12 @@
 .section-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     max-width: 1200px;
     margin: 0 auto 40px;
+    z-index: 10;
+    position: relative;
+    align-items: center;
+    
 }
 
 .section-header h2 {
@@ -347,6 +349,8 @@
 .nav-arrows {
     display: flex;
     gap: 15px;
+    position:relative;
+    z-index: 0;
 }
 
 .arrow-btn {
@@ -379,6 +383,8 @@
     overflow-x: auto;
     padding-bottom: 20px;
     scroll-behavior: smooth;
+    position: relative;
+    z-index: 20;
 }
 
 .playlists-container::-webkit-scrollbar {
@@ -435,6 +441,7 @@
     transform: translateY(-10px);
     box-shadow: 0 15px 40px rgba(204, 255, 0, 0.3);
     border: 1px solid #ccff00;
+    z-index: 10
 }
 
 .playlist-card:hover .playlist-info h3 {
@@ -453,6 +460,8 @@ SEÇÕES BEATS
     overflow-x: auto;
     padding-bottom: 20px;
     scroll-behavior: smooth;
+    position: relative;
+    z-index: 20;
 }
 
 .beats-container::-webkit-scrollbar {
@@ -590,11 +599,12 @@ SEÇÕES BEATS
 }
 
 /* RESPONSIVIDADE */
-@media (max-width: 768px) {
+@media (max-width: 200px) {
     .section-header {
         flex-direction: column;
         gap: 20px;
         align-items: flex-start;
+        z-index: 0;
     }
 
     .section-header h2 {
@@ -603,6 +613,8 @@ SEÇÕES BEATS
 
     .playlists-container {
         gap: 20px;
+        position: relative;
+        z-index: 1;
     }
 
     .playlist-card {
