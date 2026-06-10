@@ -950,11 +950,21 @@ SEÇÕES BEATS
 }
 
 /* Grid de Cards */
-.playlist-tracks-grid, .beats-grid-container {
+.beats-grid-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 10px;
+    color: #ffffff;
+    position: relative;
+}
+
+.playlist-tracks-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 25px;
     align-items: start; /* Garante que os cards comecem todos na mesma linha de altura */
+    width: 100%;
 }
 
 .track-card-mini, .beat-card {
