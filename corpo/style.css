@@ -317,10 +317,9 @@
 
 .playlists-section,
 .beats-section {
-    padding: 60px 20px;
+    padding: 60px 10px;
     color: #ffffff;
     position: relative;
-    z-index: 1;
 }
 
 .playlists-section {
@@ -380,11 +379,9 @@
     gap: 30px;
     max-width: 1200px;
     margin: 0 auto;
-    overflow-x: auto;
     padding-bottom: 20px;
     scroll-behavior: smooth;
     position: relative;
-    z-index: 20;
 }
 
 .playlists-container::-webkit-scrollbar {
@@ -457,7 +454,6 @@ SEÇÕES BEATS
     gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
-    overflow-x: auto;
     padding-bottom: 20px;
     scroll-behavior: smooth;
     position: relative;
