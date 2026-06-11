@@ -1,47 +1,54 @@
 // ============================================================
 // CONFIGURAÇÃO DA PLANILHA (ALIMENTAÇÃO DINÂMICA)
 // ============================================================
-// Colunas recomendadas no Sheets: idYoutube, artista, nome, genero
 const urlPlanilha = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS42I_YX0kzYxpH6143oUulw6EQYS8wLwhQV72F8EmfS0d7-rJyJIMu2fEUrIPWKMHuih8Ffk4DARX8/pub?output=csv";
-
-let listaBeats = []; // Inicializa o array vazio para receber os dados do Sheets
+let listaBeats = []; 
 let player; 
 let indiceMusicaAtual = 0;
 
-// REQUISITA E CONVERTE OS DADOS DO GOOGLE SHEETS (CORRIGIDO PARA PREÇOS COM VÍRGULA)
+// REQUISITA E CONVERTE OS DADOS DO GOOGLE SHEETS (BASEADO NO FORMATO REAL DO ARQUIVO)
 async function carregarBeatsDaPlanilha() {
     try {
         const resposta = await fetch(urlPlanilha);
         const dadosCSV = await resposta.text();
         
-        const linhas = dadosCSV.split('\n');
+        // Divide o texto por quebras de linha tratando Windows (\r\n) e Linux (\n)
+        const linhas = dadosCSV.split(/\r?\n/);
         listaBeats = []; 
         
-        // Loop começa em 1 para ignorar a linha de cabeçalhos
+        // Loop começa em 1 para ignorar a linha de cabeçalhos (idYoutube,artista,nome,genero)
         for (let i = 1; i < linhas.length; i++) {
             const linha = linhas[i].trim();
             if (linha === '') continue; 
             
-            // EXPRESSÃO REGULAR: Divide por vírgula, mas ignora vírgulas dentro de aspas (ex: "60,00")
-            const colunas = linha.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || linha.split(',');
+            // CORREÇÃO CIRÚRGICA: O Bloco de Notas mostrou que o separador real é a vírgula convencional!
+            const colunas = linha.split(',');
             
-            // Limpa as aspas extras que o CSV coloca ao redor dos campos modificados
-            const limparCampo = (campo) => campo ? campo.replace(/^"| Kent$/g, '').trim() : "";
+            // Remove espaços extras ou caracteres invisíveis residuais
+            const limparCampo = (campo) => campo ? campo.trim() : "";
 
-            listaBeats.push({
-                idYoutube: limparCampo(colunas[0]),
-                artista: limparCampo(colunas[1]) || "KAIKY PROD",
-                nome: limparCampo(colunas[2]),
-                genero: limparCampo(colunas[3]).toLowerCase()
-            });
+            const idYoutube = limparCampo(colunas[0]);
+            const artista = limparCampo(colunas[1]) || "KAIKY PROD";
+            const nome = limparCampo(colunas[2]);
+            const genero = colunas[3] ? limparCampo(colunas[3]).toLowerCase() : "";
+
+            // Só insere se encontrar o ID do YouTube e o Nome válidos
+            if (idYoutube && nome) {
+                listaBeats.push({
+                    idYoutube: idYoutube,
+                    artista: artista,
+                    nome: nome,
+                    genero: genero
+                });
+            }
         }
         
-        console.log("Planilha integrada com sucesso e aspas/vírgulas tratadas!", listaBeats);
+        console.log("Planilha sincronizada com sucesso!", listaBeats);
         executarRenderizacaoGlobal();
 
     } catch (erro) {
         console.error("Erro crítico ao ler dados da planilha remota:", erro);
-        // Fallback de segurança caso a internet falhe
+        // Fallback de segurança para o site não quebrar em modo offline
         listaBeats = [
             { idYoutube: "lz3mW653CL8", artista: "KAIKY PROD", nome: "brandao #1", genero: "trap" }
         ];
@@ -50,7 +57,7 @@ async function carregarBeatsDaPlanilha() {
 }
 
 // CENTRALIZA AS CHAMADAS DE TELA APÓS CARREGAR OS DADOS
-function ejecutarRenderizacaoGlobal() {
+function executarRenderizacaoGlobal() {
     atualizarStats();
     renderizarBeats();      // Renderização da Index
     renderizarTodosBeats(); // Renderização da página musicas.html
@@ -78,6 +85,7 @@ function incrementarPlays() {
     atualizarStats();
 }
 
+// Retorna o total real de beats vindos da planilha
 function getTotalBeats() {
     return listaBeats.length;
 }
@@ -176,6 +184,7 @@ function renderizarPlaylists() {
 }
 
 // ========== DINÂMICA INTERNA DE PLAYLISTS ==========
+// Puxa as músicas filtradas direto do banco de dados gerado pela planilha
 function carregarPlaylistDinamica(genero) {
     const titulo = document.getElementById('playlist-title');
     const capaPlaylist = document.getElementById('playlist-cover');
@@ -225,7 +234,7 @@ function tocarPrimeira() {
     }
 }
 
-// ========== CONTROLADORES DE PLAYER E API ==========
+// ========== CONTROLADORES DE PLAYER E API DO YOUTUBE ==========
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player-api', {
         height: '0',
@@ -308,10 +317,10 @@ function atualizarProgresso() {
     }, 1000);
 }
 
-// ========== EVENTOS DE INICIALIZAÇÃO ==========
+// ========== EVENTOS DE INICIALIZAÇÃO DELAY ==========
 document.addEventListener('DOMContentLoaded', () => {
     inicializarPlays();
-    carregarBeatsDaPlanilha(); // Dispara o carregamento do Google Sheets
+    carregarBeatsDaPlanilha(); // Executa a requisição assíncrona remota
 });
 
 window.addEventListener('load', () => {
