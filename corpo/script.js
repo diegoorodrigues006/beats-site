@@ -289,3 +289,14 @@ document.addEventListener('DOMContentLoaded', () => {
     renderizarBeats(); // Para a index principal
     renderizarTodosBeats(); // Para a nova página musicas.html
 });
+
+// ========== LOADER GLOBAL ==========
+window.addEventListener('load', () => {
+    const loader = document.getElementById('global-loader');
+    if (loader) {
+        // Dá um leve delay de 300ms para a animação aparecer bonita e sumir suavemente
+        setTimeout(() => {
+            loader.classList.add('hidden');
+        }, 300);
+    }
+});
