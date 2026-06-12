@@ -441,7 +441,9 @@
     MENU DE NAVEGAÇÃO
     ============================================================ */
 .navbar {
-    background-color: #1a1a1a;
+    background-color: rgba(26, 26, 26, 0,75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 3px solid #ccff00;
     position: sticky;
     top: 0;
@@ -653,7 +655,8 @@ SEÇÕES BEATS
     padding-bottom: 20px;
     scroll-behavior: smooth;
     position: relative;
-    z-index: 20;
+    overflow:hidden;
+    padding: 20px 10px;
 }
 
 .beats-container::-webkit-scrollbar {
@@ -667,6 +670,29 @@ SEÇÕES BEATS
 .beats-container::-webkit-scrollbar-thumb {
     background: #ccff00;
     border-radius: 4px;
+}
+
+/* TRILHO DE FUNDO */
+.carousel-progress-container {
+  width: 120px; /* Tamanho fixo e discreto para a barrinha */
+  height: 5px;
+  background: rgba(255, 255, 255, 0.1); /* Linha cinza escura de fundo */
+  border-radius: 2px;
+  margin: 20px auto 0 auto; /* Centraliza horizontalmente abaixo dos beats */
+  position: relative;
+  overflow: hidden;
+}
+
+/* INDICADOR NEON MÓVEL */
+.carousel-progress-bar {
+  height: 100%;
+  width: 50%; /* Define o tamanho da barra que vai correr */
+  background: #ccff00; /* Verde neon */
+  box-shadow: 0 0 8px rgba(204, 255, 0, 0.6);
+  border-radius: 2px;
+  position: absolute;
+  left: 0;
+  transition: left 0.2s ease-out; /* Movimento suave idêntico ao clique das setas */
 }
 
 /* TELA DE SINAL DE CARREGAMENTO GLOBAL */

@@ -371,3 +371,30 @@ window.addEventListener('scroll', () => {
         barra.style.width = porcentagem + "%";
     }
 });
+
+
+// ============================================================
+// PROGRESSO DA BARRA HORIZONTAL DO CARROSSEL DE BEATS
+// ============================================================
+const containerBeats = document.getElementById('beatsContainer');
+const indicadorCarrossel = document.getElementById('carouselBar');
+
+if (containerBeats && indicadorCarrossel) {
+    containerBeats.addEventListener('scroll', () => {
+        // Quanto foi scrollado para o lado
+        const scrollEsquerda = containerBeats.scrollLeft;
+        
+        // O tamanho máximo que ele consegue scrollar para o lado
+        const scrollMaximo = containerBeats.scrollWidth - containerBeats.clientWidth;
+        
+        if (scrollMaximo > 0) {
+            // Calcula a porcentagem atual da rolagem (0 a 100)
+            const porcentagem = (scrollEsquerda / scrollMaximo) * 100;
+            
+            // Restringe o movimento máximo para a barrinha não sumir para fora do trilho (limite de 70% já que ela tem 30% de largura)
+            const posicaoBarra = (porcentagem / 100) * 70; 
+            
+            indicadorCarrossel.style.left = posicaoBarra + "%";
+        }
+    });
+}
