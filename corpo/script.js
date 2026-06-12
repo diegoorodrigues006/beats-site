@@ -1,3 +1,5 @@
+
+
 // ============================================================
 // CONFIGURAÇÃO DA PLANILHA (ALIMENTAÇÃO DINÂMICA)
 // ============================================================
@@ -248,22 +250,35 @@ function onYouTubeIframeAPIReady() {
 }
 
 function onPlayerStateChange(event) {
+    const checkbox = document.getElementById('play-toggle');
     if (event.data === YT.PlayerState.PLAYING) {
         incrementarPlays(); 
         const dados = player.getVideoData();
-        const nomeExibicao = document.getElementById('current-track-name').innerText;
-        if(nomeExibicao === "Selecione um Beat" || nomeExibicao === "") {
-            document.getElementById('current-track-name').innerText = dados.title;
-        }
-        document.getElementById('btn-play-header').className = "fas fa-pause-circle play-main";
+        if (checkbox) checkbox.checked = true;
         atualizarProgresso();
+    } else if (event.data === YT.PlayerState.PAUSED) {
+        if (checkbox) checkbox.checked = false;
     }
 }
 
 function tocarBeat(idYoutube, nome) {
     const novoIndice = listaBeats.findIndex(b => b.idYoutube === idYoutube);
     if (novoIndice !== -1) indiceMusicaAtual = novoIndice;
-    if (nome) document.getElementById('current-track-name').innerText = nome;
+    
+    // Atualiza o título do beat
+    if (nome) {
+        document.getElementById('player-title').innerText = nome;
+    }
+    
+    // Injeta a imagem da capa do YouTube como background-image
+    const albumArtDiv = document.getElementById('player-album-art');
+    if (albumArtDiv && idYoutube) {
+        albumArtDiv.style.backgroundImage = `url('https://img.youtube.com/vi/${idYoutube}/maxresdefault.jpg')`;
+        // Remove o placeholder de música quando há imagem
+        const placeholder = albumArtDiv.querySelector('.player-placeholder');
+        if (placeholder) placeholder.style.display = 'none';
+    }
+    
     if (player && player.loadVideoById) {
         player.loadVideoById(idYoutube);
     }
@@ -284,14 +299,14 @@ function musicaAnterior() {
 }
 
 function togglePlay() {
-    const btn = document.getElementById('btn-play-header');
+    const checkbox = document.getElementById('play-toggle');
     const estado = player.getPlayerState();
     if (estado === YT.PlayerState.PLAYING) {
         player.pauseVideo();
-        btn.className = "fas fa-play-circle play-main";
+        checkbox.checked = false;
     } else {
         player.playVideo();
-        btn.className = "fas fa-pause-circle play-main";
+        checkbox.checked = true;
     }
 }
 
@@ -307,9 +322,13 @@ function atualizarProgresso() {
             const t = player.getCurrentTime();
             const d = player.getDuration();
             if(d > 0) {
-                document.getElementById('progress-fill').style.width = (t/d*100) + "%";
-                document.getElementById('current-time').innerText = formatarTempo(t);
-                document.getElementById('duration').innerText = formatarTempo(d);
+                const progressFill = document.getElementById('progress-fill');
+                const currentTime = document.getElementById('current-time');
+                const duration = document.getElementById('duration');
+                
+                if (progressFill) progressFill.style.width = (t/d*100) + "%";
+                if (currentTime) currentTime.innerText = formatarTempo(t);
+                if (duration) duration.innerText = formatarTempo(d);
             }
         } else {
             clearInterval(intervalo);
@@ -329,5 +348,26 @@ window.addEventListener('load', () => {
         setTimeout(() => {
             loader.classList.add('hidden');
         }, 300);
+    }
+});
+
+
+// ============================================================
+// SISTEMA DE BARRA DE PROGRESSO DE ROLAGEM (SCROLL PROGRESS)
+// ============================================================
+window.addEventListener('scroll', () => {
+    const barra = document.getElementById('scrollBar');
+    if (!barra) return;
+
+    // Calcula o quanto o usuário já rolou para baixo
+    const pixelsRolados = window.scrollY || document.documentElement.scrollTop;
+    
+    // Calcula a altura total máxima que a página pode rolar
+    const alturaTotalPagina = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    
+    // Transforma em porcentagem (0 a 100)
+    if (alturaTotalPagina > 0) {
+        const porcentagem = (pixelsRolados / alturaTotalPagina) * 100;
+        barra.style.width = porcentagem + "%";
     }
 });

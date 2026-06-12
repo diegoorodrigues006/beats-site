@@ -242,6 +242,202 @@
 }
 
 /* ============================================================
+    NOVO MUSIC PLAYER MINIMALISTA (ESTILO SPOTIFY)
+    ============================================================ */
+.player-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    padding: 12px 20px;
+    border-radius: 20px;
+    border: 1px solid rgba(204, 255, 0, 0.2);
+    min-width: 450px;
+    margin-left: auto;
+    height: auto;
+}
+
+.player-album-art {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+    background-image: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.player-placeholder {
+    font-size: 32px;
+    color: #666;
+}
+
+.player-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.player-title {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-artist {
+    color: #aaa;
+    font-size: 12px;
+    margin: 0;
+}
+
+.player-controls-new {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    color: #ccff00;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-btn:hover {
+    transform: scale(1.1);
+    color: #e8ff66;
+}
+
+.play-toggle {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    background: #ccff00;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(204, 255, 0, 0.3);
+    flex-shrink: 0;
+}
+
+.play-toggle:hover {
+    background: #e8ff66;
+    box-shadow: 0 6px 16px rgba(204, 255, 0, 0.5);
+    transform: scale(1.05);
+}
+
+.play-toggle input {
+    display: none;
+}
+
+.play-toggle .play-icon,
+.play-toggle .pause-icon {
+    position: absolute;
+    color: #000;
+    font-size: 22px;
+    transition: opacity 0.3s ease;
+}
+
+.play-toggle .play-icon {
+    opacity: 1;
+}
+
+.play-toggle .pause-icon {
+    opacity: 0;
+}
+
+.play-toggle input:checked ~ .play-icon {
+    opacity: 0;
+}
+
+.play-toggle input:checked ~ .pause-icon {
+    opacity: 1;
+}
+
+/* Responsivo para o player em diferentes contextos */
+@media (max-width: 1024px) {
+    .player-container {
+        min-width: 380px;
+        padding: 10px 15px;
+        gap: 15px;
+    }
+    
+    .player-album-art {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .player-title {
+        font-size: 13px;
+    }
+    
+    .player-artist {
+        font-size: 11px;
+    }
+    
+    .control-btn {
+        font-size: 16px;
+    }
+    
+    .play-toggle {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+@media (max-width: 768px) {
+    .player-container {
+        min-width: auto;
+        width: 100%;
+        max-width: 100%;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .player-album-art {
+        width: 60px;
+        height: 60px;
+        flex-shrink: 0;
+    }
+    
+    .player-info {
+        flex: 1;
+        min-width: 120px;
+    }
+    
+    .player-controls-new {
+        gap: 8px;
+        order: 3;
+        flex-basis: 100%;
+        justify-content: center;
+        margin-top: 5px;
+    }
+    
+    .play-toggle {
+        width: 42px;
+        height: 42px;
+    }
+}
+
+/* ============================================================
     MENU DE NAVEGAÇÃO
     ============================================================ */
 .navbar {
@@ -1154,4 +1350,93 @@ SEÇÕES BEATS
     background-color: #b8e600;
     box-shadow: 0 0 15px rgba(204, 255, 0, 0.5);
     transform: scale(1.05);
+}
+
+/* CONTAINER FIXO NO TOPO DA TELA */
+.scroll-progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px; /* Espessura bem fina igual aos sites modernos */
+  background: transparent; /* Fundo transparente para não atrapalhar o layout */
+  z-index: 9999; /* Garante que ela fique por cima de absolutamente tudo */
+}
+
+/* A BARRA QUE VAI PREENCHER CORES */
+.scroll-progress-bar {
+  height: 100%;
+  width: 0%; /* Começa em zero e o JavaScript controla o resto */
+  background: #ccff00; /* O seu verde neon oficial */
+  box-shadow: 0 0 10px rgba(204, 255, 0, 0.8); /* Brilho neon foda no topo */
+  transition: width 0.1s ease-out; /* Movimento suave ao rolar */
+}
+
+
+/* ============================================================
+   PERSONALIZAÇÃO DA BARRA DE ROLAGEM LATERAL (SCROLLBAR)
+   ============================================================ */
+
+/* 1. Controla a largura geral da barra vertical */
+::-webkit-scrollbar {
+  width: 10px; /* Deixa ela um pouco mais fina e discreta */
+}
+
+/* 2. O "Trilho" (fundo fixo por onde a barra corre) */
+::-webkit-scrollbar-track {
+  background: #000000; /* Preto puro igual ao fundo do seu site */
+}
+
+/* 3. O "Thumb" (a barrinha móvel que o usuário arrasta) */
+::-webkit-scrollbar-thumb {
+  background-color: #ccff00; /* Verde neon oficial */
+  border-radius: 10px; /* Deixa as pontas arredondadas igual ao print */
+  
+  /* Cria uma borda preta invisível ao redor para dar um efeito de espaçamento elegante */
+  border: 2px solid #000000; 
+  
+  transition: background-color 0.2s ease;
+}
+
+/* 4. Efeito quando o usuário passa o mouse por cima da barra */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #ffffff; /* Ela muda para branco puro no hover, dando destaque */
+}
+
+/* 5. Remove as setinhas de cima e de baixo (opcional, deixa mais clean e moderno) */
+::-webkit-scrollbar-button {
+  display: none;
+}/* ============================================================
+   PERSONALIZAÇÃO DA BARRA DE ROLAGEM LATERAL (SCROLLBAR)
+   ============================================================ */
+
+/* 1. Controla a largura geral da barra vertical */
+::-webkit-scrollbar {
+  width: 10px; /* Deixa ela um pouco mais fina e discreta */
+}
+
+/* 2. O "Trilho" (fundo fixo por onde a barra corre) */
+::-webkit-scrollbar-track {
+  background: #000000; /* Preto puro igual ao fundo do seu site */
+}
+
+/* 3. O "Thumb" (a barrinha móvel que o usuário arrasta) */
+::-webkit-scrollbar-thumb {
+  background-color: #ccff00; /* Verde neon oficial */
+  border-radius: 10px; /* Deixa as pontas arredondadas igual ao print */
+  
+  /* Cria uma borda preta invisível ao redor para dar um efeito de espaçamento elegante */
+  border: 2px solid #000000; 
+  
+  transition: background-color 0.2s ease;
+}
+
+/* 4. Efeito quando o usuário passa o mouse por cima da barra */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #ffffff; /* Ela muda para branco puro no hover, dando destaque */
+}
+
+/* 5. Remove as setinhas de cima e de baixo (opcional, deixa mais clean e moderno) */
+::-webkit-scrollbar-button {
+  display: none;
 }
