@@ -498,7 +498,7 @@
     SEÇÕES PLAYLISTS
     ============================================================ */
 
-   /* Estilo do wrapper da imagem de fundo */
+   /* Estilo do wrapper da imagem de fundo 
 .background-image-wrapper {
     position: fixed;
     top: 10px;
@@ -512,6 +512,8 @@
     z-index: 0;
     pointer-events: none;
 }
+
+*/
 
 .playlists-section,
 .beats-section {
@@ -1157,7 +1159,7 @@ SEÇÕES BEATS
     display: flex;
     align-items: flex-end;
 }
-}
+
 
 .banner-content {
     display: flex;
@@ -1491,3 +1493,4 @@ SEÇÕES BEATS
   
   z-index: -2; /* Jogamos mais para trás ainda */
 }
+
