@@ -279,8 +279,9 @@
 }
 
 .player-info {
-    flex: 1;
+    flex: 0 0 auto;
     min-width: 0;
+    width: 200px;
 }
 
 .player-title {
@@ -290,7 +291,28 @@
     margin: 0 0 4px 0;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    width: 200px;
+    max-width: 200px;
+    display: inline-block;
+}
+
+.player-title:hover {
+    animation: marquee-scroll 12s linear infinite;
+}
+
+@keyframes marquee-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    10% {
+        transform: translateX(0);
+    }
+    90% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
 }
 
 .player-artist {
@@ -387,6 +409,12 @@
     
     .player-title {
         font-size: 13px;
+        width: 170px;
+        max-width: 170px;
+    }
+    
+    .player-info {
+        width: 170px;
     }
     
     .player-artist {
@@ -419,8 +447,15 @@
     }
     
     .player-info {
-        flex: 1;
+        flex: 0 0 auto;
         min-width: 120px;
+        width: 140px;
+    }
+    
+    .player-title {
+        width: 140px;
+        max-width: 140px;
+        font-size: 12px;
     }
     
     .player-controls-new {
