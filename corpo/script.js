@@ -1,5 +1,3 @@
-
-
 // ============================================================
 // CONFIGURAÇÃO DA PLANILHA (ALIMENTAÇÃO DINÂMICA)
 // ============================================================
@@ -8,33 +6,71 @@ let listaBeats = [];
 let player; 
 let indiceMusicaAtual = 0;
 
-// REQUISITA E CONVERTE OS DADOS DO GOOGLE SHEETS (BASEADO NO FORMATO REAL DO ARQUIVO)
+// REQUISITA E CONVERTE OS DADOS DO GOOGLE SHEETS COM LIMPEZA AGRESSIVA DE ASPAS
 async function carregarBeatsDaPlanilha() {
     try {
+        console.log("🔄 Iniciando fetch da planilha...");
         const resposta = await fetch(urlPlanilha);
         const dadosCSV = await resposta.text();
         
-        // Divide o texto por quebras de linha tratando Windows (\r\n) e Linux (\n)
         const linhas = dadosCSV.split(/\r?\n/);
+        console.log("📋 Total de linhas no CSV:", linhas.length);
+        console.log("📋 Primeira linha (cabeçalho):", linhas[0]);
+        
         listaBeats = []; 
         
-        // Loop começa em 1 para ignorar a linha de cabeçalhos (idYoutube,artista,nome,genero)
+        // ===== PARSER CSV ROBUSTO =====
+        // Funciona com campos entre aspas que contêm vírgulas
+        const parseCSVLine = (line) => {
+            const colunas = [];
+            let atual = '';
+            let dentroAspas = false;
+            
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                
+                if (char === '"') {
+                    dentroAspas = !dentroAspas;
+                } else if (char === ',' && !dentroAspas) {
+                    colunas.push(atual);
+                    atual = '';
+                } else {
+                    atual += char;
+                }
+            }
+            colunas.push(atual);
+            return colunas;
+        };
+        
         for (let i = 1; i < linhas.length; i++) {
-            const linha = linhas[i].trim();
-            if (linha === '') continue; 
+            const line = linhas[i].trim();
+            if (line === '') continue; 
             
-            // CORREÇÃO CIRÚRGICA: O Bloco de Notas mostrou que o separador real é a vírgula convencional!
-            const colunas = linha.split(',');
+            const colunas = parseCSVLine(line);
             
-            // Remove espaços extras ou caracteres invisíveis residuais
-            const limparCampo = (campo) => campo ? campo.trim() : "";
+            // FUNÇÃO CORRIGIDA: Higienização AGRESSIVA de aspas CSV + caracteres especiais
+            const limparCampo = (campo) => {
+                if (!campo) return "";
+                // Passo 1: Remove espaços externos
+                let limpo = campo.trim();
+                // Passo 2: Remove aspas simples e duplas do início e fim
+                limpo = limpo.replace(/^["']+|["']+$/g, '');
+                // Passo 3: Converte sequências repetidas de aspas duplas "" em simples "
+                limpo = limpo.replace(/""/g, '"');
+                // Passo 4: Remove sequências de 3+ aspas de QUALQUER tipo (""",...,""")
+                limpo = limpo.replace(/"{3,}/g, '"');
+                limpo = limpo.replace(/'{3,}/g, "'");
+                // Passo 5: Remove espaços novamente após limpeza
+                return limpo.trim();
+            };
 
             const idYoutube = limparCampo(colunas[0]);
             const artista = limparCampo(colunas[1]) || "KAIKY PROD";
             const nome = limparCampo(colunas[2]);
             const genero = colunas[3] ? limparCampo(colunas[3]).toLowerCase() : "";
 
-            // Só insere se encontrar o ID do YouTube e o Nome válidos
+            console.log(`📌 Linha ${i}: ID="${idYoutube}", Nome="${nome}", Gênero="${genero}"`);
+
             if (idYoutube && nome) {
                 listaBeats.push({
                     idYoutube: idYoutube,
@@ -45,12 +81,21 @@ async function carregarBeatsDaPlanilha() {
             }
         }
         
-        console.log("Planilha sincronizada com sucesso!", listaBeats);
+        console.log("✅ Planilha sincronizada com sucesso!");
+        console.log("📊 Total de beats carregados:", listaBeats.length);
+        console.log("📊 Beats por gênero:", {
+            trap: listaBeats.filter(b => b.genero === 'trap').length,
+            boombap: listaBeats.filter(b => b.genero === 'boombap').length,
+            detroit: listaBeats.filter(b => b.genero === 'detroit').length,
+            funk: listaBeats.filter(b => b.genero === 'funk').length,
+            experimental: listaBeats.filter(b => b.genero === 'experimental').length
+        });
+        console.log("🎵 Primeiros 3 beats:", listaBeats.slice(0, 3));
+        
         executarRenderizacaoGlobal();
 
     } catch (erro) {
-        console.error("Erro crítico ao ler dados da planilha remota:", erro);
-        // Fallback de segurança para o site não quebrar em modo offline
+        console.error("❌ Erro crítico ao ler dados da planilha remota:", erro);
         listaBeats = [
             { idYoutube: "lz3mW653CL8", artista: "KAIKY PROD", nome: "brandao #1", genero: "trap" }
         ];
@@ -114,22 +159,31 @@ function contarMusicas(genero) {
     return beatsDogenero.length;
 }
 
-// ========== RENDERIZADORES DE LAYOUT ==========
+// ========== RENDERIZADORES DE LAYOUT BLINDADOS ==========
 function renderizarBeats() {
     const container = document.getElementById('beatsContainer');
     if (!container) return; 
 
-    container.innerHTML = listaBeats.map(beat => `
-        <div class="beat-card">
-            <div class="beat-image-container">
-                <img src="https://img.youtube.com/vi/${beat.idYoutube}/maxresdefault.jpg" class="youtube-capa">
-                <button class="spotify-play-btn" onclick="tocarBeat('${beat.idYoutube}', '${beat.nome}')">
-                    <i class="fas fa-play"></i>
-                </button>
+    container.innerHTML = listaBeats.map(beat => {
+        // ESCAPE SEGURO EM HTML: Usa entidades HTML para evitar quebras de atributos
+        // Escapa aspas simples para JavaScript dentro do atributo onclick
+        const nomeTratado = beat.nome
+            .replace(/\\/g, '\\\\')           // Barra invertida primeiro
+            .replace(/'/g, "\\'")              // Simples com escape
+            .replace(/"/g, '&quot;');          // Duplas com entidade HTML
+        
+        return `
+            <div class="beat-card">
+                <div class="beat-image-container">
+                    <img src="https://img.youtube.com/vi/${beat.idYoutube}/hqdefault.jpg" class="youtube-capa">
+                    <button class="spotify-play-btn" onclick="tocarBeat('${beat.idYoutube}', '${nomeTratado}')">
+                        <i class="fas fa-play"></i>
+                    </button>
+                </div>
+                <p style="color:white; text-align:center; margin-top:10px;">${beat.nome}</p>
             </div>
-            <p style="color:white; text-align:center; margin-top:10px;">${beat.nome}</p>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 function renderizarTodosBeats(generoFiltro = 'todos') {
@@ -138,27 +192,35 @@ function renderizarTodosBeats(generoFiltro = 'todos') {
 
     const beatsFiltrados = generoFiltro === 'todos' ? listaBeats : listaBeats.filter(beat => beat.genero === generoFiltro);
 
-    container.innerHTML = beatsFiltrados.map(beat => `
-        <div class="track-card-mini">
-            <div class="card-img-container">
-                <img src="https://img.youtube.com/vi/${beat.idYoutube}/maxresdefault.jpg" alt="${beat.nome}">
-                <div class="play-overlay" onclick="tocarBeat('${beat.idYoutube}', '${beat.nome}')">
-                    <i class="fas fa-play-circle"></i>
+    container.innerHTML = beatsFiltrados.map(beat => {
+        // ESCAPE SEGURO EM HTML: Usa entidades HTML para evitar quebras de atributos
+        const nomeTratado = beat.nome
+            .replace(/\\/g, '\\\\')           // Barra invertida primeiro
+            .replace(/'/g, "\\'")              // Simples com escape
+            .replace(/"/g, '&quot;');          // Duplas com entidade HTML
+        
+        return `
+            <div class="track-card-mini">
+                <div class="card-img-container">
+                    <img src="https://img.youtube.com/vi/${beat.idYoutube}/hqdefault.jpg" alt="${beat.nome}">
+                    <div class="play-overlay" onclick="tocarBeat('${beat.idYoutube}', '${nomeTratado}')">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                </div>
+                <div class="track-info-mini">
+                    <p class="track-name-text">${beat.nome}</p>
+                    <button class="btn-buy-green">R$ 60,00</button>
                 </div>
             </div>
-            <div class="track-info-mini">
-                <p class="track-name-text">${beat.nome}</p>
-                <button class="btn-buy-green">R$ 60,00</button>
-            </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 function filtrarBeats(genero) {
     const botoes = document.querySelectorAll('.filter-btn');
     botoes.forEach(btn => btn.classList.remove('active'));
-    if (event && event.target) {
-        event.target.classList.add('active');
+    if (window.event && window.event.target) {
+        window.event.target.classList.add('active');
     }
     renderizarTodosBeats(genero);
 }
@@ -169,15 +231,27 @@ function renderizarPlaylists() {
 
     const generos = ['trap', 'boombap', 'detroit', 'funk', 'experimental'];
     
+    // DEBUG: Log para verificar estado de listaBeats
+    console.log("🎵 renderizarPlaylists() chamado. listaBeats.length =", listaBeats.length);
+    if (listaBeats.length > 0) {
+        console.log("🎵 Amostra de beat:", listaBeats[0]);
+        console.log("🎵 Gêneros únicos encontrados:", [...new Set(listaBeats.map(b => b.genero))]);
+    }
+    
     container.innerHTML = generos.map(genero => {
-        const total = contarMusicas(genero);
+        // CORREÇÃO: Conta diretamente do array atualizado 'listaBeats' no momento da renderização
+        const beatsDogenero = listaBeats.filter(beat => beat.genero === genero);
+        const total = beatsDogenero.length;
+        
+        console.log(`📊 Gênero "${genero}": ${total} beats`);
+        
         const imagemCapa = (genero === 'trap') ? 'beats-trap.jpeg' : `beats-${genero}.jpeg`;
         return `
             <div class="playlist-card" onclick="window.location.href='playlist-detalhe.html?genero=${genero}'">
                 <div class="playlist-image" style="background: url('${imagemCapa}'); background-size: cover; background-position: center;">
                 </div>
                 <div class="playlist-info">
-                    <h3>${genero}</h3>
+                    <h3>${genero.toUpperCase()}</h3>
                     <p>${total} Beats</p>
                 </div>
             </div>
@@ -186,7 +260,6 @@ function renderizarPlaylists() {
 }
 
 // ========== DINÂMICA INTERNA DE PLAYLISTS ==========
-// Puxa as músicas filtradas direto do banco de dados gerado pela planilha
 function carregarPlaylistDinamica(genero) {
     const titulo = document.getElementById('playlist-title');
     const capaPlaylist = document.getElementById('playlist-cover');
@@ -207,20 +280,28 @@ function carregarPlaylistDinamica(genero) {
     const imagemHero = (genero === 'trap') ? 'beats-trap.jpeg' : `beats-${genero}.jpeg`;
     if(capaPlaylist) capaPlaylist.src = imagemHero;
 
-    listaContainer.innerHTML = beatsFiltrados.map(beat => `
-        <div class="track-card-mini">
-            <div class="card-img-container">
-                <img src="https://img.youtube.com/vi/${beat.idYoutube}/maxresdefault.jpg" alt="${beat.nome}">
-                <div class="play-overlay" onclick="tocarBeat('${beat.idYoutube}', '${beat.nome}')">
-                    <i class="fas fa-play-circle"></i>
+    listaContainer.innerHTML = beatsFiltrados.map(beat => {
+        // ESCAPE SEGURO EM HTML: Usa entidades HTML para evitar quebras de atributos
+        const nomeTratado = beat.nome
+            .replace(/\\/g, '\\\\')           // Barra invertida primeiro
+            .replace(/'/g, "\\'")              // Simples com escape
+            .replace(/"/g, '&quot;');          // Duplas com entidade HTML
+        
+        return `
+            <div class="track-card-mini">
+                <div class="card-img-container">
+                    <img src="https://img.youtube.com/vi/${beat.idYoutube}/hqdefault.jpg" alt="${beat.nome}">
+                    <div class="play-overlay" onclick="tocarBeat('${beat.idYoutube}', '${nomeTratado}')">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                </div>
+                <div class="track-info-mini">
+                    <p class="track-name-text">${beat.nome}</p>
+                    <button class="btn-buy-green">R$ 60,00</button>
                 </div>
             </div>
-            <div class="track-info-mini">
-                <p class="track-name-text">${beat.nome}</p>
-                <button class="btn-buy-green">R$ 60,00</button>
-            </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 function tocarPrimeira() {
@@ -253,7 +334,6 @@ function onPlayerStateChange(event) {
     const checkbox = document.getElementById('play-toggle');
     if (event.data === YT.PlayerState.PLAYING) {
         incrementarPlays(); 
-        const dados = player.getVideoData();
         if (checkbox) checkbox.checked = true;
         atualizarProgresso();
     } else if (event.data === YT.PlayerState.PAUSED) {
@@ -270,10 +350,10 @@ function tocarBeat(idYoutube, nome) {
         document.getElementById('player-title').innerText = nome;
     }
     
-    // Injeta a imagem da capa do YouTube como background-image
+    // Injeta a imagem da capa do YouTube como background-image usando hqdefault estável
     const albumArtDiv = document.getElementById('player-album-art');
     if (albumArtDiv && idYoutube) {
-        albumArtDiv.style.backgroundImage = `url('https://img.youtube.com/vi/${idYoutube}/maxresdefault.jpg')`;
+        albumArtDiv.style.backgroundImage = `url('https://img.youtube.com/vi/${idYoutube}/hqdefault.jpg')`;
         // Remove o placeholder de música quando há imagem
         const placeholder = albumArtDiv.querySelector('.player-placeholder');
         if (placeholder) placeholder.style.display = 'none';
@@ -300,13 +380,15 @@ function musicaAnterior() {
 
 function togglePlay() {
     const checkbox = document.getElementById('play-toggle');
+    if (!player || typeof player.getPlayerState !== "function") return;
+    
     const estado = player.getPlayerState();
     if (estado === YT.PlayerState.PLAYING) {
         player.pauseVideo();
-        checkbox.checked = false;
+        if (checkbox) checkbox.checked = false;
     } else {
         player.playVideo();
-        checkbox.checked = true;
+        if (checkbox) checkbox.checked = true;
     }
 }
 
@@ -336,13 +418,24 @@ function atualizarProgresso() {
     }, 1000);
 }
 
-// ========== EVENTOS DE INICIALIZAÇÃO DELAY ==========
+// ========== EVENTOS DE INICIALIZAÇÃO ==========
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("📌 DOMContentLoaded disparado!");
     inicializarPlays();
-    carregarBeatsDaPlanilha(); // Executa a requisição assíncrona remota
+    carregarBeatsDaPlanilha();
+    
+    // Force re-render das playlists após 2 segundos caso ainda estejam em "0 Beats"
+    setTimeout(() => {
+        console.log("⏱️ Verificação de contingência: listaBeats.length =", listaBeats.length);
+        if (listaBeats.length > 0) {
+            renderizarPlaylists();
+            console.log("✅ Re-renderização das playlists executada!");
+        }
+    }, 2000);
 });
 
 window.addEventListener('load', () => {
+    console.log("📌 Window 'load' disparado!");
     const loader = document.getElementById('global-loader');
     if (loader) {
         setTimeout(() => {
@@ -351,7 +444,6 @@ window.addEventListener('load', () => {
     }
 });
 
-
 // ============================================================
 // SISTEMA DE BARRA DE PROGRESSO DE ROLAGEM (SCROLL PROGRESS)
 // ============================================================
@@ -359,19 +451,14 @@ window.addEventListener('scroll', () => {
     const barra = document.getElementById('scrollBar');
     if (!barra) return;
 
-    // Calcula o quanto o usuário já rolou para baixo
     const pixelsRolados = window.scrollY || document.documentElement.scrollTop;
-    
-    // Calcula a altura total máxima que a página pode rolar
     const alturaTotalPagina = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     
-    // Transforma em porcentagem (0 a 100)
     if (alturaTotalPagina > 0) {
         const porcentagem = (pixelsRolados / alturaTotalPagina) * 100;
         barra.style.width = porcentagem + "%";
     }
 });
-
 
 // ============================================================
 // PROGRESSO DA BARRA HORIZONTAL DO CARROSSEL DE BEATS
@@ -381,19 +468,12 @@ const indicadorCarrossel = document.getElementById('carouselBar');
 
 if (containerBeats && indicadorCarrossel) {
     containerBeats.addEventListener('scroll', () => {
-        // Quanto foi scrollado para o lado
         const scrollEsquerda = containerBeats.scrollLeft;
-        
-        // O tamanho máximo que ele consegue scrollar para o lado
         const scrollMaximo = containerBeats.scrollWidth - containerBeats.clientWidth;
         
         if (scrollMaximo > 0) {
-            // Calcula a porcentagem atual da rolagem (0 a 100)
             const porcentagem = (scrollEsquerda / scrollMaximo) * 100;
-            
-            // Restringe o movimento máximo para a barrinha não sumir para fora do trilho (limite de 70% já que ela tem 30% de largura)
             const posicaoBarra = (porcentagem / 100) * 70; 
-            
             indicadorCarrossel.style.left = posicaoBarra + "%";
         }
     });
