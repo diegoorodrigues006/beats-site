@@ -781,13 +781,13 @@ SEÇÕES BEATS
 }
 
 .beat-card {
-    flex-shrink: 0;
-    width: 180px;
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    min-width: 200px; /* Mantém a largura estável no carrossel */
+    height: 300px;    /* Altura fixa para todos ficarem idênticos */
+    box-sizing: border-box;
 }
 
 .beat-image {
@@ -835,12 +835,13 @@ SEÇÕES BEATS
 
 /* O Card (Sempre Preto) */
 .beat-card {
-    background-color: transparent; /* Fundo transparente */
-    border-radius: 12px;
-    padding: 15px;
-    transition: background-color 0.3s ease;
-    border: 1px solid #1a1a1a;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    min-width: 200px; /* Mantém a largura estável no carrossel */
+    height: 380px;    /* Altura fixa para todos ficarem idênticos */
+    box-sizing: border-box;
 }
 
 /* Container da Imagem */
@@ -1405,6 +1406,10 @@ SEÇÕES BEATS
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-top: auto;
 }
 
 .btn-buy-green:hover {

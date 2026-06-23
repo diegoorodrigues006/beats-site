@@ -76,7 +76,8 @@ async function carregarBeatsDaPlanilha() {
                     idYoutube: idYoutube,
                     artista: artista,
                     nome: nome,
-                    genero: genero
+                    genero: genero,
+                    preco: limparCampo(colunas[4]) || "R$ 60,00"
                 });
             }
         }
@@ -181,6 +182,7 @@ function renderizarBeats() {
                     </button>
                 </div>
                 <p style="color:white; text-align:center; margin-top:10px;">${beat.nome}</p>
+                <button class="btn-buy-green">${beat.preco}</button>
             </div>
         `;
     }).join('');
@@ -209,7 +211,7 @@ function renderizarTodosBeats(generoFiltro = 'todos') {
                 </div>
                 <div class="track-info-mini">
                     <p class="track-name-text">${beat.nome}</p>
-                    <button class="btn-buy-green">R$ 60,00</button>
+                    <button class="btn-buy-green">${beat.preco}</button>
                 </div>
             </div>
         `;
@@ -297,7 +299,7 @@ function carregarPlaylistDinamica(genero) {
                 </div>
                 <div class="track-info-mini">
                     <p class="track-name-text">${beat.nome}</p>
-                    <button class="btn-buy-green">R$ 60,00</button>
+                    <button class="btn-buy-green">${beat.preco}</button>
                 </div>
             </div>
         `;
