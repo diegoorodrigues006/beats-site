@@ -10,6 +10,13 @@
     font-family: Arial, sans-serif; /*escolher fonte depois*/
 }
 
+:root {
+    --bg-color: #0a0a0a;
+    --accent-color: #ccff00; /* Verde limão/neon */
+    --text-color: #ffffff;
+    --gray-text: #888888;
+}
+
 /* ALINHAMENTO DO BANNER PRINCIPAL CORRIGIDO (IGUAL À MAQUETE) */
 .main-header {
     position: relative;
@@ -46,11 +53,9 @@
 .header-right-group {
     display: flex;
     align-items: center;
-    gap: 15px; /* Espaço entre os números e as redes sociais */
     gap: 20px; /* Espaço entre os números e os ícones das redes */
     margin-left: auto; /* Empurra o grupo para a direita */
     margin: 90px 0 0 0; /* Ajuste fino para alinhar melhor com a maquete */
-
 }
 
 /* ESTILIZAÇÃO DOS SEUS STATS (NÚMEROS) */
@@ -157,6 +162,19 @@
     font-size: 28px;
     color: #ccff00; /* Verde neon */
 }
+
+.player-controls i, 
+.nav-arrows button,
+.spotify-play-btn {
+    cursor: pointer;
+    transition: transform 0.2s ease; /* Bônus: animação suave ao interagir */
+}
+
+.player-controls i:hover {
+    transform: scale(1.1);
+    color: #ccff00; /* O seu verde neon para dar destaque */
+}
+
 /* 1. O Container que "corta" o que sai da borda */
 .track-name-container {
     width: 140px; /* Largura ajustada para o header */
@@ -180,7 +198,6 @@
     0% { transform: translateX(0); }
     100% { transform: translateX(-100%); }
 }
-
 
 .play-main {
     font-size: 48px;
@@ -214,31 +231,6 @@
     border-radius: 2px;
     box-shadow: 0 0 8px #ccff00;
     transform: 1s linear; /* Transição suave para o progresso */
-}
-/* Faz com que todos os ícones de controle do player mostrem a 'mãozinha' */
-.player-controls i, 
-.nav-arrows button,
-.spotify-play-btn {
-    cursor: pointer;
-    transition: transform 0.2s ease; /* Bônus: animação suave ao interagir */
-}
-
-/* Dica: Adicionar um efeito de leve aumento ou brilho ao passar o mouse */
-.player-controls i:hover {
-    transform: scale(1.1);
-    color: #ccff00; /* O seu verde neon para dar destaque */
-}
-
-/* Estilo do botão de redes sociais (não usado?) */
-#redes-sociais {
-    background-color: #000000; /*cor de fundo vermelha */
-    color: white; /*cor do texto branca */
-    border: none; /*remove borda padrão */
-    padding: 10px 20px; /*espaçamento interno */
-    cursor: pointer; /*muda o cursor para indicar que é clicável */
-    font-size: 16px; /*tamanho da fonte */
-    border-radius: 5px; /*borda arredondada */
-
 }
 
 /* ============================================================
@@ -394,7 +386,6 @@
     opacity: 1;
 }
 
-/* Responsivo para o player em diferentes contextos */
 @media (max-width: 1024px) {
     .player-container {
         min-width: 380px;
@@ -529,27 +520,9 @@
     }
 }
 
-    /*-- ============================================================
-    SEÇÕES PLAYLISTS
-    ============================================================ */
-
-   /* Estilo do wrapper da imagem de fundo 
-.background-image-wrapper {
-    position: fixed;
-    top: 10px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('fundo-site.jpeg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 0;
-    pointer-events: none;
-}
-
-*/
-
+/*-- ============================================================
+SEÇÕES GERAIS (PLAYLISTS E BEATS)
+============================================================ */
 .playlists-section,
 .beats-section {
     padding: 60px 10px;
@@ -569,7 +542,6 @@
     z-index: 10;
     position: relative;
     align-items: center;
-    
 }
 
 .section-header h2 {
@@ -608,7 +580,39 @@
     box-shadow: 0 0 20px rgba(204, 255, 0, 0.8);
 }
 
-/* PLAYLISTS CONTAINER */
+@media (max-width: 200px) {
+    .section-header {
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+        z-index: 0;
+    }
+
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .playlists-section,
+    .beats-section {
+        padding: 40px 15px;
+    }
+
+    .section-header h2 {
+        font-size: 1.2rem;
+    }
+
+    .arrow-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+}
+
+/*-- ============================================================
+SEÇÃO PLAYLISTS (HOME)
+============================================================ */
 .playlists-container {
     display: flex;
     gap: 30px;
@@ -641,6 +645,17 @@
     transition: all 0.3s ease;
 }
 
+.playlist-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(204, 255, 0, 0.3);
+    border: 1px solid #ccff00;
+    z-index: 10
+}
+
+.playlist-card:hover .playlist-info h3 {
+    color: #ccff00;
+}
+
 .playlist-image {
     width: 100%;
     height: 180px;
@@ -669,19 +684,30 @@
     color: #888888;
 }
 
-.playlist-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(204, 255, 0, 0.3);
-    border: 1px solid #ccff00;
-    z-index: 10
+@media (max-width: 200px) {
+    .playlists-container {
+        gap: 20px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .playlist-card {
+        width: 160px;
+    }
+
+    .playlist-image {
+        height: 140px;
+    }
 }
 
-.playlist-card:hover .playlist-info h3 {
-    color: #ccff00;
+@media (max-width: 480px) {
+    .playlist-card {
+        width: 140px;
+    }
 }
 
 /*-- ============================================================
-SEÇÕES BEATS
+SEÇÃO BEATS (HOME)
 ============================================================ */
 
 .beats-container {
@@ -732,6 +758,139 @@ SEÇÕES BEATS
   transition: left 0.2s ease-out; /* Movimento suave idêntico ao clique das setas */
 }
 
+@media (max-width: 200px) {
+    .beats-container {
+        gap: 15px;
+    }
+}
+
+/*-- ============================================================
+   CARDS (BEATS E TRACKS)
+   ============================================================ */
+.track-card-mini, .beat-card {
+    background: #111111;
+    border-radius: 12px;
+    padding: 14px;
+    border: 1px solid #222222;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    min-width: 200px;
+    height: 380px;
+}
+
+.track-card-mini:hover, .beat-card:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(204, 255, 0, 0.3), 0 8px 24px rgba(204, 255, 0, 0.15);
+    border-color: #ccff00;
+    background-color: #1a1a1a;
+}
+
+.track-card-mini:hover .artist-badge,
+.beat-card:hover .artist-badge {
+    background-color: #ccff00;
+    color: #000;
+}
+
+.track-card-mini:hover .youtube-capa,
+.beat-card:hover .youtube-capa {
+    opacity: 1;
+}
+
+.track-card-mini:hover .spotify-play-btn,
+.beat-card:hover .spotify-play-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.track-card-mini:hover .card-img-container img,
+.beat-card:hover .beat-image-container img {
+    transform: scale(1.04); 
+}
+
+.card-img-container, .beat-image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #1a1a1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.card-img-container img, .beat-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease, opacity 0.4s ease;
+}
+
+.youtube-capa {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 1; /* Visível sempre */
+}
+
+.beat-artist {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 10, 0.3) 100%);
+    padding: 30px 15px 15px;
+    text-align: left;
+}
+
+.beat-artist p {
+    font-size: 0.9rem;
+    color: #888888;
+    margin: 5px 0;
+}
+
+.spotify-play-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    background-color: #ccff00; /* Seu verde neon */
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 5;
+    cursor: pointer;
+}
+
+@media (max-width: 200px) {
+    .beat-card {
+        width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .beat-card {
+        width: 130px;
+    }
+}
+
+/*-- ============================================================
+   COMPONENTES GERAIS
+   ============================================================ */
+
 /* TELA DE SINAL DE CARREGAMENTO GLOBAL */
 #global-loader {
     position: fixed;
@@ -780,203 +939,319 @@ SEÇÕES BEATS
     50% { height: 60px; }
 }
 
-.beat-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-    min-width: 200px; /* Mantém a largura estável no carrossel */
-    height: 300px;    /* Altura fixa para todos ficarem idênticos */
-    box-sizing: border-box;
+/* BARRA DE PROGRESSO DE SCROLL */
+.scroll-progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px; /* Espessura bem fina igual aos sites modernos */
+  background: transparent; /* Fundo transparente para não atrapalhar o layout */
+  z-index: 9999; /* Garante que ela fique por cima de absolutamente tudo */
 }
 
-.beat-image {
+.scroll-progress-bar {
+  height: 100%;
+  width: 0%; /* Começa em zero e o JavaScript controla o resto */
+  background: #ccff00; /* O seu verde neon oficial */
+  box-shadow: 0 0 10px rgba(204, 255, 0, 0.8); /* Brilho neon foda no topo */
+  transition: width 0.1s ease-out; /* Movimento suave ao rolar */
+}
+
+/* PERSONALIZAÇÃO DA BARRA DE ROLAGEM */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #ccff00;
+  border-radius: 10px;
+  border: 2px solid #000000; 
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #ffffff;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* FUNDO DESFOCADO DA PÁGINA DE MÚSICAS */
+.background-image-musica {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+  background-image: url('fundo-site.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(7px);
+  transform: scale(1.05);
+  background-color: rgba(0, 0, 0, 0.65); 
+  z-index: -2;
+}
+
+
+/*-- ============================================================
+    PÁGINA PLAYLISTS (playlists.html)
+    ============================================================ */
+.playlists-grid-page {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 40px 5%;
+}
+
+.playlist-card-large {
     position: relative;
-    width: 100%;
-    height: 220px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    padding: 15px;
-    aspect-ratio: 1 / 1; /* Garante que a imagem seja quadrada */
-    border-radius: 8px;
+    border-radius: 20px;
     overflow: hidden;
+    aspect-ratio: 1 / 1;
+    display: block;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
-.beat-artist {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 10, 0.3) 100%);
-    padding: 30px 15px 15px;
-    text-align: left;
+.playlist-card-large:hover {
+    transform: translateY(-8px);
+    border-color: #ccff00;
 }
 
-.beat-artist p {
-    font-size: 0.9rem;
-    color: #888888;
-    margin: 5px 0;
+.playlist-card-large:hover img {
+    transform: scale(1.1);
+    filter: brightness(0.9);
 }
 
-.beat-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 15px 40px rgba(204, 255, 0, 0.3);
-}
-
-.beat-card:hover .artist-badge {
-    background-color: #ccff00;
-    color: #000;
-}
-
-/* =========================================
-   BOTÃO DE PLAY ESTILO SPOTIFY
-   ========================================= */
-
-/* O Card (Sempre Preto) */
-.beat-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-    min-width: 200px; /* Mantém a largura estável no carrossel */
-    height: 380px;    /* Altura fixa para todos ficarem idênticos */
-    box-sizing: border-box;
-}
-
-/* Container da Imagem */
-.beat-image-container {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1/1;
-    background-color: transparent;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    overflow: hidden;
-}
-
-/* A Capa do YouTube (Escondida por padrão) */
-.youtube-capa {
+.playlist-card-large img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 1; /* Visível sempre */
-    transition: opacity 0.4s ease; /* Transição suave */
+    transition: transform 0.4s ease, filter 0.3s ease;
+    filter: brightness(0.7);
 }
 
-/* O Botão Spotify (Também escondido) */
-.spotify-play-btn {
+.playlist-info-overlay {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
-    width: 48px;
-    height: 48px;
-    background-color: #ccff00; /* Seu verde neon */
-    border-radius: 50%;
-    border: none;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 25px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+}
+
+.playlist-info-overlay h3 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.playlist-info-overlay span {
+    color: #ccff00;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/*-- ============================================================
+    PÁGINA DETALHE DE PLAYLIST (playlist-detalhes.html)
+    ============================================================ */
+.playlist-banner {
+    position: relative;
+    background: rgba(12, 12, 12, 0.8)!important; /* MUDOU AQUI: Trocou transparent por #000000 */
+    background-image: none !important;
+    padding: 60px 10% 40px 10%; 
+    border-bottom: 1px solid #ccff00;
     display: flex;
+    align-items: flex-end;
+    z-index: 5; /* Garante que fique acima da imagem borrada do fundo */
+}
+
+.banner-content {
+    display: flex;
+    gap: 40px;
     align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
-    z-index: 5;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.banner-text {
+    flex: 1;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.banner-text .label-neon {
+    font-size: 0.85rem;
+    color: #ccff00;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.banner-text h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 10px;
+    line-height: 1.1;
+}
+
+.banner-text p {
+    font-size: 1rem;
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+.main-cover {
+    width: 230px;
+    height: 230px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.btn-tocar-top {
+    background-color: #ccff00;
+    border: 1px solid #ccff00;
+    padding: 10px 35px;
+    border-radius: 6px;
+    font-weight: bold;
     cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: fit-content;
 }
 
-/* HOVER: A mágica acontece aqui */
-
-/* Quando o mouse entra no card: */
-.beat-card:hover {
-    background-color: #1a1a1a; /* O card clareia um pouquinho (estilo Spotify) */
+.beats-grid-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 10px;
+    color: #ffffff;
+    position: relative;
 }
 
-/* A imagem aparece */
-.beat-card:hover .youtube-capa {
-    opacity: 1;
+.playlist-tracks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+    align-items: start;
+    width: 100%;
 }
 
-/* O botão de play sobe e aparece */
-.beat-card:hover .spotify-play-btn {
-    opacity: 1;
-    transform: translateY(0);
+.play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5) !important;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
 }
 
-/* RESPONSIVIDADE */
-@media (max-width: 200px) {
-    .section-header {
-        flex-direction: column;
-        gap: 20px;
-        align-items: flex-start;
-        z-index: 0;
-    }
-
-    .section-header h2 {
-        font-size: 1.5rem;
-    }
-
-    .playlists-container {
-        gap: 20px;
-        position: relative;
-        z-index: 1;
-    }
-
-    .playlist-card {
-        width: 160px;
-    }
-
-    .playlist-image {
-        height: 140px;
-    }
-
-    .beats-container {
-        gap: 15px;
-    }
-
-    .beat-card {
-        width: 150px;
-    }
-
-    .beat-image {
-        height: 180px;
-    }
+.play-overlay i {
+    cursor: pointer;
+    font-size: 3rem;
+    color: #ccff00;
+    transition: all 0.3s ease;
 }
 
-@media (max-width: 480px) {
-    .playlists-section,
-    .beats-section {
-        padding: 40px 15px;
-    }
-
-    .section-header h2 {
-        font-size: 1.2rem;
-    }
-
-    .playlist-card {
-        width: 140px;
-    }
-
-    .beat-card {
-        width: 130px;
-    }
-
-    .arrow-btn {
-        width: 35px;
-        height: 35px;
-        font-size: 16px;
-    }
+.play-overlay:hover i {
+    transform: scale(1.15);
+    text-shadow: 0 0 20px rgba(204, 255, 0, 0.8);
 }
 
-    /*-- ============================================================
+.filter-btn {
+    background-color: transparent;
+    border: 2px solid #333;
+    color: #aaa;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.filter-btn:hover {
+    border-color: #ccff00;
+    color: #ccff00;
+}
+
+.filter-btn.active {
+    background-color: #ccff00;
+    border-color: #ccff00;
+    color: #000;
+}
+
+.track-info-mini {
+    padding: 12px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.track-name-text {
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-buy-green {
+    background-color: #ccff00;
+    color: #000;
+    border: 1px solid #ccff00;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-top: auto;
+}
+
+.btn-buy-green:hover {
+    background-color: #b8e600;
+    box-shadow: 0 0 15px rgba(204, 255, 0, 0.5);
+    transform: scale(1.05);
+}
+
+/*-- ============================================================
     RODAPÉ (FOOTER)
     ============================================================ */
-:root {
-    --bg-color: #0a0a0a;
-    --accent-color: #ccff00; /* Verde limão/neon */
-    --text-color: #ffffff;
-    --gray-text: #888888;
-}
-
 .street-footer {
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -1086,7 +1361,6 @@ SEÇÕES BEATS
     color: var(--gray-text);
 }
 
-/* Responsivo */
 @media (max-width: 768px) {
     .footer-container {
         grid-template-columns: 1fr;
@@ -1094,443 +1368,3 @@ SEÇÕES BEATS
     }
     .social-icons { justify-content: center; }
 }
-
-/* estilo playlists.html */
-/* Container das playlists na página nova */
-.playlists-grid-page {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
-    padding: 20px 5%;
-}
-
-.playlist-card-large {
-    position: relative;
-    border-radius: 15px;
-    overflow: hidden;
-    aspect-ratio: 1 / 1; /* Faz ficar quadradinho igual na imagem */
-    display: block;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.playlist-card-large img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-}
-
-.playlist-card-large:hover img {
-    transform: scale(1.1); /* Efeito de zoom ao passar o mouse */
-}
-
-/* O texto em cima da imagem */
-
-.playlists-grid-page {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
-    padding: 40px 5%;
-}
-
-.playlist-card-large {
-    position: relative;
-    border-radius: 20px; /* Bordas bem arredondadas como na sua ref */
-    overflow: hidden;
-    aspect-ratio: 1 / 1;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.playlist-card-large:hover {
-    transform: translateY(-8px);
-    border-color: #ccff00;
-}
-
-.playlist-card-large img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.7); /* Deixa a imagem mais escura para o texto brilhar */
-    transition: filter 0.3s ease;
-}
-
-.playlist-card-large:hover img {
-    filter: brightness(0.9);
-}
-
-.playlist-info-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 25px;
-    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-}
-
-.playlist-info-overlay h3 {
-    font-size: 1.5rem;
-    color: #fff;
-    margin-bottom: 5px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.playlist-info-overlay span {
-    color: #ccff00;
-    font-weight: bold;
-    font-size: 0.9rem;
-}
-
-/* playlist-detalhes.html */
-.playlist-banner {
-    position: relative;
-    
-    /* CORREÇÃO: Removemos a imagem repetida e o gradiente sólido, deixando o banner transparente */
-    background: transparent !important;
-    background-image: none !important;
-    
-    /* Mantém o alinhamento e o espaçamento dos textos originais */
-    padding: 60px 10% 40px 10%; 
-    display: flex;
-    align-items: flex-end;
-}
-
-
-.banner-content {
-    display: flex;
-    gap: 40px;
-    align-items: center;
-    flex-wrap: wrap;
-    width: 100%;
-}
-
-.banner-text {
-    flex: 1;
-    min-width: 250px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-
-.banner-text .label-neon {
-    font-size: 0.85rem;
-    color: #ccff00;
-    font-weight: bold;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 10px;
-}
-
-.banner-text h1 {
-    font-size: 3rem;
-    font-weight: 900;
-    color: white;
-    margin-bottom: 10px;
-    line-height: 1.1;
-}
-
-.banner-text p {
-    font-size: 1rem;
-    color: #aaa;
-    margin-bottom: 20px;
-}
-
-.main-cover {
-    width: 230px;
-    height: 230px;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-.btn-tocar-top {
-    background-color: var(--primary-color);
-    color: black;
-    border: none;
-    padding: 12px 35px;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 20px;
-}
-
-/* Grid de Cards */
-.beats-grid-container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 60px 10px;
-    color: #ffffff;
-    position: relative;
-}
-
-.playlist-tracks-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 25px;
-    align-items: start; /* Garante que os cards comecem todos na mesma linha de altura */
-    width: 100%;
-}
-
-.track-card-mini, .beat-card {
-    background: #111111;
-    border-radius: 12px;
-    padding: 14px;
-    border: 1px solid #222222;
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
-    overflow: hidden; /* CRÍTICO: Não deixa nada de dentro cortar ou vazar no hover */
-    position: relative;
-    box-sizing: border-box;
-}
-
-.track-card-mini:hover, .beat-card:hover {
-    transform: translateY(-5px); /* Efeito suave para cima, sem quebrar o layout */
-    box-shadow: 0 8px 24px rgba(204, 255, 0, 0.15); /* Leve brilho neon do seu site */
-    border-color: #ccff00;
-}
-
-.card-img-container, .beat-image-container {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1; /* Força o quadrado perfeito */
-    border-radius: 8px;
-    overflow: hidden; /* Previne que a imagem ou o overlay passem da borda */
-    background-color: #1a1a1a;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.card-img-container img, .beat-image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-/* Efeito sutil na foto ao passar o mouse */
-.track-card-mini:hover .card-img-container img,
-.beat-card:hover .beat-image-container img {
-    transform: scale(1.04); 
-}
-
-.play-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5) !important; /* Camada escura uniforme */
-    display: flex !important;
-    justify-content: center; /* Centraliza na horizontal morto */
-    align-items: center;
-    cursor: pointer;
-    transition: opacity 0.3s ease;
-}
-
-.play-overlay i {
-    cursor: pointer;
-    font-size: 3rem;
-    color: #ccff00;
-    transition: all 0.3s ease;
-}
-
-.play-overlay:hover i {
-    transform: scale(1.15);
-    text-shadow: 0 0 20px rgba(204, 255, 0, 0.8);
-}
-
-/* =========================================
-   BOTÕES DE FILTRO
-   ========================================= */
-.filter-btn {
-    background-color: transparent;
-    border: 2px solid #333;
-    color: #aaa;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.filter-btn:hover {
-    border-color: #ccff00;
-    color: #ccff00;
-}
-
-.filter-btn.active {
-    background-color: #ccff00;
-    border-color: #ccff00;
-    color: #000;
-}
-
-/* =========================================
-   INFORMAÇÕES DO CARD MINI
-   ========================================= */
-.track-info-mini {
-    padding: 12px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.track-name-text {
-    color: #ffffff;
-    font-size: 0.95rem;
-    font-weight: 600;
-    text-align: center;
-    margin: 0;
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* =========================================
-   BOTÃO DE COMPRA (PREÇO)
-   ========================================= */
-.btn-buy-green {
-    background-color: #ccff00;
-    color: #000;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    width: 100%;
-    display: block;
-    text-align: center;
-    margin-top: auto;
-}
-
-.btn-buy-green:hover {
-    background-color: #b8e600;
-    box-shadow: 0 0 15px rgba(204, 255, 0, 0.5);
-    transform: scale(1.05);
-}
-
-/* CONTAINER FIXO NO TOPO DA TELA */
-.scroll-progress-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px; /* Espessura bem fina igual aos sites modernos */
-  background: transparent; /* Fundo transparente para não atrapalhar o layout */
-  z-index: 9999; /* Garante que ela fique por cima de absolutamente tudo */
-}
-
-/* A BARRA QUE VAI PREENCHER CORES */
-.scroll-progress-bar {
-  height: 100%;
-  width: 0%; /* Começa em zero e o JavaScript controla o resto */
-  background: #ccff00; /* O seu verde neon oficial */
-  box-shadow: 0 0 10px rgba(204, 255, 0, 0.8); /* Brilho neon foda no topo */
-  transition: width 0.1s ease-out; /* Movimento suave ao rolar */
-}
-
-
-/* ============================================================
-   PERSONALIZAÇÃO DA BARRA DE ROLAGEM LATERAL (SCROLLBAR)
-   ============================================================ */
-
-/* 1. Controla a largura geral da barra vertical */
-::-webkit-scrollbar {
-  width: 10px; /* Deixa ela um pouco mais fina e discreta */
-}
-
-/* 2. O "Trilho" (fundo fixo por onde a barra corre) */
-::-webkit-scrollbar-track {
-  background: #000000; /* Preto puro igual ao fundo do seu site */
-}
-
-/* 3. O "Thumb" (a barrinha móvel que o usuário arrasta) */
-::-webkit-scrollbar-thumb {
-  background-color: #ccff00; /* Verde neon oficial */
-  border-radius: 10px; /* Deixa as pontas arredondadas igual ao print */
-  
-  /* Cria uma borda preta invisível ao redor para dar um efeito de espaçamento elegante */
-  border: 2px solid #000000; 
-  
-  transition: background-color 0.2s ease;
-}
-
-/* 4. Efeito quando o usuário passa o mouse por cima da barra */
-::-webkit-scrollbar-thumb:hover {
-  background-color: #ffffff; /* Ela muda para branco puro no hover, dando destaque */
-}
-
-/* 5. Remove as setinhas de cima e de baixo (opcional, deixa mais clean e moderno) */
-::-webkit-scrollbar-button {
-  display: none;
-}/* ============================================================
-   PERSONALIZAÇÃO DA BARRA DE ROLAGEM LATERAL (SCROLLBAR)
-   ============================================================ */
-
-/* 1. Controla a largura geral da barra vertical */
-::-webkit-scrollbar {
-  width: 10px; /* Deixa ela um pouco mais fina e discreta */
-}
-
-/* 2. O "Trilho" (fundo fixo por onde a barra corre) */
-::-webkit-scrollbar-track {
-  background: #000000; /* Preto puro igual ao fundo do seu site */
-}
-
-/* 3. O "Thumb" (a barrinha móvel que o usuário arrasta) */
-::-webkit-scrollbar-thumb {
-  background-color: #ccff00; /* Verde neon oficial */
-  border-radius: 10px; /* Deixa as pontas arredondadas igual ao print */
-  
-  /* Cria uma borda preta invisível ao redor para dar um efeito de espaçamento elegante */
-  border: 2px solid #000000; 
-  
-  transition: background-color 0.2s ease;
-}
-
-/* 4. Efeito quando o usuário passa o mouse por cima da barra */
-::-webkit-scrollbar-thumb:hover {
-  background-color: #ffffff; /* Ela muda para branco puro no hover, dando destaque */
-}
-
-/* 5. Remove as setinhas de cima e de baixo (opcional, deixa mais clean e moderno) */
-::-webkit-scrollbar-button {
-  display: none;
-}
-
-/* ============================================================
-   FUNDO DESFOCADO DA PÁGINA DE MÚSICAS
-   ============================================================ */
-.background-image-musica {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100vh;
-  
-  background-image: url('fundo-site.jpeg'); /* Nome do seu arquivo */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  
-  filter: blur(7px);
-  transform: scale(1.05);
-  
-  /* Substituímos o blend-mode antigo por uma propriedade mais direta de overlay se necessário, 
-     mas vamos garantir que ela não clareie o topo: */
-  background-color: rgba(0, 0, 0, 0.65); 
-  
-  z-index: -2; /* Jogamos mais para trás ainda */
-}
-
