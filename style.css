@@ -442,9 +442,9 @@ body {
 .carousel {
   display: flex;
   gap: 16px;
-  overflow-x: auto;
   padding-bottom: 16px;
   scrollbar-width: none;
+  width:100%;
 }
 .carousel::-webkit-scrollbar { display: none; }
 
@@ -1021,4 +1021,12 @@ body.player-open .page-content { padding-bottom: 120px; }
   .playlist-banner-top { flex-direction: column; align-items: flex-start; gap: 16px; }
   .player-time { display: none; }
   .player-waveform { display: none; }
+}
+
+/* Cria o bloco invisível no final para destruir a parede e dar o respiro do scroll */
+#playlistsContainer::after {
+    content: "";
+    min-width: 10% !important; /* Use a mesma porcentagem ou pixel do seu padding esquerdo */
+    height: 1px;
+    display: block;
 }
