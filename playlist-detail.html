@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playlist — Prod. Kaiky</title>
+  <meta name="description" content="Playlist de beats por gênero.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="scroll-progress"></div>
+
+  <div id="global-loader">
+    <div class="loading-wave">
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="nav-logo">PROD.<span class="neon-text">KAIKY</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">INÍCIO</a></li>
+        <li><a href="beats.html" class="nav-link">BEATS</a></li>
+        <li><a href="playlists.html" class="nav-link">PLAYLISTS</a></li>
+        <li><a href="https://wa.me/553171821903" target="_blank" rel="noopener noreferrer" class="nav-link">CONTATE-ME</a></li>
+      </ul>
+      <div class="nav-beats-count">
+        <div class="count">—</div>
+        <div class="label">Beats</div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <!-- Playlist Banner -->
+    <div class="playlist-banner">
+      <img id="playlist-banner-img" src="" alt="Genre">
+      <div class="playlist-banner-fade"></div>
+      <div class="playlist-banner-content">
+        <div class="playlist-banner-top">
+          <div>
+            <p class="playlist-banner-eyebrow">Playlist</p>
+            <h1 class="playlist-banner-title" id="playlist-banner-title">—</h1>
+            <p class="playlist-banner-meta">
+              PROD.KAIKY · <span id="playlist-beat-count">—</span> Beats
+            </p>
+          </div>
+          <div class="playlist-banner-actions">
+            <button class="btn-primary" id="playlist-play-all">
+              <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              Tocar Tudo
+            </button>
+            <a href="playlists.html" class="back-link">← Voltar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Beats Grid -->
+    <div class="beats-grid" id="playlist-detail-grid"></div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <h2>PROD.<span class="neon-text">KAIKY</span></h2>
+          <p>Produção musical independente. Beats autorais para artistas que querem se destacar.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Explorar</h3>
+          <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="beats.html">Beats</a></li>
+            <li><a href="playlists.html">Playlists</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Contato</h3>
+          <ul>
+            <li><a href="https://wa.me/553171821903" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+            <li><a href="https://www.instagram.com/prod.kaiky" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 Prod.Kaiky. Todos os direitos reservados.</div>
+    </footer>
+  </div>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="app.js"></script>
+  <script>initPlaylistDetail();</script>
+</body>
+</html>

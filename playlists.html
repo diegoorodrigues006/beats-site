@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playlists — Prod. Kaiky</title>
+  <meta name="description" content="Explore os beats por gênero: Trap, Boombap, Detroit, Funk e Experimental.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="scroll-progress"></div>
+
+  <div id="global-loader">
+    <div class="loading-wave">
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="nav-logo">PROD.<span class="neon-text">KAIKY</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">INÍCIO</a></li>
+        <li><a href="beats.html" class="nav-link">BEATS</a></li>
+        <li><a href="playlists.html" class="nav-link">PLAYLISTS</a></li>
+        <li><a href="https://wa.me/553171821903" target="_blank" rel="noopener noreferrer" class="nav-link">CONTATE-ME</a></li>
+      </ul>
+      <div class="nav-beats-count">
+        <div class="count">—</div>
+        <div class="label">Beats</div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <!-- Banner -->
+    <section class="page-banner">
+      <p class="page-banner-eyebrow">Explore por Gênero</p>
+      <h1 class="page-banner-title">PLAYLISTS</h1>
+      <p class="page-banner-sub" id="playlists-sub">5 Gêneros · — Beats</p>
+    </section>
+
+    <!-- Grid -->
+    <div class="playlist-grid" id="playlists-grid"></div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <h2>PROD.<span class="neon-text">KAIKY</span></h2>
+          <p>Produção musical independente. Beats autorais para artistas que querem se destacar.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Explorar</h3>
+          <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="beats.html">Beats</a></li>
+            <li><a href="playlists.html">Playlists</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Contato</h3>
+          <ul>
+            <li><a href="https://wa.me/553171821903" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+            <li><a href="https://www.instagram.com/prod.kaiky" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2026 Prod.Kaiky. Todos os direitos reservados.</div>
+    </footer>
+  </div>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="app.js"></script>
+  <script>
+    initPlaylists().then(() => {
+      const sub = document.getElementById("playlists-sub");
+      if (sub) sub.textContent = `5 Gêneros · ${state.beats.length} Beats`;
+    });
+  </script>
+</body>
+</html>
