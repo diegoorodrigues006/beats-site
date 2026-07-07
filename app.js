@@ -16,10 +16,10 @@ const GENRE_IMAGES = {
 
 const GENRE_COLORS = {
   trap: "#ccff00",
-  boombap: "#ff6b35",
-  detroit: "#00d4ff",
-  funk: "#ff00aa",
-  experimental: "#aa00ff",
+  boombap: "#ccff00",
+  detroit: "#ccff00",
+  funk: "#ccff00",
+  experimental: "#ccff00",
 };
 
 const MARQUEE_WORDS = ["TRAP", "BOOMBAP", "DETROIT", "FUNK", "EXPERIMENTAL", "PROD.KAIKY", "BEATS", "AUTORAL"];
