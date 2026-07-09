@@ -37,6 +37,32 @@ const state = {
 let ytPlayer = null;
 let progressInterval = null;
 
+/* ── SISTEMA DE CONTADORES DE PLAYS (LOCALSTORAGE) ── */
+function inicializarPlays() {
+  if (!localStorage.getItem('totalPlays')) {
+    localStorage.setItem('totalPlays', '0');
+  }
+}
+
+function incrementarPlays() {
+  inicializarPlays();
+  const totalPlays = parseInt(localStorage.getItem('totalPlays')) || 0;
+  localStorage.setItem('totalPlays', totalPlays + 1);
+  updatePlaysUI();
+}
+
+function getTotalPlays() {
+  inicializarPlays();
+  return parseInt(localStorage.getItem('totalPlays')) || 0;
+}
+
+function updatePlaysUI() {
+  const heroPlays = document.getElementById("hero-plays-count");
+  if (heroPlays) {
+    heroPlays.textContent = getTotalPlays();
+  }
+}
+
 /* ── CSV Parser ── */
 function parseCSVLine(line) {
   const cols = [];
@@ -108,6 +134,7 @@ window.onYouTubeIframeAPIReady = function () {
 function onPlayerStateChange(event) {
   if (event.data === YT.PlayerState.PLAYING) {
     state.isPlaying = true;
+    incrementarPlays(); // Incrementa o contador de reproduções global ao ouvir
     startProgressTimer();
     updatePlayerUI();
   } else if (event.data === YT.PlayerState.PAUSED) {
@@ -406,6 +433,7 @@ function updateNavCount() {
 
 /* ── HOME page ── */
 async function initHome() {
+  inicializarPlays(); // Inicia o storage de plays com segurança
   injectGlobalPlayer();
   initScrollProgress();
   setActiveNavLink();
@@ -420,6 +448,7 @@ async function initHome() {
   await loadBeats();
   hideLoader();
   updateNavCount();
+  updatePlaysUI(); // Exibe o valor total de plays guardado
 
   if (heroBeats) heroBeats.textContent = state.beats.length;
   if (heroGenres) heroGenres.textContent = GENRES.length;
