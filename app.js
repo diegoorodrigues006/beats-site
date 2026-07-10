@@ -427,8 +427,11 @@ function buildMarquee(containerId) {
 
 /* ── Navbar beats count ── */
 function updateNavCount() {
-  const el = document.querySelector(".nav-beats-count .count");
-  if (el) el.textContent = state.beats.length;
+  const elBeats = document.querySelector(".nav-beats-count .count");
+  if (elBeats) elBeats.textContent = state.beats.length;
+
+  const elPlays = document.getElementById("nav-total-plays");
+  if (elPlays) elPlays.textContent = getTotalPlays();
 }
 
 /* ── HOME page ── */
