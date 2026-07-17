@@ -62,12 +62,22 @@ O projeto foi construído utilizando tecnologias nativas para garantir o máximo
 
 ---
 
+---
+
 ## 💻 Como Rodar o Projeto Localmente
 
-1. **Clone o repositório:**
-   ```bash
-   git clone [https://github.com/diegoorodrigues006/beats-site.git](https://github.com/diegoorodrigues006/beats-site.git)
+* **Passo 1:** Clone o repositório executando o comando abaixo no seu terminal:
+git clone https://github.com/diegoorodrigues006/beats-site.git
 
-   2. **Acesse a pasta do projeto:**
-   ```bash
-   cd beats-site
+* **Passo 2:** Entre na pasta que foi criada:
+cd beats-site
+
+* **Passo 3:** Execute o projeto abrindo o arquivo `index.html` diretamente no seu navegador, ou utilize a extensão *Live Server* do VS Code para uma melhor experiência de desenvolvimento.
+
+---
+
+## 👤 Desenvolvedor
+
+Desenvolvido com ⚡ por **Diego Rodrigues**.
+
+* **GitHub:** https://github.com/diegoorodrigues006
