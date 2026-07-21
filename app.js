@@ -168,28 +168,68 @@ function stopProgressTimer() {
 }
 
 /* ── Player controls ── */
+function isSameBeat(beat) {
+  return !!state.currentBeat && state.currentBeat.idYoutube === beat.idYoutube;
+}
+
 function play(beat) {
+  if (!beat) return;
+
   state.currentBeat = beat;
+  state.currentTime = 0;
+  state.duration = 0;
+  state.progress = 0;
+
   if (ytPlayer && ytPlayer.loadVideoById) {
     ytPlayer.loadVideoById(beat.idYoutube);
     state.isPlaying = true;
+    startProgressTimer();
   }
+
   showPlayer();
   updatePlayerUI();
   highlightActiveCards();
 }
 
-function togglePlay() {
-  if (!ytPlayer || typeof ytPlayer.getPlayerState !== "function") return;
-  const s = ytPlayer.getPlayerState();
-  if (s === 1) {
-    ytPlayer.pauseVideo();
-    state.isPlaying = false;
+function toggleBeatPlayback(beat, event) {
+  if (!beat) return;
+
+  const target = event?.target;
+  if (target instanceof Element && target.closest(".beat-buy")) return;
+
+  if (isSameBeat(beat)) {
+    if (state.isPlaying) {
+      ytPlayer?.pauseVideo?.();
+      state.isPlaying = false;
+      stopProgressTimer();
+    } else {
+      ytPlayer?.playVideo?.();
+      state.isPlaying = true;
+      startProgressTimer();
+    }
   } else {
-    ytPlayer.playVideo();
+    play(beat);
+    return;
+  }
+
+  showPlayer();
+  updatePlayerUI();
+}
+
+function togglePlay() {
+  if (!state.currentBeat) return;
+
+  if (state.isPlaying) {
+    ytPlayer?.pauseVideo?.();
+    state.isPlaying = false;
+    stopProgressTimer();
+  } else {
+    ytPlayer?.playVideo?.();
     state.isPlaying = true;
     startProgressTimer();
   }
+
+  showPlayer();
   updatePlayerUI();
 }
 
@@ -300,8 +340,7 @@ function renderBeatCard(beat) {
   `;
 
   div.addEventListener("click", (e) => {
-    if (e.target.closest(".beat-buy")) return;
-    play(beat);
+    toggleBeatPlayback(beat, e);
   });
 
   div.querySelector(".beat-buy").addEventListener("click", (e) => {
