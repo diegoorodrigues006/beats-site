@@ -31,6 +31,7 @@ const MARQUEE_WORDS = ["TRAP", "BOOMBAP", "DETROIT", "FUNK", "EXPERIMENTAL", "PR
 const state = {
   beats: [],
   currentBeat: null,
+  currentPlaylist: [],
   isPlaying: false,
   progress: 0,
   currentTime: 0,
@@ -203,8 +204,12 @@ function isSameBeat(beat) {
   return !!state.currentBeat && state.currentBeat.idYoutube === beat.idYoutube;
 }
 
-function play(beat) {
+function play(beat, playlist = null) {
   if (!beat) return;
+
+  if (playlist) {
+    state.currentPlaylist = playlist;
+  }
 
   state.currentBeat = beat;
   state.currentTime = 0;
@@ -222,8 +227,12 @@ function play(beat) {
   highlightActiveCards();
 }
 
-function toggleBeatPlayback(beat, event) {
+function toggleBeatPlayback(beat, event, playlist = null) {
   if (!beat) return;
+
+  if (playlist) {
+    state.currentPlaylist = playlist;
+  }
 
   const target = event?.target;
   if (target instanceof Element && target.closest(".beat-buy")) return;
@@ -239,7 +248,7 @@ function toggleBeatPlayback(beat, event) {
       startProgressTimer();
     }
   } else {
-    play(beat);
+    play(beat, playlist);
     return;
   }
 
@@ -265,15 +274,19 @@ function togglePlay() {
 }
 
 function next() {
-  if (!state.beats.length || !state.currentBeat) return;
-  const idx = state.beats.findIndex(b => b.idYoutube === state.currentBeat.idYoutube);
-  play(state.beats[(idx + 1) % state.beats.length]);
+  const list = state.currentPlaylist.length ? state.currentPlaylist : state.beats;
+  if (!list.length || !state.currentBeat) return;
+  const idx = list.findIndex(b => b.idYoutube === state.currentBeat.idYoutube);
+  const nextBeat = list[(idx + 1) % list.length];
+  if (nextBeat) play(nextBeat, list);
 }
 
 function prev() {
-  if (!state.beats.length || !state.currentBeat) return;
-  const idx = state.beats.findIndex(b => b.idYoutube === state.currentBeat.idYoutube);
-  play(state.beats[(idx - 1 + state.beats.length) % state.beats.length]);
+  const list = state.currentPlaylist.length ? state.currentPlaylist : state.beats;
+  if (!list.length || !state.currentBeat) return;
+  const idx = list.findIndex(b => b.idYoutube === state.currentBeat.idYoutube);
+  const prevBeat = list[(idx - 1 + list.length) % list.length];
+  if (prevBeat) play(prevBeat, list);
 }
 
 /* ── Player UI ── */
@@ -345,7 +358,7 @@ function highlightActiveCards() {
 }
 
 /* ── Render helpers ── */
-function renderBeatCard(beat) {
+function renderBeatCard(beat, playlist = null) {
   const div = document.createElement("div");
   div.className = "beat-card" + (state.currentBeat?.idYoutube === beat.idYoutube ? " active" : "");
   div.dataset.id = beat.idYoutube;
@@ -371,7 +384,7 @@ function renderBeatCard(beat) {
   `;
 
   div.addEventListener("click", (e) => {
-    toggleBeatPlayback(beat, e);
+    toggleBeatPlayback(beat, e, playlist);
   });
 
   div.querySelector(".beat-buy").addEventListener("click", (e) => {
@@ -525,8 +538,9 @@ async function initHome() {
 
   const beatsCarousel = document.getElementById("beats-carousel");
   if (beatsCarousel) {
+    const homeBeats = state.beats.slice(0, 12);
     beatsCarousel.innerHTML = "";
-    state.beats.slice(0, 12).forEach(beat => beatsCarousel.appendChild(renderBeatCard(beat)));
+    homeBeats.forEach(beat => beatsCarousel.appendChild(renderBeatCard(beat, homeBeats)));
   }
 
   const playlistsCarousel = document.getElementById("playlists-carousel");
@@ -599,7 +613,7 @@ function renderBeatsGrid() {
     grid.innerHTML = `<div class="empty-state"><div class="icon">🎵</div><p>Nenhum beat encontrado</p></div>`;
     return;
   }
-  filtered.forEach(beat => grid.appendChild(renderBeatCard(beat)));
+  filtered.forEach(beat => grid.appendChild(renderBeatCard(beat, filtered)));
 }
 
 function updateFilterCounts() {
@@ -685,7 +699,7 @@ async function initPlaylistDetail() {
 
   if (playAllBtn) {
     playAllBtn.addEventListener("click", () => {
-      if (genreBeats.length > 0) play(genreBeats[0]);
+      if (genreBeats.length > 0) play(genreBeats[0], genreBeats);
     });
   }
 
@@ -697,5 +711,5 @@ async function initPlaylistDetail() {
     grid.innerHTML = `<div class="empty-state" style="width:100%;"><div class="icon">🎵</div><p>Nenhum beat nesse gênero ainda</p></div>`;
     return;
   }
-  genreBeats.forEach(beat => grid.appendChild(renderBeatCard(beat)));
+  genreBeats.forEach(beat => grid.appendChild(renderBeatCard(beat, genreBeats)));
 }
