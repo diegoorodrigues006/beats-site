@@ -2,6 +2,9 @@
 const SHEET_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vS42I_YX0kzYxpH6143oUulw6EQYS8wLwhQV72F8EmfS0d7-rJyJIMu2fEUrIPWKMHuih8Ffk4DARX8/pub?output=csv";
 
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbx4iLX_6GcW83llrwdtb4VmzQtcKdvSM0XoSl8pcjHaOiH7H0FFSAigBDl8EyKPB9NX/exec";
+
 const WA_NUMBER = "553171821903";
 
 const GENRES = ["trap", "boombap", "detroit", "funk", "experimental"];
@@ -32,34 +35,62 @@ const state = {
   progress: 0,
   currentTime: 0,
   duration: 0,
+  totalPlays: 0,
 };
 
 let ytPlayer = null;
 let progressInterval = null;
 
-/* ── SISTEMA DE CONTADORES DE PLAYS (LOCALSTORAGE) ── */
-function inicializarPlays() {
-  if (!localStorage.getItem('totalPlays')) {
-    localStorage.setItem('totalPlays', '0');
+/* ── SISTEMA DE CONTADORES DE PLAYS GLOBAIS (GOOGLE SHEETS) ── */
+async function carregarPlaysGlobais() {
+  // 1. Carrega imediatamente o último valor do cache local para não exibir zero
+  const cachedPlays = localStorage.getItem("cachedTotalPlays");
+  if (cachedPlays !== null) {
+    state.totalPlays = parseInt(cachedPlays) || 0;
+    updatePlaysUI();
+  }
+
+  try {
+    // 2. Busca o valor atualizado na planilha via API
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    if (data && typeof data.total_plays !== "undefined") {
+      state.totalPlays = parseInt(data.total_plays) || 0;
+      localStorage.setItem("cachedTotalPlays", state.totalPlays);
+      updatePlaysUI();
+    }
+  } catch (e) {
+    console.error("Erro ao carregar plays globais da planilha:", e);
   }
 }
 
-function incrementarPlays() {
-  inicializarPlays();
-  const totalPlays = parseInt(localStorage.getItem('totalPlays')) || 0;
-  localStorage.setItem('totalPlays', totalPlays + 1);
+function incrementarPlaysGlobais() {
+  // Incrementa na hora para dar retorno instantâneo na interface
+  state.totalPlays += 1;
+  localStorage.setItem("cachedTotalPlays", state.totalPlays);
   updatePlaysUI();
-}
 
-function getTotalPlays() {
-  inicializarPlays();
-  return parseInt(localStorage.getItem('totalPlays')) || 0;
+  // Envia a requisição para somar +1 na planilha
+  fetch(`${API_URL}?action=increment`)
+    .then((res) => res.json())
+    .then((data) => {
+      if (data && typeof data.total_plays !== "undefined") {
+        state.totalPlays = parseInt(data.total_plays) || 0;
+        localStorage.setItem("cachedTotalPlays", state.totalPlays);
+        updatePlaysUI();
+      }
+    })
+    .catch((err) => console.error("Erro ao incrementar play global:", err));
 }
 
 function updatePlaysUI() {
   const heroPlays = document.getElementById("hero-plays-count");
   if (heroPlays) {
-    heroPlays.textContent = getTotalPlays();
+    heroPlays.textContent = state.totalPlays;
+  }
+  const elPlays = document.getElementById("nav-total-plays");
+  if (elPlays) {
+    elPlays.textContent = state.totalPlays;
   }
 }
 
@@ -134,7 +165,7 @@ window.onYouTubeIframeAPIReady = function () {
 function onPlayerStateChange(event) {
   if (event.data === YT.PlayerState.PLAYING) {
     state.isPlaying = true;
-    incrementarPlays(); // Incrementa o contador de reproduções global ao ouvir
+    incrementarPlaysGlobais(); // Incrementa o contador global na planilha
     startProgressTimer();
     updatePlayerUI();
   } else if (event.data === YT.PlayerState.PAUSED) {
@@ -468,14 +499,12 @@ function buildMarquee(containerId) {
 function updateNavCount() {
   const elBeats = document.querySelector(".nav-beats-count .count");
   if (elBeats) elBeats.textContent = state.beats.length;
-
-  const elPlays = document.getElementById("nav-total-plays");
-  if (elPlays) elPlays.textContent = getTotalPlays();
+  updatePlaysUI();
 }
 
 /* ── HOME page ── */
 async function initHome() {
-  inicializarPlays(); // Inicia o storage de plays com segurança
+  carregarPlaysGlobais();
   injectGlobalPlayer();
   initScrollProgress();
   setActiveNavLink();
@@ -490,7 +519,6 @@ async function initHome() {
   await loadBeats();
   hideLoader();
   updateNavCount();
-  updatePlaysUI(); // Exibe o valor total de plays guardado
 
   if (heroBeats) heroBeats.textContent = state.beats.length;
   if (heroGenres) heroGenres.textContent = GENRES.length;
@@ -536,6 +564,7 @@ async function initHome() {
 let activeGenre = "todos";
 
 async function initBeats() {
+  carregarPlaysGlobais();
   injectGlobalPlayer();
   initScrollProgress();
   setActiveNavLink();
@@ -584,6 +613,7 @@ function updateFilterCounts() {
 
 /* ── PLAYLISTS page ── */
 async function initPlaylists() {
+  carregarPlaysGlobais();
   injectGlobalPlayer();
   initScrollProgress();
   setActiveNavLink();
@@ -628,6 +658,7 @@ async function initPlaylists() {
 
 /* ── PLAYLIST DETAIL page ── */
 async function initPlaylistDetail() {
+  carregarPlaysGlobais();
   injectGlobalPlayer();
   initScrollProgress();
   setActiveNavLink();
