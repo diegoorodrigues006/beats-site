@@ -3,8 +3,7 @@ const SHEET_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vS42I_YX0kzYxpH6143oUulw6EQYS8wLwhQV72F8EmfS0d7-rJyJIMu2fEUrIPWKMHuih8Ffk4DARX8/pub?output=csv";
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbx4iLX_6GcW83llrwdtb4VmzQtcKdvSM0XoSl8pcjHaOiH7H0FFSAigBDl8EyKPB9NX/exec";
-
+  "https://script.google.com/macros/s/AKfycbyty7nVgl-tYlk9YEjani2-3msDihw06HZf7JrNHCQ/dev";
 const WA_NUMBER = "553171821903";
 
 const GENRES = ["trap", "boombap", "detroit", "funk", "experimental"];
