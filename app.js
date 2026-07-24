@@ -2,8 +2,9 @@
 const SHEET_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vS42I_YX0kzYxpH6143oUulw6EQYS8wLwhQV72F8EmfS0d7-rJyJIMu2fEUrIPWKMHuih8Ffk4DARX8/pub?output=csv";
 
-const API_URL =
-"https://script.google.com/macros/s/AKfycbx4iLX_6GcW83llrwdtb4VmzQtcKdvSM0XoSl8pcjHaOiH7H0FFSAigBDl8EyKPB9NX/exec";
+const COUNT_API_KEY = "beatssite_kaikyprod_totalplays";
+const COUNT_API_URL = "https://api.countapi.xyz";
+
 const WA_NUMBER = "553171821903";
 
 const GENRES = ["trap", "boombap", "detroit", "funk", "experimental"];
@@ -41,9 +42,9 @@ const state = {
 let ytPlayer = null;
 let progressInterval = null;
 
-/* ── SISTEMA DE CONTADORES DE PLAYS GLOBAIS (GOOGLE SHEETS) ── */
+/* ── SISTEMA DE CONTADORES DE PLAYS GLOBAIS (COUNTAPI) ── */
 async function carregarPlaysGlobais() {
-  // 1. Carrega imediatamente o último valor do cache local para não exibir zero
+  // 1. Carrega imediatamente o cache local para evitar exibir 0 enquanto carrega
   const cachedPlays = localStorage.getItem("cachedTotalPlays");
   if (cachedPlays !== null) {
     state.totalPlays = parseInt(cachedPlays) || 0;
@@ -51,31 +52,31 @@ async function carregarPlaysGlobais() {
   }
 
   try {
-    // 2. Busca o valor atualizado na planilha via API
-    const res = await fetch(API_URL);
+    // 2. Busca o valor total atualizado na CountAPI
+    const res = await fetch(`${COUNT_API_URL}/get/${COUNT_API_KEY}`);
     const data = await res.json();
-    if (data && typeof data.total_plays !== "undefined") {
-      state.totalPlays = parseInt(data.total_plays) || 0;
+    if (data && typeof data.value !== "undefined") {
+      state.totalPlays = data.value;
       localStorage.setItem("cachedTotalPlays", state.totalPlays);
       updatePlaysUI();
     }
   } catch (e) {
-    console.error("Erro ao carregar plays globais da planilha:", e);
+    console.error("Erro ao carregar plays globais da CountAPI:", e);
   }
 }
 
 function incrementarPlaysGlobais() {
-  // Incrementa na hora para dar retorno instantâneo na interface
+  // Incrementa na tela e no cache local imediatamente
   state.totalPlays += 1;
   localStorage.setItem("cachedTotalPlays", state.totalPlays);
   updatePlaysUI();
 
-  // Envia a requisição para somar +1 na planilha
-  fetch(`${API_URL}?action=increment`)
+  // Soma +1 na CountAPI globalmente
+  fetch(`${COUNT_API_URL}/hit/${COUNT_API_KEY}`)
     .then((res) => res.json())
     .then((data) => {
-      if (data && typeof data.total_plays !== "undefined") {
-        state.totalPlays = parseInt(data.total_plays) || 0;
+      if (data && typeof data.value !== "undefined") {
+        state.totalPlays = data.value;
         localStorage.setItem("cachedTotalPlays", state.totalPlays);
         updatePlaysUI();
       }
@@ -165,7 +166,7 @@ window.onYouTubeIframeAPIReady = function () {
 function onPlayerStateChange(event) {
   if (event.data === YT.PlayerState.PLAYING) {
     state.isPlaying = true;
-    incrementarPlaysGlobais(); // Incrementa o contador global na planilha
+    incrementarPlaysGlobais(); // Incrementa o contador global na CountAPI
     startProgressTimer();
     updatePlayerUI();
   } else if (event.data === YT.PlayerState.PAUSED) {
