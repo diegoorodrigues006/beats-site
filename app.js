@@ -38,9 +38,9 @@ const state = {
 
 let ytPlayer = null;
 let progressInterval = null;
-let playsRef = null;
+var playsRef = null;
 
-/* ── FIREBASE CONFIG & SAFE INITIALIZATION ── */
+/* ── FIREBASE CONFIG & INITIALIZATION ── */
 const firebaseConfig = {
   apiKey: "AIzaSyBABwCbrMKOoGl1C7J4T2eTJzyHE4qePEw",
   authDomain: "beats-site-10044.firebaseapp.com",
@@ -57,48 +57,38 @@ function initFirebaseSafe() {
       if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
       }
-      const db = firebase.database();
-      playsRef = db.ref("total_plays");
+      playsRef = firebase.database().ref("total_plays");
     }
   } catch (e) {
-    console.error("Erro na inicialização do Firebase:", e);
+    console.error("Erro na inicializacao do Firebase:", e);
   }
 }
 
-// Tenta inicializar ao carregar o script
 initFirebaseSafe();
 
-/* ── SISTEMA DE CONTADORES DE PLAYS GLOBAIS (FIREBASE SEGURO) ── */
+/* ── SISTEMA DE CONTADORES DE PLAYS GLOBAIS ── */
 function carregarPlaysGlobais() {
-  try {
-    if (!playsRef) initFirebaseSafe();
-    
-    if (playsRef) {
-      playsRef.on("value", (snapshot) => {
-        const val = snapshot.val();
-        state.totalPlays = val !== null ? parseInt(val) : 0;
-        updatePlaysUI();
-      });
-    }
-  } catch (e) {
-    console.error("Erro ao carregar plays globais:", e);
+  if (!playsRef) initFirebaseSafe();
+
+  if (playsRef) {
+    playsRef.on("value", (snapshot) => {
+      const val = snapshot.val();
+      state.totalPlays = val !== null ? parseInt(val) : 0;
+      updatePlaysUI();
+    });
   }
 }
 
 function incrementarPlaysGlobais() {
-  try {
-    if (!playsRef) initFirebaseSafe();
+  if (!playsRef) initFirebaseSafe();
 
-    if (playsRef) {
-      playsRef.transaction((currentPlays) => {
-        return (currentPlays || 0) + 1;
-      });
-    } else {
-      state.totalPlays += 1;
-      updatePlaysUI();
-    }
-  } catch (e) {
-    console.error("Erro ao incrementar play global:", e);
+  if (playsRef) {
+    playsRef.transaction((currentPlays) => {
+      return (currentPlays || 0) + 1;
+    });
+  } else {
+    state.totalPlays += 1;
+    updatePlaysUI();
   }
 }
 
