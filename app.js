@@ -38,8 +38,9 @@ const state = {
 
 let ytPlayer = null;
 let progressInterval = null;
+let playsRef = null;
 
-/* ── FIREBASE CONFIG & INITIALIZATION ── */
+/* ── FIREBASE CONFIG & SAFE INITIALIZATION ── */
 const firebaseConfig = {
   apiKey: "AIzaSyBABwCbrMKOoGl1C7J4T2eTJzyHE4qePEw",
   authDomain: "beats-site-10044.firebaseapp.com",
@@ -50,25 +51,55 @@ const firebaseConfig = {
   appId: "1:882809484284:web:c925d81f3acefe3dd8b879"
 };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
+function initFirebaseSafe() {
+  try {
+    if (typeof firebase !== "undefined") {
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
+      const db = firebase.database();
+      playsRef = db.ref("total_plays");
+    }
+  } catch (e) {
+    console.error("Erro na inicialização do Firebase:", e);
+  }
 }
-const db = firebase.database();
-const playsRef = db.ref("total_plays");
 
-/* ── SISTEMA DE CONTADORES DE PLAYS GLOBAIS (FIREBASE) ── */
+// Tenta inicializar ao carregar o script
+initFirebaseSafe();
+
+/* ── SISTEMA DE CONTADORES DE PLAYS GLOBAIS (FIREBASE SEGURO) ── */
 function carregarPlaysGlobais() {
-  playsRef.on("value", (snapshot) => {
-    const val = snapshot.val();
-    state.totalPlays = val !== null ? parseInt(val) : 0;
-    updatePlaysUI();
-  });
+  try {
+    if (!playsRef) initFirebaseSafe();
+    
+    if (playsRef) {
+      playsRef.on("value", (snapshot) => {
+        const val = snapshot.val();
+        state.totalPlays = val !== null ? parseInt(val) : 0;
+        updatePlaysUI();
+      });
+    }
+  } catch (e) {
+    console.error("Erro ao carregar plays globais:", e);
+  }
 }
 
 function incrementarPlaysGlobais() {
-  playsRef.transaction((currentPlays) => {
-    return (currentPlays || 0) + 1;
-  });
+  try {
+    if (!playsRef) initFirebaseSafe();
+
+    if (playsRef) {
+      playsRef.transaction((currentPlays) => {
+        return (currentPlays || 0) + 1;
+      });
+    } else {
+      state.totalPlays += 1;
+      updatePlaysUI();
+    }
+  } catch (e) {
+    console.error("Erro ao incrementar play global:", e);
+  }
 }
 
 function updatePlaysUI() {
