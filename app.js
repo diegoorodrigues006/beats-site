@@ -2,9 +2,6 @@
 const SHEET_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vS42I_YX0kzYxpH6143oUulw6EQYS8wLwhQV72F8EmfS0d7-rJyJIMu2fEUrIPWKMHuih8Ffk4DARX8/pub?output=csv";
 
-const COUNT_API_KEY = "beatssite_kaikyprod_totalplays";
-const COUNT_API_URL = "https://api.countapi.xyz";
-
 const WA_NUMBER = "553171821903";
 
 const GENRES = ["trap", "boombap", "detroit", "funk", "experimental"];
@@ -42,46 +39,36 @@ const state = {
 let ytPlayer = null;
 let progressInterval = null;
 
-/* ── SISTEMA DE CONTADORES DE PLAYS GLOBAIS (COUNTAPI) ── */
-async function carregarPlaysGlobais() {
-  // 1. Carrega imediatamente o cache local para evitar exibir 0 enquanto carrega
-  const cachedPlays = localStorage.getItem("cachedTotalPlays");
-  if (cachedPlays !== null) {
-    state.totalPlays = parseInt(cachedPlays) || 0;
-    updatePlaysUI();
-  }
+/* ── FIREBASE CONFIG & INITIALIZATION ── */
+const firebaseConfig = {
+  apiKey: "AIzaSyBABwCbrMKOoGl1C7J4T2eTJzyHE4qePEw",
+  authDomain: "beats-site-10044.firebaseapp.com",
+  databaseURL: "https://beats-site-10044-default-rtdb.firebaseio.com",
+  projectId: "beats-site-10044",
+  storageBucket: "beats-site-10044.firebasestorage.app",
+  messagingSenderId: "882809484284",
+  appId: "1:882809484284:web:c925d81f3acefe3dd8b879"
+};
 
-  try {
-    // 2. Busca o valor total atualizado na CountAPI
-    const res = await fetch(`${COUNT_API_URL}/get/${COUNT_API_KEY}`);
-    const data = await res.json();
-    if (data && typeof data.value !== "undefined") {
-      state.totalPlays = data.value;
-      localStorage.setItem("cachedTotalPlays", state.totalPlays);
-      updatePlaysUI();
-    }
-  } catch (e) {
-    console.error("Erro ao carregar plays globais da CountAPI:", e);
-  }
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+const db = firebase.database();
+const playsRef = db.ref("total_plays");
+
+/* ── SISTEMA DE CONTADORES DE PLAYS GLOBAIS (FIREBASE) ── */
+function carregarPlaysGlobais() {
+  playsRef.on("value", (snapshot) => {
+    const val = snapshot.val();
+    state.totalPlays = val !== null ? parseInt(val) : 0;
+    updatePlaysUI();
+  });
 }
 
 function incrementarPlaysGlobais() {
-  // Incrementa na tela e no cache local imediatamente
-  state.totalPlays += 1;
-  localStorage.setItem("cachedTotalPlays", state.totalPlays);
-  updatePlaysUI();
-
-  // Soma +1 na CountAPI globalmente
-  fetch(`${COUNT_API_URL}/hit/${COUNT_API_KEY}`)
-    .then((res) => res.json())
-    .then((data) => {
-      if (data && typeof data.value !== "undefined") {
-        state.totalPlays = data.value;
-        localStorage.setItem("cachedTotalPlays", state.totalPlays);
-        updatePlaysUI();
-      }
-    })
-    .catch((err) => console.error("Erro ao incrementar play global:", err));
+  playsRef.transaction((currentPlays) => {
+    return (currentPlays || 0) + 1;
+  });
 }
 
 function updatePlaysUI() {
@@ -166,7 +153,7 @@ window.onYouTubeIframeAPIReady = function () {
 function onPlayerStateChange(event) {
   if (event.data === YT.PlayerState.PLAYING) {
     state.isPlaying = true;
-    incrementarPlaysGlobais(); // Incrementa o contador global na CountAPI
+    incrementarPlaysGlobais();
     startProgressTimer();
     updatePlayerUI();
   } else if (event.data === YT.PlayerState.PAUSED) {
