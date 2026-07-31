@@ -3,19 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Proteção para evitar que o navegador tente adivinhar tipos de arquivos incorretamente -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  
   <title>Playlists — Prod. Kaiky</title>
-  <!-- Bloqueia navegadores de adivinharem tipos de arquivo -->
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<!-- Impede que seu site seja colocado dentro de iframes em sites terceiros -->
-<meta http-equiv="X-Frame-Options" content="DENY">
-  <!-- Favicon da Guia -->
-<!-- Favicon em SVG com o estilo do site -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230a0a0a'/><path d='M30 20 H44 V42 L66 20 H84 L56 49 L86 80 H68 L44 54 V80 H30 Z' fill='%23ccff00'/></svg>">  <meta name="description" content="Explore os beats por gênero: Trap, Boombap, Detroit, Funk e Experimental.">
+  
+  <!-- Meu Favicon em SVG no formato do 'K' neon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230a0a0a'/><path d='M30 20 H44 V42 L66 20 H84 L56 49 L86 80 H68 L44 54 V80 H30 Z' fill='%23ccff00'/></svg>">
+  
+  <!-- Descrição para mecanismos de busca -->
+  <meta name="description" content="Explore os beats por gênero: Trap, Boombap, Detroit, Funk e Experimental.">
+  
+  <!-- Importação da minha folha de estilos principal -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- Minha barra verde indicadora de progresso do scroll no topo -->
   <div id="scroll-progress"></div>
 
+  <!-- Minha tela de carregamento global (Loader de ondas) -->
   <div id="global-loader">
     <div class="loading-wave">
       <div class="loading-bar"></div>
@@ -25,16 +33,21 @@
     </div>
   </div>
 
-  <!-- Navbar -->
+  <!-- Barra de Navegação Superior (Navbar) -->
   <nav class="navbar">
     <div class="navbar-inner">
+      <!-- Meu Logo com destaque em texto neon -->
       <a href="index.html" class="nav-logo">PROD.<span class="neon-text">KAIKY</span></a>
+      
+      <!-- Meus Links principais de navegação -->
       <ul class="nav-links">
         <li><a href="index.html" class="nav-link">INÍCIO</a></li>
         <li><a href="beats.html" class="nav-link">BEATS</a></li>
         <li><a href="playlists.html" class="nav-link">PLAYLISTS</a></li>
         <li><a href="https://wa.me/553171821903" target="_blank" rel="noopener noreferrer" class="nav-link">CONTATE-ME</a></li>
       </ul>
+
+      <!-- Meu bloco de estatísticas rápidas na Navbar (Beats totais e Plays do Firebase) -->
       <div class="nav-stats-group">
         <div class="nav-beats-count">
           <span class="count">—</span>
@@ -48,24 +61,30 @@
     </div>
   </nav>
 
+  <!-- Conteúdo da Página das Playlists -->
   <div class="page-content">
-    <!-- Banner -->
+
+    <!-- Banner Superior da Página -->
     <section class="page-banner">
       <p class="page-banner-eyebrow">Explore por Gênero</p>
       <h1 class="page-banner-title">PLAYLISTS</h1>
+      <!-- Subtítulo atualizado dinamicamente pelo meu app.js com o total de gêneros e faixas -->
       <p class="page-banner-sub" id="playlists-sub">5 Gêneros · — Beats</p>
     </section>
 
-    <!-- Grid -->
+    <!-- Grid Dinâmica: O meu app.js injeta os cards dos 5 gêneros principais aqui dentro -->
     <div class="playlist-grid" id="playlists-grid"></div>
 
-    <!-- Footer -->
+    <!-- Rodapé (Footer) -->
     <footer>
       <div class="footer-inner">
+        <!-- Minha Apresentação/Marca -->
         <div class="footer-brand">
           <h2>PROD.<span class="neon-text">KAIKY</span></h2>
           <p>Beatmaker direto de Barreiro, Belo Horizonte, MG. Desenvolvo produções exclusivas elevando o nível da cena mineira através da minha arte.</p>
         </div>
+
+        <!-- Links de navegação do rodapé -->
         <div class="footer-col">
           <h3>Explorar</h3>
           <ul>
@@ -74,6 +93,8 @@
             <li><a href="playlists.html">Playlists</a></li>
           </ul>
         </div>
+
+        <!-- Minhas Redes Sociais -->
         <div class="footer-col">
           <h3>Sintonize</h3>
           <div class="social-links">
@@ -86,29 +107,35 @@
             <a href="https://youtube.com/@prod_kaiky" target="_blank" rel="noopener noreferrer" class="social-link">
               <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
             </a>
-           <a href="https://github.com/diegoorodrigues006/beats-site" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub" style="display:inline-flex;align-items:center;justify-content:center;">
+            <a href="https://github.com/diegoorodrigues006/beats-site" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub" style="display:inline-flex;align-items:center;justify-content:center;">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="#b8b0a3"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          </a>
+            </a>
           </div>
         </div>
       </div>
+      
+      <!-- Direitos autorais -->
       <div class="footer-bottom">© 2026 Prod.Kaiky. Todos os direitos reservados.</div>
     </footer>
   </div>
 
+  <!-- Bibliotecas do Firebase para o contador de plays globais -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
-
+  <!-- Biblioteca oficial do Tocador do YouTube -->
   <script src="https://www.youtube.com/iframe_api"></script>
+  
+  <!-- Meu Script JavaScript Principal -->
   <script src="app.js?v=1.1"></script>
+  
+  <!-- Inicializo a visualização das playlists e atualizo o subtítulo do banner -->
   <script>
     initPlaylists().then(() => {
       const sub = document.getElementById("playlists-sub");
-      if (sub) sub.textContent = `5 Gêneros · ${state.beats.length} Beats`;
+      if (sub) sub.textContent = GENRES.length + " Gêneros · " + state.beats.length + " Beats";
     });
   </script>
-  
 
 </body>
 </html>
