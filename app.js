@@ -1,3 +1,5 @@
+console.log("%c🚀 Beats Site | Inicializando Scripts...", "color: #ccff00; font-weight: bold; font-size: 14px;");
+
 /* ── Constants ── */
 const SHEET_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vS42I_YX0kzYxpH6143oUulw6EQYS8wLwhQV72F8EmfS0d7-rJyJIMu2fEUrIPWKMHuih8Ffk4DARX8/pub?output=csv";
@@ -39,7 +41,7 @@ const state = {
   currentTime: 0,
   duration: 0,
   totalPlays: 0,
-  previousActiveId: null, // Rastreia o card ativo anterior para evitar Layout Thrashing
+  previousActiveId: null,
 };
 
 let ytPlayer = null;
@@ -63,17 +65,18 @@ function initFirebaseSafe() {
     if (typeof firebase !== "undefined") {
       if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
+        console.log("🔥 Firebase inicializado com sucesso.");
       }
       playsRef = firebase.database().ref("total_plays");
     }
   } catch (e) {
-    console.error("Erro na inicializacao do Firebase:", e);
+    console.error("❌ Erro na inicializacao do Firebase:", e);
   }
 }
 
 initFirebaseSafe();
 
-/* ── INTERSECTION OBSERVER API (Passo 4) ── */
+/* ── INTERSECTION OBSERVER API ── */
 function initIntersectionObserver() {
   if (scrollObserver) scrollObserver.disconnect();
 
@@ -90,6 +93,7 @@ function initIntersectionObserver() {
     rootMargin: "0px 0px -40px 0px"
   });
 
+  console.log("👁️ Intersection Observer configurado para animações em scroll.");
   observeNewElements();
 }
 
@@ -111,6 +115,7 @@ function carregarPlaysGlobais() {
     playsRef.on("value", (snapshot) => {
       const val = snapshot.val();
       state.totalPlays = val !== null ? parseInt(val) : 0;
+      console.log(`📈 Total de plays globais atualizado via Firebase: ${state.totalPlays}`);
       updatePlaysUI();
     });
   }
@@ -123,8 +128,10 @@ function incrementarPlaysGlobais() {
     playsRef.transaction((currentPlays) => {
       return (currentPlays || 0) + 1;
     });
+    console.log("➕ Incrementando contador de plays globais no Firebase...");
   } else {
     state.totalPlays += 1;
+    console.log("➕ Incrementando contador de plays localmente...");
     updatePlaysUI();
   }
 }
@@ -163,6 +170,7 @@ function clean(s) {
 /* ── Load beats from Google Sheets ── */
 async function loadBeats() {
   try {
+    console.log("🔄 Buscando lista de beats no Google Sheets...");
     const res = await fetch(SHEET_URL);
     const csv = await res.text();
     const lines = csv.split(/\r?\n/);
@@ -183,7 +191,9 @@ async function loadBeats() {
       });
     }
     state.beats = result;
+    console.log(`✅ ${state.beats.length} beats carregados e processados com sucesso!`);
   } catch (e) {
+    console.warn("⚠️ Falha ao buscar planilha online. Carregando dados de fallback...", e);
     state.beats = [
       { idYoutube: "lz3mW653CL8", artista: "KAIKY PROD", nome: "brandao #1", genero: "trap", preco: "R$ 60,00" }
     ];
@@ -192,6 +202,7 @@ async function loadBeats() {
 
 /* ── YouTube IFrame API ── */
 window.onYouTubeIframeAPIReady = function () {
+  console.log("🎵 YouTube IFrame API pronta.");
   const container = document.createElement("div");
   container.id = "yt-player-container";
   container.style.cssText = "position:fixed;bottom:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;";
@@ -203,7 +214,7 @@ window.onYouTubeIframeAPIReady = function () {
     playerVars: { autoplay: 1, controls: 0, disablekb: 1, fs: 0, modestbranding: 1, rel: 0 },
     events: {
       onStateChange: onPlayerStateChange,
-      onReady: () => { /* player ready */ },
+      onReady: () => { console.log("✅ Tocador do YouTube pronto para reprodução."); },
     },
   });
 };
@@ -211,14 +222,17 @@ window.onYouTubeIframeAPIReady = function () {
 function onPlayerStateChange(event) {
   if (event.data === YT.PlayerState.PLAYING) {
     state.isPlaying = true;
+    console.log(`▶️ Reprodução iniciada: "${state.currentBeat?.nome || 'Beat'}"`);
     incrementarPlaysGlobais();
     startProgressTimer();
     updatePlayerUI();
   } else if (event.data === YT.PlayerState.PAUSED) {
     state.isPlaying = false;
+    console.log(`⏸️ Reprodução pausada: "${state.currentBeat?.nome || 'Beat'}"`);
     stopProgressTimer();
     updatePlayerUI();
   } else if (event.data === YT.PlayerState.ENDED) {
+    console.log("🏁 Fim da faixa. Avançando para a próxima...");
     next();
   }
 }
@@ -260,6 +274,8 @@ function play(beat, playlist = null) {
   state.currentTime = 0;
   state.duration = 0;
   state.progress = 0;
+
+  console.log(`🎧 Carregando faixa no tocador: "${beat.nome}" (${beat.genero.toUpperCase()})`);
 
   if (ytPlayer && ytPlayer.loadVideoById) {
     ytPlayer.loadVideoById(beat.idYoutube);
@@ -323,7 +339,10 @@ function next() {
   if (!list.length || !state.currentBeat) return;
   const idx = list.findIndex(b => b.idYoutube === state.currentBeat.idYoutube);
   const nextBeat = list[(idx + 1) % list.length];
-  if (nextBeat) play(nextBeat, list);
+  if (nextBeat) {
+    console.log("⏭️ Pulo de faixa -> Próxima");
+    play(nextBeat, list);
+  }
 }
 
 function prev() {
@@ -331,7 +350,10 @@ function prev() {
   if (!list.length || !state.currentBeat) return;
   const idx = list.findIndex(b => b.idYoutube === state.currentBeat.idYoutube);
   const prevBeat = list[(idx - 1 + list.length) % list.length];
-  if (prevBeat) play(prevBeat, list);
+  if (prevBeat) {
+    console.log("⏮️ Pulo de faixa -> Anterior");
+    play(prevBeat, list);
+  }
 }
 
 /* ── Player UI (Cirúrgico) ── */
@@ -412,13 +434,11 @@ function updateCardElements(card, isActive, isPlaying) {
 function highlightActiveCards() {
   const currentId = state.currentBeat?.idYoutube;
 
-  // Desativa apenas o card anterior se houver troca de beat
   if (state.previousActiveId && state.previousActiveId !== currentId) {
     const prevCards = document.querySelectorAll(`.beat-card[data-id="${state.previousActiveId}"]`);
     prevCards.forEach(card => updateCardElements(card, false, false));
   }
 
-  // Ativa/Atualiza o card atual
   if (currentId) {
     const currentCards = document.querySelectorAll(`.beat-card[data-id="${currentId}"]`);
     currentCards.forEach(card => updateCardElements(card, true, state.isPlaying));
@@ -462,6 +482,7 @@ function handleContainerBeatClick(e, playlistContext) {
     e.stopPropagation();
     const nome = buyBtn.dataset.nome || "";
     const preco = buyBtn.dataset.preco || "";
+    console.log(`💬 Redirecionando para WhatsApp -> Interesse em: "${nome}" (${preco})`);
     const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Tenho interesse no beat: " + nome + " - " + preco)}`;
     window.open(url, "_blank");
     return;
@@ -501,6 +522,7 @@ function escHtml(str) {
 /* ── Global Player HTML injection ── */
 function injectGlobalPlayer() {
   if (document.getElementById("global-player")) return;
+  console.log("🛠️ Injetando HTML do Tocador Global na página...");
   const html = `
     <div id="global-player">
       <div class="player-progress progress-track" id="player-progress-track">
@@ -601,6 +623,7 @@ function updateNavCount() {
 
 /* ── HOME page ── */
 async function initHome() {
+  console.log("🏠 Inicializando visualização: HOME");
   carregarPlaysGlobais();
   injectGlobalPlayer();
   initScrollProgress();
@@ -671,6 +694,7 @@ async function initHome() {
 let activeGenre = "todos";
 
 async function initBeats() {
+  console.log("🎵 Inicializando visualização: BEATS");
   carregarPlaysGlobais();
   injectGlobalPlayer();
   initScrollProgress();
@@ -685,13 +709,13 @@ async function initBeats() {
   renderBeatsGrid();
   updateFilterCounts();
 
-  // Delegação de eventos flexível para os botões de filtro
   const filterContainer = document.querySelector(".filter-container, .genre-filters, .filters-bar, .beats-filters");
   if (filterContainer) {
     filterContainer.addEventListener("click", (e) => {
       const btn = e.target.closest(".filter-btn, [data-genre]");
       if (btn && btn.dataset.genre) {
         activeGenre = btn.dataset.genre.toLowerCase();
+        console.log(`🔍 Filtro selecionado: "${activeGenre.toUpperCase()}"`);
         document.querySelectorAll(".filter-btn, [data-genre]").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
         renderBeatsGrid();
@@ -702,6 +726,7 @@ async function initBeats() {
       btn.addEventListener("click", () => {
         if (btn.dataset.genre) {
           activeGenre = btn.dataset.genre.toLowerCase();
+          console.log(`🔍 Filtro selecionado via fallback: "${activeGenre.toUpperCase()}"`);
           document.querySelectorAll(".filter-btn, [data-genre]").forEach(b => b.classList.remove("active"));
           btn.classList.add("active");
           renderBeatsGrid();
@@ -738,6 +763,7 @@ function renderBeatsGrid() {
   filtered.forEach(beat => fragment.appendChild(renderBeatCard(beat)));
   grid.appendChild(fragment);
 
+  console.log(`⚡ Renderizados ${filtered.length} beats na grid via DocumentFragment.`);
   observeNewElements();
 }
 
@@ -752,6 +778,7 @@ function updateFilterCounts() {
 
 /* ── PLAYLISTS page ── */
 async function initPlaylists() {
+  console.log("📂 Inicializando visualização: PLAYLISTS");
   carregarPlaysGlobais();
   injectGlobalPlayer();
   initScrollProgress();
@@ -802,6 +829,7 @@ async function initPlaylists() {
 
 /* ── PLAYLIST DETAIL page ── */
 async function initPlaylistDetail() {
+  console.log("📄 Inicializando visualização: DETALHES DA PLAYLIST");
   carregarPlaysGlobais();
   injectGlobalPlayer();
   initScrollProgress();
@@ -850,4 +878,4 @@ async function initPlaylistDetail() {
   observeNewElements();
 
   grid.addEventListener("click", (e) => handleContainerBeatClick(e, genreBeats));
-                     }
+    }
