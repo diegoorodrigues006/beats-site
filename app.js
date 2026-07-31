@@ -685,16 +685,28 @@ async function initBeats() {
   renderBeatsGrid();
   updateFilterCounts();
 
-  const filterContainer = document.querySelector(".filter-container");
+  // Delegação de eventos flexível para os botões de filtro
+  const filterContainer = document.querySelector(".filter-container, .genre-filters, .filters-bar, .beats-filters");
   if (filterContainer) {
     filterContainer.addEventListener("click", (e) => {
-      const btn = e.target.closest(".filter-btn");
+      const btn = e.target.closest(".filter-btn, [data-genre]");
       if (btn && btn.dataset.genre) {
-        activeGenre = btn.dataset.genre;
-        document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+        activeGenre = btn.dataset.genre.toLowerCase();
+        document.querySelectorAll(".filter-btn, [data-genre]").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
         renderBeatsGrid();
       }
+    });
+  } else {
+    document.querySelectorAll(".filter-btn, [data-genre]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (btn.dataset.genre) {
+          activeGenre = btn.dataset.genre.toLowerCase();
+          document.querySelectorAll(".filter-btn, [data-genre]").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          renderBeatsGrid();
+        }
+      });
     });
   }
 
@@ -730,8 +742,8 @@ function renderBeatsGrid() {
 }
 
 function updateFilterCounts() {
-  document.querySelectorAll(".filter-btn").forEach(btn => {
-    const g = btn.dataset.genre;
+  document.querySelectorAll(".filter-btn, [data-genre]").forEach(btn => {
+    const g = btn.dataset.genre ? btn.dataset.genre.toLowerCase() : "todos";
     const count = g === "todos" ? state.beats.length : state.beats.filter(b => b.genero === g).length;
     const span = btn.querySelector(".filter-count");
     if (span) span.textContent = `(${count})`;
@@ -838,4 +850,4 @@ async function initPlaylistDetail() {
   observeNewElements();
 
   grid.addEventListener("click", (e) => handleContainerBeatClick(e, genreBeats));
-                                     }
+                     }
