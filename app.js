@@ -44,6 +44,7 @@ const state = {
 let ytPlayer = null;
 let progressInterval = null;
 var playsRef = null;
+let scrollObserver = null;
 
 /* ── FIREBASE CONFIG & INITIALIZATION ── */
 const firebaseConfig = {
@@ -70,6 +71,36 @@ function initFirebaseSafe() {
 }
 
 initFirebaseSafe();
+
+/* ── INTERSECTION OBSERVER API (Passo 4) ── */
+function initIntersectionObserver() {
+  if (scrollObserver) scrollObserver.disconnect();
+
+  scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        scrollObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    root: null,
+    threshold: 0.1,
+    rootMargin: "0px 0px -40px 0px"
+  });
+
+  observeNewElements();
+}
+
+function observeNewElements() {
+  if (!scrollObserver) return;
+  const selectors = ".beat-card, .playlist-card, .card-lift";
+  document.querySelectorAll(selectors).forEach(el => {
+    if (!el.classList.contains("visible")) {
+      scrollObserver.observe(el);
+    }
+  });
+}
 
 /* ── SISTEMA DE CONTADORES DE PLAYS GLOBAIS ── */
 function carregarPlaysGlobais() {
@@ -558,6 +589,7 @@ async function initHome() {
   injectGlobalPlayer();
   initScrollProgress();
   setActiveNavLink();
+  initIntersectionObserver();
   buildMarquee("marquee-track");
 
   const heroBeats = document.getElementById("hero-beats-count");
@@ -581,7 +613,6 @@ async function initHome() {
     homeBeats.forEach(beat => fragmentBeats.appendChild(renderBeatCard(beat)));
     beatsCarousel.appendChild(fragmentBeats);
 
-    // Delegação de eventos no carrossel da Home
     beatsCarousel.addEventListener("click", (e) => handleContainerBeatClick(e, homeBeats));
   }
 
@@ -608,6 +639,8 @@ async function initHome() {
     playlistsCarousel.appendChild(fragmentPlaylists);
   }
 
+  observeNewElements();
+
   document.getElementById("scroll-beats-left")?.addEventListener("click", () =>
     document.getElementById("beats-carousel")?.scrollBy({ left: -220, behavior: "smooth" }));
   document.getElementById("scroll-beats-right")?.addEventListener("click", () =>
@@ -626,6 +659,7 @@ async function initBeats() {
   injectGlobalPlayer();
   initScrollProgress();
   setActiveNavLink();
+  initIntersectionObserver();
 
   renderSkeletons(document.getElementById("beats-grid"), 12, 200, 320);
 
@@ -635,7 +669,6 @@ async function initBeats() {
   renderBeatsGrid();
   updateFilterCounts();
 
-  // Delegação de eventos para botões de filtro
   const filterContainer = document.querySelector(".filter-container");
   if (filterContainer) {
     filterContainer.addEventListener("click", (e) => {
@@ -649,7 +682,6 @@ async function initBeats() {
     });
   }
 
-  // Delegação de eventos para os cards da grid
   const grid = document.getElementById("beats-grid");
   if (grid) {
     grid.addEventListener("click", (e) => {
@@ -677,6 +709,8 @@ function renderBeatsGrid() {
   const fragment = document.createDocumentFragment();
   filtered.forEach(beat => fragment.appendChild(renderBeatCard(beat)));
   grid.appendChild(fragment);
+
+  observeNewElements();
 }
 
 function updateFilterCounts() {
@@ -694,6 +728,7 @@ async function initPlaylists() {
   injectGlobalPlayer();
   initScrollProgress();
   setActiveNavLink();
+  initIntersectionObserver();
 
   await loadBeats();
   hideLoader();
@@ -733,6 +768,8 @@ async function initPlaylists() {
     fragment.appendChild(a);
   });
   grid.appendChild(fragment);
+
+  observeNewElements();
 }
 
 /* ── PLAYLIST DETAIL page ── */
@@ -741,6 +778,7 @@ async function initPlaylistDetail() {
   injectGlobalPlayer();
   initScrollProgress();
   setActiveNavLink();
+  initIntersectionObserver();
 
   const params = new URLSearchParams(window.location.search);
   const genre = params.get("genero") || "trap";
@@ -781,6 +819,7 @@ async function initPlaylistDetail() {
   genreBeats.forEach(beat => fragment.appendChild(renderBeatCard(beat)));
   grid.appendChild(fragment);
 
-  // Delegação de eventos na grid de detalhes
+  observeNewElements();
+
   grid.addEventListener("click", (e) => handleContainerBeatClick(e, genreBeats));
-        }
+}
