@@ -405,13 +405,16 @@ function renderBeatCard(beat, playlist = null) {
 }
 
 function renderSkeletons(container, count, width, height) {
+  if (!container) return;
   container.innerHTML = "";
+  const fragment = document.createDocumentFragment();
   for (let i = 0; i < count; i++) {
     const div = document.createElement("div");
     div.className = "skeleton";
     div.style.cssText = `width:${width}px;height:${height}px;flex-shrink:0;`;
-    container.appendChild(div);
+    fragment.appendChild(div);
   }
+  container.appendChild(fragment);
 }
 
 function escHtml(str) {
@@ -548,12 +551,15 @@ async function initHome() {
   if (beatsCarousel) {
     const homeBeats = state.beats.slice(0, 12);
     beatsCarousel.innerHTML = "";
-    homeBeats.forEach(beat => beatsCarousel.appendChild(renderBeatCard(beat, homeBeats)));
+    const fragmentBeats = document.createDocumentFragment();
+    homeBeats.forEach(beat => fragmentBeats.appendChild(renderBeatCard(beat, homeBeats)));
+    beatsCarousel.appendChild(fragmentBeats);
   }
 
   const playlistsCarousel = document.getElementById("playlists-carousel");
   if (playlistsCarousel) {
     playlistsCarousel.innerHTML = "";
+    const fragmentPlaylists = document.createDocumentFragment();
     GENRES.forEach(genre => {
       const count = state.beats.filter(b => b.genero === genre).length;
       const card = document.createElement("a");
@@ -568,8 +574,9 @@ async function initHome() {
           <p style="font-size:0.875rem;color:#ccff00;">${count} Beats</p>
         </div>
       `;
-      playlistsCarousel.appendChild(card);
+      fragmentPlaylists.appendChild(card);
     });
+    playlistsCarousel.appendChild(fragmentPlaylists);
   }
 
   document.getElementById("scroll-beats-left")?.addEventListener("click", () =>
@@ -621,7 +628,10 @@ function renderBeatsGrid() {
     grid.innerHTML = `<div class="empty-state"><div class="icon">🎵</div><p>Nenhum beat encontrado</p></div>`;
     return;
   }
-  filtered.forEach(beat => grid.appendChild(renderBeatCard(beat, filtered)));
+
+  const fragment = document.createDocumentFragment();
+  filtered.forEach(beat => fragment.appendChild(renderBeatCard(beat, filtered)));
+  grid.appendChild(fragment);
 }
 
 function updateFilterCounts() {
@@ -648,6 +658,7 @@ async function initPlaylists() {
   if (!grid) return;
   grid.innerHTML = "";
 
+  const fragment = document.createDocumentFragment();
   GENRES.forEach(genre => {
     const count = state.beats.filter(b => b.genero === genre).length;
     const color = GENRE_COLORS[genre] || "#ccff00";
@@ -674,8 +685,9 @@ async function initPlaylists() {
       </div>
     `;
 
-    grid.appendChild(a);
+    fragment.appendChild(a);
   });
+  grid.appendChild(fragment);
 }
 
 /* ── PLAYLIST DETAIL page ── */
@@ -719,5 +731,8 @@ async function initPlaylistDetail() {
     grid.innerHTML = `<div class="empty-state" style="width:100%;"><div class="icon">🎵</div><p>Nenhum beat nesse gênero ainda</p></div>`;
     return;
   }
-  genreBeats.forEach(beat => grid.appendChild(renderBeatCard(beat, genreBeats)));
-}
+
+  const fragment = document.createDocumentFragment();
+  genreBeats.forEach(beat => fragment.appendChild(renderBeatCard(beat, genreBeats)));
+  grid.appendChild(fragment);
+                             }
