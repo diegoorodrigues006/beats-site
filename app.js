@@ -365,8 +365,8 @@ function highlightActiveCards() {
   });
 }
 
-/* ── Render helpers ── */
-function renderBeatCard(beat, playlist = null) {
+/* ── Render helpers (Sem event listeners individuais) ── */
+function renderBeatCard(beat) {
   const div = document.createElement("div");
   div.className = "beat-card" + (state.currentBeat?.idYoutube === beat.idYoutube ? " active" : "");
   div.dataset.id = beat.idYoutube;
@@ -391,17 +391,29 @@ function renderBeatCard(beat, playlist = null) {
     </div>
   `;
 
-  div.addEventListener("click", (e) => {
-    toggleBeatPlayback(beat, e, playlist);
-  });
-
-  div.querySelector(".beat-buy").addEventListener("click", (e) => {
-    e.stopPropagation();
-    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Tenho interesse no beat: " + beat.nome + " - " + beat.preco)}`;
-    window.open(url, "_blank");
-  });
-
   return div;
+}
+
+/* Handler genérico para delegação de cliques nos cards */
+function handleContainerBeatClick(e, playlistContext) {
+  const buyBtn = e.target.closest(".beat-buy");
+  if (buyBtn) {
+    e.stopPropagation();
+    const nome = buyBtn.dataset.nome || "";
+    const preco = buyBtn.dataset.preco || "";
+    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Tenho interesse no beat: " + nome + " - " + preco)}`;
+    window.open(url, "_blank");
+    return;
+  }
+
+  const card = e.target.closest(".beat-card");
+  if (card) {
+    const id = card.dataset.id;
+    const beat = state.beats.find(b => b.idYoutube === id);
+    if (beat) {
+      toggleBeatPlayback(beat, e, playlistContext);
+    }
+  }
 }
 
 function renderSkeletons(container, count, width, height) {
@@ -552,8 +564,11 @@ async function initHome() {
     const homeBeats = state.beats.slice(0, 12);
     beatsCarousel.innerHTML = "";
     const fragmentBeats = document.createDocumentFragment();
-    homeBeats.forEach(beat => fragmentBeats.appendChild(renderBeatCard(beat, homeBeats)));
+    homeBeats.forEach(beat => fragmentBeats.appendChild(renderBeatCard(beat)));
     beatsCarousel.appendChild(fragmentBeats);
+
+    // Delegação de eventos no carrossel da Home
+    beatsCarousel.addEventListener("click", (e) => handleContainerBeatClick(e, homeBeats));
   }
 
   const playlistsCarousel = document.getElementById("playlists-carousel");
@@ -606,14 +621,30 @@ async function initBeats() {
   renderBeatsGrid();
   updateFilterCounts();
 
-  document.querySelectorAll(".filter-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      activeGenre = btn.dataset.genre;
-      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      renderBeatsGrid();
+  // Delegação de eventos para botões de filtro
+  const filterContainer = document.querySelector(".filter-container");
+  if (filterContainer) {
+    filterContainer.addEventListener("click", (e) => {
+      const btn = e.target.closest(".filter-btn");
+      if (btn && btn.dataset.genre) {
+        activeGenre = btn.dataset.genre;
+        document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        renderBeatsGrid();
+      }
     });
-  });
+  }
+
+  // Delegação de eventos para os cards da grid
+  const grid = document.getElementById("beats-grid");
+  if (grid) {
+    grid.addEventListener("click", (e) => {
+      const filtered = activeGenre === "todos"
+        ? state.beats
+        : state.beats.filter(b => b.genero === activeGenre);
+      handleContainerBeatClick(e, filtered);
+    });
+  }
 }
 
 function renderBeatsGrid() {
@@ -630,7 +661,7 @@ function renderBeatsGrid() {
   }
 
   const fragment = document.createDocumentFragment();
-  filtered.forEach(beat => fragment.appendChild(renderBeatCard(beat, filtered)));
+  filtered.forEach(beat => fragment.appendChild(renderBeatCard(beat)));
   grid.appendChild(fragment);
 }
 
@@ -733,6 +764,9 @@ async function initPlaylistDetail() {
   }
 
   const fragment = document.createDocumentFragment();
-  genreBeats.forEach(beat => fragment.appendChild(renderBeatCard(beat, genreBeats)));
+  genreBeats.forEach(beat => fragment.appendChild(renderBeatCard(beat)));
   grid.appendChild(fragment);
-                             }
+
+  // Delegação de eventos na grid de detalhes
+  grid.addEventListener("click", (e) => handleContainerBeatClick(e, genreBeats));
+}
