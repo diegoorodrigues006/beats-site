@@ -39,6 +39,7 @@ const state = {
   currentTime: 0,
   duration: 0,
   totalPlays: 0,
+  previousActiveId: null, // Rastreia o card ativo anterior para evitar Layout Thrashing
 };
 
 let ytPlayer = null;
@@ -387,27 +388,42 @@ function fmt(s) {
   return m + ":" + (sec < 10 ? "0" : "") + sec;
 }
 
-/* ── Manipulação Cirúrgica de Atributos nos Cards ── */
-function highlightActiveCards() {
-  document.querySelectorAll(".beat-card").forEach(card => {
-    const isActive = state.currentBeat && card.dataset.id === state.currentBeat.idYoutube;
-    
-    card.classList.toggle("active", isActive);
+/* ── Manipulação Cirúrgica de Atributos (Sem Layout Thrashing) ── */
+function updateCardElements(card, isActive, isPlaying) {
+  if (!card) return;
 
-    const name = card.querySelector(".beat-name");
-    if (name) name.classList.toggle("playing", isActive);
+  card.classList.toggle("active", isActive);
 
-    const badge = card.querySelector(".beat-active-badge");
-    if (badge) badge.style.display = isActive ? "block" : "none";
+  const name = card.querySelector(".beat-name");
+  if (name) name.classList.toggle("playing", isActive);
 
-    const playIconPath = card.querySelector(".beat-thumb-overlay .beat-play-btn svg path");
-    if (playIconPath) {
-      const targetPath = (isActive && state.isPlaying) ? SVG_PATHS.PAUSE : SVG_PATHS.PLAY;
-      if (playIconPath.getAttribute("d") !== targetPath) {
-        playIconPath.setAttribute("d", targetPath);
-      }
+  const badge = card.querySelector(".beat-active-badge");
+  if (badge) badge.style.display = isActive ? "block" : "none";
+
+  const playIconPath = card.querySelector(".beat-thumb-overlay .beat-play-btn svg path");
+  if (playIconPath) {
+    const targetPath = (isActive && isPlaying) ? SVG_PATHS.PAUSE : SVG_PATHS.PLAY;
+    if (playIconPath.getAttribute("d") !== targetPath) {
+      playIconPath.setAttribute("d", targetPath);
     }
-  });
+  }
+}
+
+function highlightActiveCards() {
+  const currentId = state.currentBeat?.idYoutube;
+
+  // Desativa apenas o card anterior se houver troca de beat
+  if (state.previousActiveId && state.previousActiveId !== currentId) {
+    const prevCards = document.querySelectorAll(`.beat-card[data-id="${state.previousActiveId}"]`);
+    prevCards.forEach(card => updateCardElements(card, false, false));
+  }
+
+  // Ativa/Atualiza o card atual
+  if (currentId) {
+    const currentCards = document.querySelectorAll(`.beat-card[data-id="${currentId}"]`);
+    currentCards.forEach(card => updateCardElements(card, true, state.isPlaying));
+    state.previousActiveId = currentId;
+  }
 }
 
 /* ── Render helpers ── */
@@ -419,7 +435,7 @@ function renderBeatCard(beat) {
 
   div.innerHTML = `
     <div class="beat-thumb">
-      <img src="https://img.youtube.com/vi/${beat.idYoutube}/hqdefault.jpg" alt="${escHtml(beat.nome)}" loading="lazy">
+      <img src="https://img.youtube.com/vi/${beat.idYoutube}/hqdefault.jpg" alt="${escHtml(beat.nome)}" loading="lazy" decoding="async">
       <div class="beat-thumb-overlay">
         <div class="beat-play-btn">
           <svg viewBox="0 0 24 24" style="fill:#000;width:20px;height:20px;">
@@ -822,4 +838,4 @@ async function initPlaylistDetail() {
   observeNewElements();
 
   grid.addEventListener("click", (e) => handleContainerBeatClick(e, genreBeats));
-}
+                                     }
