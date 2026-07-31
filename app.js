@@ -200,13 +200,28 @@ async function loadBeats() {
   }
 }
 
-/* ── YouTube IFrame API ── */
+/* ── YouTube IFrame API (Carregamento Dinâmico Garantido) ── */
+function loadYouTubeAPI() {
+  if (!document.getElementById("yt-iframe-script")) {
+    console.log("🛠️ Injetando script da API do YouTube IFrame...");
+    const tag = document.createElement("script");
+    tag.id = "yt-iframe-script";
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  }
+}
+
+loadYouTubeAPI();
+
 window.onYouTubeIframeAPIReady = function () {
-  console.log("🎵 YouTube IFrame API pronta.");
-  const container = document.createElement("div");
-  container.id = "yt-player-container";
-  container.style.cssText = "position:fixed;bottom:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;";
-  document.body.appendChild(container);
+  console.log("🎵 YouTube IFrame API carregada e pronta.");
+  if (!document.getElementById("yt-player-container")) {
+    const container = document.createElement("div");
+    container.id = "yt-player-container";
+    container.style.cssText = "position:fixed;bottom:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;";
+    document.body.appendChild(container);
+  }
 
   ytPlayer = new YT.Player("yt-player-container", {
     width: "1",
@@ -277,10 +292,33 @@ function play(beat, playlist = null) {
 
   console.log(`🎧 Carregando faixa no tocador: "${beat.nome}" (${beat.genero.toUpperCase()})`);
 
-  if (ytPlayer && ytPlayer.loadVideoById) {
+  if (ytPlayer && typeof ytPlayer.loadVideoById === "function") {
     ytPlayer.loadVideoById(beat.idYoutube);
     state.isPlaying = true;
     startProgressTimer();
+  } else if (typeof YT !== "undefined" && YT.Player) {
+    // Fallback de inicialização se o player não estivesse pronto no ready inicial
+    console.log("🔄 Inicializando tocador pontual...");
+    if (!document.getElementById("yt-player-container")) {
+      const container = document.createElement("div");
+      container.id = "yt-player-container";
+      container.style.cssText = "position:fixed;bottom:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;";
+      document.body.appendChild(container);
+    }
+    ytPlayer = new YT.Player("yt-player-container", {
+      width: "1",
+      height: "1",
+      videoId: beat.idYoutube,
+      playerVars: { autoplay: 1, controls: 0, disablekb: 1, fs: 0, modestbranding: 1, rel: 0 },
+      events: {
+        onStateChange: onPlayerStateChange,
+        onReady: (e) => {
+          e.target.playVideo();
+          state.isPlaying = true;
+          startProgressTimer();
+        }
+      }
+    });
   }
 
   showPlayer();
