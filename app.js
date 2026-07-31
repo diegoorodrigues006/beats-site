@@ -24,6 +24,11 @@ const GENRE_COLORS = {
 
 const MARQUEE_WORDS = ["TRAP", "BOOMBAP", "DETROIT", "FUNK", "EXPERIMENTAL", "PROD.KAIKY", "BEATS", "AUTORAL"];
 
+const SVG_PATHS = {
+  PLAY: "M8 5v14l11-7z",
+  PAUSE: "M6 19h4V5H6v14zm8-14v14h4V5h-4z"
+};
+
 /* ── State ── */
 const state = {
   beats: [],
@@ -297,7 +302,7 @@ function prev() {
   if (prevBeat) play(prevBeat, list);
 }
 
-/* ── Player UI ── */
+/* ── Player UI (Cirúrgico) ── */
 function showPlayer() {
   const player = document.getElementById("global-player");
   if (player) {
@@ -313,17 +318,23 @@ function updatePlayerUI() {
   const art = document.getElementById("player-art");
   const title = document.getElementById("player-title");
   const playBtn = document.getElementById("player-play-btn");
+  const playIconPath = playBtn?.querySelector("path");
   const waveform = document.getElementById("player-waveform");
 
   if (art) {
-    art.style.backgroundImage = `url(https://img.youtube.com/vi/${beat.idYoutube}/hqdefault.jpg)`;
+    const newBg = `url("https://img.youtube.com/vi/${beat.idYoutube}/hqdefault.jpg")`;
+    if (art.style.backgroundImage !== newBg) {
+      art.style.backgroundImage = newBg;
+    }
   }
-  if (title) title.textContent = beat.nome;
+  if (title && title.textContent !== beat.nome) {
+    title.textContent = beat.nome;
+  }
   if (playBtn) {
     playBtn.classList.toggle("playing", state.isPlaying);
-    playBtn.innerHTML = state.isPlaying
-      ? `<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`
-      : `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+    if (playIconPath) {
+      playIconPath.setAttribute("d", state.isPlaying ? SVG_PATHS.PAUSE : SVG_PATHS.PLAY);
+    }
   }
   if (waveform) {
     waveform.classList.toggle("paused", !state.isPlaying);
@@ -345,9 +356,11 @@ function fmt(s) {
   return m + ":" + (sec < 10 ? "0" : "") + sec;
 }
 
+/* ── Manipulação Cirúrgica de Atributos nos Cards ── */
 function highlightActiveCards() {
   document.querySelectorAll(".beat-card").forEach(card => {
     const isActive = state.currentBeat && card.dataset.id === state.currentBeat.idYoutube;
+    
     card.classList.toggle("active", isActive);
 
     const name = card.querySelector(".beat-name");
@@ -356,21 +369,22 @@ function highlightActiveCards() {
     const badge = card.querySelector(".beat-active-badge");
     if (badge) badge.style.display = isActive ? "block" : "none";
 
-    const playIcon = card.querySelector(".beat-thumb-overlay .beat-play-btn svg");
-    if (playIcon && isActive && state.isPlaying) {
-      playIcon.innerHTML = `<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>`;
-    } else if (playIcon) {
-      playIcon.innerHTML = `<path d="M8 5v14l11-7z"/>`;
+    const playIconPath = card.querySelector(".beat-thumb-overlay .beat-play-btn svg path");
+    if (playIconPath) {
+      const targetPath = (isActive && state.isPlaying) ? SVG_PATHS.PAUSE : SVG_PATHS.PLAY;
+      if (playIconPath.getAttribute("d") !== targetPath) {
+        playIconPath.setAttribute("d", targetPath);
+      }
     }
   });
 }
 
-/* ── Render helpers (Sem event listeners individuais) ── */
+/* ── Render helpers ── */
 function renderBeatCard(beat) {
   const div = document.createElement("div");
-  div.className = "beat-card" + (state.currentBeat?.idYoutube === beat.idYoutube ? " active" : "");
-  div.dataset.id = beat.idYoutube;
   const isActive = state.currentBeat?.idYoutube === beat.idYoutube;
+  div.className = "beat-card" + (isActive ? " active" : "");
+  div.dataset.id = beat.idYoutube;
 
   div.innerHTML = `
     <div class="beat-thumb">
@@ -378,7 +392,7 @@ function renderBeatCard(beat) {
       <div class="beat-thumb-overlay">
         <div class="beat-play-btn">
           <svg viewBox="0 0 24 24" style="fill:#000;width:20px;height:20px;">
-            <path d="${isActive && state.isPlaying ? "M6 19h4V5H6v14zm8-14v14h4V5h-4z" : "M8 5v14l11-7z"}"/>
+            <path d="${isActive && state.isPlaying ? SVG_PATHS.PAUSE : SVG_PATHS.PLAY}"/>
           </svg>
         </div>
       </div>
@@ -458,7 +472,7 @@ function injectGlobalPlayer() {
             <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
           </button>
           <button class="player-play-btn" id="player-play-btn" title="Play/Pause">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="${SVG_PATHS.PLAY}"/></svg>
           </button>
           <button class="player-ctrl-btn" id="player-next-btn" title="Próxima">
             <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zm2-8.14 4.96 3.5L8 16.48V9.86zM16 6h2v12h-2z"/></svg>
@@ -769,4 +783,4 @@ async function initPlaylistDetail() {
 
   // Delegação de eventos na grid de detalhes
   grid.addEventListener("click", (e) => handleContainerBeatClick(e, genreBeats));
-}
+        }
