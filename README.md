@@ -1,83 +1,65 @@
-# 🎵 Beats-Site — Prod. Kaiky
+<div align="center">
 
-<p align="center">
-  <img src="https://img.shields.io/github/stars/diegoorodrigues006/beats-site?style=for-the-badge&color=ccff00&labelColor=1a1a1a" alt="Stars">
-  <img src="https://img.shields.io/github/forks/diegoorodrigues006/beats-site?style=for-the-badge&color=ccff00&labelColor=1a1a1a" alt="Forks">
-  <img src="https://img.shields.io/github/license/diegoorodrigues006/beats-site?style=for-the-badge&color=ccff00&labelColor=1a1a1a" alt="License">
-</p>
+  <!-- Banner do Projeto -->
+  <img src="https://raw.githubusercontent.com/diegoorodrigues006/beats-site/main/corpo/beats-trap.jpeg" alt="Beats Site Banner" width="100%" style="border-radius: 12px; max-height: 280px; object-fit: cover;">
 
-<p align="center">
-  <a href="#-demonstração">Ver Demonstração</a> •
-  <a href="#-funcionalidades">Funcionalidades</a> •
-  <a href="#-tecnologias">Tecnologias</a> •
-  <a href="#-como-rodar">Como Rodar</a>
-</p>
+  <br><br>
 
----
+  # 🎵 BEATS SITE — PROD. KAIKY
 
-## 📌 Sobre o Projeto
+  **Plataforma Web de Apresentação e Comercialização de Beats Autorais**
 
-O **Beats-Site** é uma plataforma web premium, moderna e totalmente responsiva desenvolvida para o produtor **KAIKY PROD**. O site funciona como um catálogo interativo e dinâmico de instrumentais, permitindo que artistas naveguem por gêneros, ouçam os beats em tempo real e façam a aquisição direta via integração com o WhatsApp.
+  [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
+  [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
+  [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
+  [![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com/)
+  [![YouTube API](https://img.shields.io/badge/YouTube_API-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://developers.google.com/youtube/iframe_api_reference)
 
-O grande diferencial técnico do projeto é o consumo automatizado de dados através de uma planilha do Google Sheets (atuando como um CMS leve) combinado a um player global persistente que utiliza a API de IFrame do YouTube no background.
+  <br>
 
----
+  [🖥️ **Acessar o Site**](https://diegoorodrigues006.github.io/beats-site/) • [📱 **Falar no WhatsApp**](https://wa.me/553171821903)
 
-## 🚀 Demonstração
-
-O projeto está publicado e pronto para ser testado homologado ao vivo:
-
-👉 **[Acesse o site rodando no GitHub Pages](https://diegoorodrigues006.github.io/beats-site/)**
+</div>
 
 ---
 
-## ✨ Funcionalidades
+## 📌 Visão Geral
 
-### 🏠 Página Inicial (Home)
-- **Painel Estatístico Real-time**: Exibição dinâmica do total de beats cadastrados, quantidade de gêneros trabalhados e um contador persistente de **reproduções (Plays)** integrado ao `localStorage`.
-- **Letreiro Dinâmico (Marquee)**: Efeito de texto contínuo estilizado com identidade urbana e streetwear.
-- **Carrosséis Fluidos**: Navegação horizontal otimizada por gestos no mobile (touch) e por botões de navegação no desktop.
-
-### 🎵 Sistema de Player Global Persistente
-- **Música Sem Interrupções**: Player fixo no rodapé que permite ao usuário continuar ouvindo o instrumental enquanto navega por diferentes páginas do site.
-- **Controle Total**: Opções de Play, Pause, Avançar, Voltar, barra de progresso clicável com cálculo de tempo (`MM:SS`) e animação visual de onda sonora (Waveform).
-
-### 🗂️ Filtros e Categorias
-- **Páginas por Gênero**: Separação inteligente para Trap, Boombap, Detroit, Funk e Experimental.
-- **Consumo de Planilha**: Adição, remoção ou alteração de preços e instrumentais feitas direto pelo Google Sheets, atualizando o site automaticamente sem necessidade de novos deploys de código.
+O **Beats Site** é uma aplicação web moderna, responsiva e de alta performance criada para exibir o portfólio de instrumental do **Prod. Kaiky**. O sistema oferece uma experiência fluida para ouvintes e artistas navegarem por gêneros musicais, ouvirem faixas em um player persistente e comprarem autorizações diretamente pelo WhatsApp.
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## ⚡ Diferenciais de Arquitetura & Otimizações do DOM
 
-O projeto foi construído utilizando tecnologias nativas para garantir o máximo de performance, carregamento instantâneo e fluidez visual:
+<details>
+<summary><b>🔍 Clique aqui para expandir os detalhes técnicos de performance</b></summary>
 
-- ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) — Estruturação semântica.
-- ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white) — Design responsivo customizado, animações, efeitos neon (`text-shadow`) e layout adaptável (Grid/Flexbox).
-- ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) — Lógica de estados, manipulação assíncrona do DOM e persistência com `localStorage`.
-- ![YouTube API](https://img.shields.io/badge/YouTube_API-FF0000?style=for-the-badge&logo=youtube&logoColor=white) — Integração com a API oficial de IFrame do YouTube para streaming de áudio estável.
+<br>
 
----
+| Otimização | Técnica Utilizada | Impacto no Projeto |
+| :--- | :--- | :--- |
+| **Renderização em Lote** | `DocumentFragment` | Monta os cards em memória antes de injetar na árvore DOM, evitando múltiplos re-renders. |
+| **Gerenciamento de Memória** | `Event Delegation` | Utiliza um único escutador no container pai para tratar cliques com `.closest()`. |
+| **Prevenção de Thrashing** | Rastreamento no `state` | Modifica apenas atributos pontuais dos cards (`.active`, SVG) sem destruir elementos HTML. |
+| **Animações Aceleradas** | `Intersection Observer` | Monitora elementos na tela e desacopla a observação (`unobserve`) após a animação. |
 
-
----
-
----
-
-## 💻 Como Rodar o Projeto Localmente
-
-* **Passo 1:** Clone o repositório executando o comando abaixo no seu terminal:
-git clone https://github.com/diegoorodrigues006/beats-site.git
-
-* **Passo 2:** Entre na pasta que foi criada:
-cd beats-site
-
-* **Passo 3:** Execute o projeto abrindo o arquivo `index.html` diretamente no seu navegador, ou utilize a extensão *Live Server* do VS Code para uma melhor experiência de desenvolvimento.
+</details>
 
 ---
 
-## 👤 Desenvolvedor
+## 🛠️ Recursos e Funcionalidades
 
-Desenvolvido com ⚡ por **Diego Rodrigues**.
-
-* **GitHub:** https://github.com/diegoorodrigues006
+```text
+├── 🎧 Player Global Persistente   -> Permanece ativo e sincronizado durante a navegação.
+├── 🎛️ Filtro Dinâmico por Gênero  -> Trap, Boombap, Detroit, Funk e Experimental sem reload.
+├── 🔥 Contador em Tempo Real      -> Plays sincronizados globalmente via Firebase Realtime.
+├── 📊 Integração via Planilha     -> Beats carregados automaticamente via Google Sheets CSV.
+└── 💬 Checkout via WhatsApp       -> Gera mensagens pré-formatadas com o beat e o valor.
+📂 Estrutura do Repositório
+beats-site/
+ ├── 📄 index.html          # Página Inicial (Hero, Carrosséis e CTA)
+ ├── 📄 beats.html          # Catálogo Completo com Filtros Dinâmicos
+ ├── 📄 playlists.html      # Visão Geral das Categorias de Gênero
+ ├── 📄 playlist-detail.html# Lista de beats do gênero selecionado
+ ├── 🎨 style.css           # Estilos Globais, Animações Neon e Responsividade
+ └── ⚡ app.js              # Gerenciamento de Estado, Player e Otimizações
