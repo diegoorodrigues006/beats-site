@@ -1,95 +1,83 @@
 <div align="center">
 
-  <!-- Header Banner Visual -->
-  <table>
-    <tr>
-      <td align="center" width="1000" rgba(204,255,0,0.1)>
-        <br>
-        <h1>⚡ PROD. KAIKY — BEATS SITE</h1>
-        <p><i>Platform for Streaming, Catalogue Management & Digital Licensing</i></p>
-        <code>TRAP</code> • <code>BOOMBAP</code> • <code>DETROIT</code> • <code>FUNK</code> • <code>EXPERIMENTAL</code>
-        <br><br>
-      </td>
-    </tr>
-  </table>
+# 🎧 Beats Site — Prod. Kaiky
 
-  <br>
+**Plataforma web de alta performance para exibição, streaming de áudio e comercialização de beats autorais.**
 
-  <!-- Badges Tecnológicas -->
-  <img src="https://img.shields.io/badge/JavaScript-ES6+-yellow?style=flat-square&logo=javascript" alt="JS">
-  <img src="https://img.shields.io/badge/HTML5-Semantic-orange?style=flat-square&logo=html5" alt="HTML5">
-  <img src="https://img.shields.io/badge/CSS3-Modular-blue?style=flat-square&logo=css3" alt="CSS3">
-  <img src="https://img.shields.io/badge/Firebase-Realtime-red?style=flat-square&logo=firebase" alt="Firebase">
-  <img src="https://img.shields.io/badge/API-YouTube_IFrame-red?style=flat-square&logo=youtube" alt="YouTube API">
-  <img src="https://img.shields.io/badge/Performance-60_FPS-brightgreen?style=flat-square" alt="Performance">
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)](#)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)](#)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](#)
+[![Firebase](https://img.shields.io/badge/Firebase-Realtime_DB-FFCA28?style=flat-square&logo=firebase&logoColor=black)](#)
+[![Google Sheets API](https://img.shields.io/badge/CMS-Google_Sheets_CSV-34A853?style=flat-square&logo=googlesheets&logoColor=white)](#)
 
-  <br><br>
-
-  <a href="https://diegoorodrigues006.github.io/beats-site/"><strong>🌐 Acesse a Plataforma</strong></a> | 
-  <a href="https://wa.me/553171821903"><strong>💬 Contato Comercial</strong></a>
+---
 
 </div>
 
+## 📌 Sobre o Projeto
+
+O **Beats Site** é um catálogo interativo desenvolvido para o produtor **Kaiky**, permitindo que artistas explorem, ouçam e adquiram instrumentalizações autorais de diversos gêneros urbanos: **Trap, Boombap, Detroit, Funk e Experimental**.
+
+A aplicação utiliza uma abordagem *Headless CMS* usando o Google Sheets como gerenciador de conteúdo e o Firebase como banco em tempo real para controle de métricas.
+
 ---
 
-## 🎧 Visão Geral
+## 🏗️ Arquitetura de Dados
 
-O **Beats Site** é uma aplicação web desenvolvida sob medida para a apresentação e comercialização de instrumental autoral. A plataforma resolve o desafio de entregar áudio contínuo e navegação de alta velocidade, integrando um player persistente, contadores globais sincronizados e conversão direta para o WhatsApp.
+| Camada | Tecnologia | Função |
+| :--- | :--- | :--- |
+| **CMS Headless** | Google Sheets (CSV) | Armazenamento dinâmico dos metadados dos beats (título, BPM, tom, capa, link de áudio). |
+| **Realtime Metrics** | Firebase Realtime DB | Registro e sincronização em tempo real do contador de *plays* por beat. |
+| **Audio Engine** | YouTube IFrame Player API | Gerenciamento do player de áudio integrado, controles e carregamento assíncrono. |
 
 ---
 
-## ⚡ Engenharia de Front-End & Desempenho
-
-A aplicação foi construída em **Vanilla JavaScript**, priorizando a eficiência na manipulação do DOM e a economia de memória em dispositivos móveis.
+## ⚡ Otimizações de Performance & DOM
 
 <details>
-<summary><strong>▶ Clique para abrir a análise de arquitetura do DOM</strong></summary>
+<summary><b>1. Renderização em lote com DocumentFragment</b></summary>
 
-<br>
+> Minimiza o número de *reflows* e *repaints* no navegador, inserindo múltiplos elementos de mídia no DOM de uma única vez.
+</details>
 
-### 🟢 1. Injeção em Lote (`DocumentFragment`)
-O carregamento de cards de áudio evita repasses consecutivos de renderização (*reflows*). As estruturas HTML são construídas e organizadas em memória via `DocumentFragment` antes de uma única inserção no DOM.
+<details>
+<summary><b>2. Delegação de Eventos (.closest())</b></summary>
 
-### 🟢 2. Gestão de Eventos via Delegação
-Em vez de alocar ouvintes de clique para cada nó de card criado, os eventos são tratados de forma centralizada pelo contêiner pai via `event.target.closest('.beat-card')`.
+> Evita a criação excessiva de escutadores de evento (*listeners*). Apenas um único escutador na árvore pai gerencia a interação de reprodução de toda a lista de beats.
+</details>
 
-### 🟢 3. Atualizações Cirúrgicas de Interface
-A troca de estados de reprodução não reconstrói a árvore de nós. A função de controle atualiza exclusivamente as propriedades necessárias (`classList`, atributos `d` de vetores SVG e `backgroundImage`) de forma pontual usando a referência `previousActiveId`.
+<details>
+<summary><b>3. Prevenção de Layout Thrashing</b></summary>
 
-### 🟢 4. Animações com `Intersection Observer`
-As transições visuais de scroll dependem de observadores assíncronos nativos. Ao entrar na *viewport*, a classe visual é ativada e o observador é imediatamente desativado (`unobserve`), liberando a *Main Thread*.
+> Controle cirúrgico do estado ativo via `previousActiveId`, impedindo relayouts desnecessários da página durante a troca de faixas.
+</details>
 
+<details>
+<summary><b>4. Intersection Observer API</b></summary>
+
+> Animações de scroll performáticas e carregamento otimizado de imagens/recursos de mídia conforme o usuário navega pela tela.
 </details>
 
 ---
 
-## 📊 Arquitetura de Dados & Integrações
-
-| Componente | Função no Sistema | Método de Comunicação |
-| :--- | :--- | :--- |
-| **YouTube IFrame API** | Motor invisível para reprodução de áudio | Eventos assíncronos baseados em estado (`onStateChange`) |
-| **Firebase Realtime DB** | Sincronização do contador global de plays | Escuta contínua via WebSockets (`on('value')`) |
-| **Google Sheets CSV** | CMS Headless para catálogo de beats | Fetch HTTP nativo e parsing de CSV customizado |
-
----
-
-## 📂 Estrutura de Módulos
+## 📂 Estrutura de Arquivos
 
 ```text
 beats-site/
- ├── index.html           # Página Principal (Hero, Destaques e Call to Action)
- ├── beats.html           # Catálogo Geral com Filtro de Gêneros
- ├── playlists.html       # Visualização das Categorias Musicais
- ├── playlist-detail.html # Detalhes da Playlist Temática
- ├── style.css            # Estilização Global, Neon Utilitários e Responsividade
- └── app.js               # Gerenciador do Estado Global, Player e DOM
-
-💻 Instruções para Instalação Local
-Clone o repositório para o seu ambiente local:
-
-Bash
-git clone [https://github.com/diegoorodrigues006/beats-site.git](https://github.com/diegoorodrigues006/beats-site.git)
-Entre na pasta do projeto:
+├── public/
+│   └── assets/             # Banners, capas e mídias estáticas
+├── src/
+│   ├── css/
+│   │   └── style.css       # Estilização global do projeto
+│   ├── js/
+│   │   └── app.js          # Lógica principal, Firebase e Player API
+│   └── pages/              # Páginas secundárias
+│       ├── beats.html
+│       ├── playlist-detail.html
+│       └── playlists.html
+├── .gitignore              # Arquivos ignorados pelo Git
+├── index.html              # Landing page principal
+└── README.md               # Documentação do repositório
 
 Bash
 cd beats-site
