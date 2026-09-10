@@ -84,4 +84,64 @@ cd beats-site
 Execute o arquivo:
 A aplicação é 100% estática. Abra o arquivo index.html em qualquer navegador moderno ou via extensão Live Server no VS Code.
 
-Desenvolvido por Diego Rodrigues • Todos os direitos autorais reservados a Prod. Kaiky (2026)
+Desenvolvido por Diego Rodrigues • Todos os direitos autorais reservados a Prod. Kaiky (2026)S
+
+```
+---
+
+## 🚀 Como Executar o Projeto
+
+1. Clone o repositório:
+```bash
+git clone [https://github.com/diegoorodrigues006/beats-site.git](https://github.com/diegoorodrigues006/beats-site.git)
+```
+
+2. Navegue até a pasta do projeto:
+```bash
+cd beats-site
+```
+
+3. Abra o projeto no navegador:
+   * Abra diretamente o arquivo `index.html` ou utilize a extensão **Live Server** no VS Code.
+
+
+---
+
+## 👨‍💻 Autor & Créditos
+
+<div align="center">
+
+<img src="https://github.com/diegoorodrigues006.png" width="100px;" style="border-radius: 50%;" alt="Foto Diego Rodrigues"/><br />
+<b>Diego Rodrigues</b>
+<br />
+<i>Desenvolvedor Front-End & Autor do Projeto</i>
+
+<br />
+
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/diegoorodrigues006)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)]((https://www.linkedin.com/in/diego-rodrigues-b86a0a345/))
+[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/_dirodr/)
+
+<br />
+
+> 🎵 *Direitos de áudio e produção musical reservados exclusivamente a **Prod. Kaiky (2026)**.*
+
+</div>
+
+---
+
+## 🤝 Contribuição
+
+Contribuições, sugestões e relatórios de *bugs* são super bem-vindos! Para contribuir:
+
+1. Faça um **Fork** do projeto.
+2. Crie uma **Branch** para sua Feature (`git checkout -b feature/NovaFeature`).
+3. Faça o **Commit** de suas mudanças (`git commit -m 'feat: Adiciona nova funcionalidade'`).
+4. Faça o **Push** para a Branch (`git push origin feature/NovaFeature`).
+5. Abra um **Pull Request**.
+
+---
+
+## 📄 Licença
+
+Este projeto está sob a licença **MIT** — veja o arquivo [LICENSE](LICENSE) para mais detalhes.
