@@ -710,7 +710,7 @@ async function initHome() {
     GENRES.forEach(genre => {
       const count = state.beats.filter(b => b.genero === genre).length;
       const card = document.createElement("a");
-      card.href = `src/pages/playlist-detail.html?genero=${genre}`;
+      card.href = `playlist-detail.html?genero=${genre}`;
       card.className = "card-lift";
       card.style.cssText = `position:relative;flex-shrink:0;width:200px;height:250px;border-radius:12px;overflow:hidden;border:1.5px solid #1f1f1f;display:block;text-decoration:none;`;
       card.innerHTML = `
