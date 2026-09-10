@@ -8,13 +8,23 @@ const WA_NUMBER = "553171821903";
 
 const GENRES = ["trap", "boombap", "detroit", "funk", "experimental"];
 
+
 const GENRE_IMAGES = {
-  trap: "https://raw.githubusercontent.com/diegoorodrigues006/beats-site/main/corpo/beats-trap.jpeg",
-  boombap: "https://raw.githubusercontent.com/diegoorodrigues006/beats-site/main/corpo/beats-boombap.jpeg",
-  detroit: "https://raw.githubusercontent.com/diegoorodrigues006/beats-site/main/corpo/beats-detroit.jpeg",
-  funk: "https://raw.githubusercontent.com/diegoorodrigues006/beats-site/main/corpo/beats-funk.jpeg",
-  experimental: "https://raw.githubusercontent.com/diegoorodrigues006/beats-site/main/corpo/beats-experimental.jpeg",
+  trap: "beats-trap.jpeg",
+  boombap: "beats-boombap.jpeg",
+  detroit: "beats-detroit.jpeg",
+  funk: "beats-funk.jpeg",
+  experimental: "beats-experimental.jpeg",
 };
+
+function getAssetUrl(filename) {
+  const rootPath = window.location.pathname.includes("/src/pages/") ? "../../" : "";
+  return `${rootPath}public/assets/${filename}`;
+}
+
+function getGenreImageUrl(genre) {
+  return getAssetUrl(GENRE_IMAGES[genre] || GENRE_IMAGES.trap);
+}
 
 const GENRE_COLORS = {
   trap: "#ccff00",
@@ -618,9 +628,9 @@ function setActiveNavLink() {
     const href = link.getAttribute("href") || "";
     const match =
       (path === "index.html" && href === "index.html") ||
-      (path === "beats.html" && href === "beats.html") ||
-      (path === "playlists.html" && href === "playlists.html") ||
-      (path === "playlist-detail.html" && href === "playlists.html");
+      (path === "src/pages/beats.html" && href === "src/pages/beats.html") ||
+      (path === "src/pages/playlists.html" && href === "src/pages/playlists.html") ||
+      (path === "src/pages/playlist-detail.html" && href === "src/pages/playlist-detail.html");
     link.classList.toggle("active", match);
   });
 }
@@ -704,7 +714,7 @@ async function initHome() {
       card.className = "card-lift";
       card.style.cssText = `position:relative;flex-shrink:0;width:200px;height:250px;border-radius:12px;overflow:hidden;border:1.5px solid #1f1f1f;display:block;text-decoration:none;`;
       card.innerHTML = `
-        <img src="${GENRE_IMAGES[genre]}" alt="${genre}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <img src="${getGenreImageUrl(genre)}" alt="${genre}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
         <div class="genre-overlay" style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.4) 50%,transparent 100%);"></div>
         <div style="position:absolute;bottom:0;left:0;right:0;padding:16px;">
           <h3 style="font-size:1.125rem;font-weight:900;text-transform:uppercase;letter-spacing:-0.5px;color:#fff;">${genre}</h3>
@@ -841,7 +851,7 @@ async function initPlaylists() {
     a.className = "playlist-card";
 
     a.innerHTML = `
-      <img src="${GENRE_IMAGES[genre]}" alt="${genre}">
+      <img src="${getGenreImageUrl(genre)}" alt="${genre}">
       <div class="playlist-card-overlay"></div>
       <div class="playlist-card-accent" style="background:${color};"></div>
       <div class="playlist-card-content">
@@ -881,7 +891,7 @@ async function initPlaylistDetail() {
   const bannerTitle = document.getElementById("playlist-banner-title");
   const playAllBtn = document.getElementById("playlist-play-all");
 
-  if (bannerImg) bannerImg.src = GENRE_IMAGES[genre] || GENRE_IMAGES.trap;
+  if (bannerImg) bannerImg.src = getGenreImageUrl(genre);
   if (bannerTitle) bannerTitle.textContent = genre;
   document.title = `${genre.toUpperCase()} — Prod. Kaiky`;
 
