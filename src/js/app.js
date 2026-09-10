@@ -3,8 +3,6 @@ console.log("%c🚀 Beats Site | Inicializando Scripts...", "color: #ccff00; fon
 /* ── Constants ── */
 const SHEET_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vS42I_YX0kzYxpH6143oUulw6EQYS8wLwhQV72F8EmfS0d7-rJyJIMu2fEUrIPWKMHuih8Ffk4DARX8/pub?output=csv";
-const SHEET_TIMEOUT_MS = 6000;
-const LOADER_FAILSAFE_MS = 8000;
 
 const WA_NUMBER = "553171821903";
 
@@ -181,13 +179,9 @@ function clean(s) {
 
 /* ── Load beats from Google Sheets ── */
 async function loadBeats() {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), SHEET_TIMEOUT_MS);
-
   try {
     console.log("🔄 Buscando lista de beats no Google Sheets...");
-    const res = await fetch(SHEET_URL, { signal: controller.signal });
-    if (!res.ok) throw new Error(`Planilha indisponível: HTTP ${res.status}`);
+    const res = await fetch(SHEET_URL);
     const csv = await res.text();
     const lines = csv.split(/\r?\n/);
     const result = [];
@@ -213,8 +207,6 @@ async function loadBeats() {
     state.beats = [
       { idYoutube: "lz3mW653CL8", artista: "KAIKY PROD", nome: "brandao #1", genero: "trap", preco: "R$ 60,00" }
     ];
-  } finally {
-    clearTimeout(timeoutId);
   }
 }
 
@@ -659,11 +651,6 @@ function hideLoader() {
   const loader = document.getElementById("global-loader");
   if (loader) loader.classList.add("hidden");
 }
-
-// Serviços externos não podem bloquear a interface indefinidamente.
-setTimeout(hideLoader, LOADER_FAILSAFE_MS);
-window.addEventListener("error", hideLoader);
-window.addEventListener("unhandledrejection", hideLoader);
 
 /* ── Marquee builder ── */
 function buildMarquee(containerId) {
