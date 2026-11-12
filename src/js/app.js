@@ -10,11 +10,11 @@ const GENRES = ["trap", "boombap", "detroit", "funk", "experimental"];
 
 
 const GENRE_IMAGES = {
-  trap: "beats-trap.jpeg",
-  boombap: "beats-boombap.jpeg",
-  detroit: "beats-detroit.jpeg",
-  funk: "beats-funk.jpeg",
-  experimental: "beats-experimental.jpeg",
+  trap: "beats-trap.webp",
+  boombap: "beats-boombap.webp",
+  detroit: "beats-detroit.webp",
+  funk: "beats-funk.webp",
+  experimental: "beats-experimental.webp",
 };
 
 function getAssetUrl(filename) {
@@ -24,6 +24,13 @@ function getAssetUrl(filename) {
 
 function getGenreImageUrl(genre) {
   return getAssetUrl(GENRE_IMAGES[genre] || GENRE_IMAGES.trap);
+}
+
+function getPlaylistDetailUrl(genre) {
+  const pagePath = window.location.pathname.includes("/src/pages/")
+    ? ""
+    : "src/pages/";
+  return `${pagePath}playlist-detail.html?genero=${genre}`;
 }
 
 const GENRE_COLORS = {
@@ -710,7 +717,7 @@ async function initHome() {
     GENRES.forEach(genre => {
       const count = state.beats.filter(b => b.genero === genre).length;
       const card = document.createElement("a");
-      card.href = `playlist-detail.html?genero=${genre}`;
+      card.href = getPlaylistDetailUrl(genre);
       card.className = "card-lift";
       card.style.cssText = `position:relative;flex-shrink:0;width:200px;height:250px;border-radius:12px;overflow:hidden;border:1.5px solid #1f1f1f;display:block;text-decoration:none;`;
       card.innerHTML = `
@@ -847,7 +854,7 @@ async function initPlaylists() {
     const color = GENRE_COLORS[genre] || "#ccff00";
 
     const a = document.createElement("a");
-    a.href = `playlist-detail.html?genero=${genre}`;
+    a.href = getPlaylistDetailUrl(genre);
     a.className = "playlist-card";
 
     a.innerHTML = `
