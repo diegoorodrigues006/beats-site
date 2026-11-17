@@ -68,6 +68,8 @@ let pendingBeat = null;
 let progressInterval = null;
 var playsRef = null;
 let scrollObserver = null;
+let playsListenerRegistered = false;
+let pendingPlayIncrements = 0;
 
 /* ── FIREBASE CONFIG & INITIALIZATION ── */
 const firebaseConfig = {
@@ -88,13 +90,33 @@ function initFirebaseSafe() {
         console.log("🔥 Firebase inicializado com sucesso.");
       }
       playsRef = firebase.database().ref("total_plays");
+      if (pendingPlayIncrements > 0) {
+        const increments = pendingPlayIncrements;
+        pendingPlayIncrements = 0;
+        playsRef.transaction((currentPlays) => (currentPlays || 0) + increments);
+      }
     }
   } catch (e) {
     console.error("❌ Erro na inicializacao do Firebase:", e);
   }
 }
 
-initFirebaseSafe();
+function scheduleFirebaseInitialization() {
+  const initialize = () => {
+    setTimeout(() => {
+      initFirebaseSafe();
+      carregarPlaysGlobais();
+    }, 800);
+  };
+
+  if (document.readyState === "complete") {
+    initialize();
+  } else {
+    window.addEventListener("load", initialize, { once: true });
+  }
+}
+
+scheduleFirebaseInitialization();
 
 /* ── INTERSECTION OBSERVER API ── */
 function initIntersectionObserver() {
@@ -129,27 +151,25 @@ function observeNewElements() {
 
 /* ── SISTEMA DE CONTADORES DE PLAYS GLOBAIS ── */
 function carregarPlaysGlobais() {
-  if (!playsRef) initFirebaseSafe();
+  if (!playsRef || playsListenerRegistered) return;
 
-  if (playsRef) {
-    playsRef.on("value", (snapshot) => {
-      const val = snapshot.val();
-      state.totalPlays = val !== null ? parseInt(val) : 0;
-      console.log(`📈 Total de plays globais atualizado via Firebase: ${state.totalPlays}`);
-      updatePlaysUI();
-    });
-  }
+  playsListenerRegistered = true;
+  playsRef.on("value", (snapshot) => {
+    const val = snapshot.val();
+    state.totalPlays = val !== null ? parseInt(val) : 0;
+    console.log(`📈 Total de plays globais atualizado via Firebase: ${state.totalPlays}`);
+    updatePlaysUI();
+  });
 }
 
 function incrementarPlaysGlobais() {
-  if (!playsRef) initFirebaseSafe();
-
   if (playsRef) {
     playsRef.transaction((currentPlays) => {
       return (currentPlays || 0) + 1;
     });
     console.log("➕ Incrementando contador de plays globais no Firebase...");
   } else {
+    pendingPlayIncrements += 1;
     state.totalPlays += 1;
     console.log("➕ Incrementando contador de plays localmente...");
     updatePlaysUI();
@@ -753,7 +773,7 @@ async function initHome() {
       card.className = "card-lift";
       card.style.cssText = `position:relative;flex-shrink:0;width:200px;height:250px;border-radius:12px;overflow:hidden;border:1.5px solid #1f1f1f;display:block;text-decoration:none;`;
       card.innerHTML = `
-        <img src="${getGenreImageUrl(genre)}" alt="${genre}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <img src="${getGenreImageUrl(genre)}" alt="${genre}" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
         <div class="genre-overlay" style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.4) 50%,transparent 100%);"></div>
         <div style="position:absolute;bottom:0;left:0;right:0;padding:16px;">
           <h3 style="font-size:1.125rem;font-weight:900;text-transform:uppercase;letter-spacing:-0.5px;color:#fff;">${genre}</h3>
@@ -890,7 +910,7 @@ async function initPlaylists() {
     a.className = "playlist-card";
 
     a.innerHTML = `
-      <img src="${getGenreImageUrl(genre)}" alt="${genre}">
+      <img src="${getGenreImageUrl(genre)}" alt="${genre}" loading="lazy" decoding="async">
       <div class="playlist-card-overlay"></div>
       <div class="playlist-card-accent" style="background:${color};"></div>
       <div class="playlist-card-content">
