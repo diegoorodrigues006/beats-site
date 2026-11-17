@@ -233,7 +233,7 @@ body {
   list-style: none;
 }
 .nav-link {
-  color: #666;
+  color: #999999;
   font-weight: 600;
   font-size: 0.8rem;
   letter-spacing: 2px;
@@ -270,7 +270,7 @@ body {
 
 .nav-beats-count .label, .nav-plays-count .label {
   font-size: 0.7rem;
-  color: #555;
+  color: #999999;
   text-transform: uppercase;
   letter-spacing: 2px;
 }
@@ -339,7 +339,7 @@ body {
   text-transform: uppercase;
 }
 .hero-sub {
-  color: #555;
+  color: #999999;
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 3px;
@@ -409,7 +409,7 @@ body {
 }
 .hero-stat .lbl {
   font-size: 0.7rem;
-  color: #555;
+  color: #999999;
   text-transform: uppercase;
   letter-spacing: 2px;
 }
@@ -428,7 +428,7 @@ body {
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: #555;
+  color: #999999;
 }
 .scroll-hint-line {
   width: 1px;
@@ -448,7 +448,7 @@ body {
 .section-header-right { display: flex; align-items: center; gap: 16px; }
 .see-all {
   font-size: 0.75rem;
-  color: #555;
+  color: #999999;
   text-transform: uppercase;
   letter-spacing: 2px;
   text-decoration: none;
@@ -662,7 +662,7 @@ body {
   line-height: 1.1;
 }
 .cta-sub {
-  color: #555;
+  color: #999999;
   max-width: 400px;
   margin: 0 auto 32px;
   font-size: 0.9rem;
@@ -690,7 +690,7 @@ footer {
   margin-bottom: 8px;
 }
 .footer-brand p {
-  color: #555;
+  color: #999999;
   font-size: 0.875rem;
   max-width: 280px;
   line-height: 1.5;
@@ -699,7 +699,7 @@ footer {
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: #555;
+  color: #999999;
   margin-bottom: 16px;
 }
 .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
@@ -733,7 +733,7 @@ footer {
   border-top: 1px solid var(--bg3);
   text-align: center;
   font-size: 0.75rem;
-  color: #444;
+  color: #888888;
 }
 
 /* ── Estilos do Banner Interno das Páginas ── */
@@ -758,7 +758,7 @@ footer {
   text-transform: uppercase;
 }
 .page-banner-sub {
-  color: #555;
+  color: #999999;
   margin-top: 12px;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -938,7 +938,7 @@ footer {
 .playlist-banner-actions { display: flex; align-items: center; gap: 12px; }
 .back-link {
   font-size: 0.75rem;
-  color: #555;
+  color: #999999;
   text-transform: uppercase;
   letter-spacing: 2px;
   text-decoration: none;
@@ -992,7 +992,7 @@ footer {
 }
 .player-artist {
   font-size: 0.7rem;
-  color: #555;
+  color: #999999;
   text-transform: uppercase;
   letter-spacing: 2px;
 }
@@ -1026,7 +1026,7 @@ footer {
 .player-play-btn.playing { box-shadow: 0 0 20px rgba(204,255,0,0.6); }
 .player-time {
   font-size: 0.75rem;
-  color: #555;
+  color: #999999;
   font-variant-numeric: tabular-nums;
 }
 .player-waveform {
@@ -1063,7 +1063,7 @@ footer {
   justify-content: center;
   padding: 80px 24px;
   gap: 16px;
-  color: #555;
+  color: #999999;
   text-align: center;
 }
 .empty-state .icon { font-size: 4rem; }
